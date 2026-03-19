@@ -1,0 +1,976 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Briefing Diário — Postos Gasparini</title>
+  <style>
+    @import url('https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800;900&display=swap');
+
+    /* ── RESET & BASE ── */
+    * { margin:0; padding:0; box-sizing:border-box; }
+    body { background:#DDE1EE; font-family:'Inter',Arial,Helvetica,sans-serif; color:#0F1729; -webkit-font-smoothing:antialiased; }
+    .page-wrapper { padding:28px 16px 40px; }
+    .wrapper { max-width:660px; margin:0 auto; background:#FFFFFF; border-radius:14px; overflow:hidden; box-shadow:0 8px 32px rgba(15,23,41,.14),0 2px 8px rgba(15,23,41,.08); }
+
+    /* ════════════════════════════════
+       HEADER
+    ════════════════════════════════ */
+    .header { background:linear-gradient(150deg,#0A1020 0%,#1C2B6E 55%,#2A3E8C 100%); padding:32px 40px 24px; position:relative; overflow:hidden; }
+    .header::after { content:''; position:absolute; top:-40px; right:-40px; width:180px; height:180px; border-radius:50%; background:rgba(255,255,255,.03); pointer-events:none; }
+    .header-inner { display:flex; align-items:center; justify-content:space-between; gap:24px; position:relative; z-index:1; }
+
+    /* Logo oval CSS */
+    .logo-oval { flex-shrink:0; width:124px; height:68px; position:relative; border-radius:50%; background:linear-gradient(145deg,#B8BCCA 0%,#E8EBF2 25%,#C4C8D5 55%,#DDE0EA 80%,#B0B4C2 100%); box-shadow:0 0 0 3px rgba(255,255,255,.12),0 6px 20px rgba(0,0,0,.45),inset 0 1px 3px rgba(255,255,255,.7),inset 0 -1px 3px rgba(0,0,0,.2); }
+    .logo-oval-inner { position:absolute; inset:5px; border-radius:50%; background:linear-gradient(145deg,#F4F5F9 0%,#E8EAF2 100%); display:flex; flex-direction:column; align-items:center; justify-content:center; }
+    .logo-postos    { font-size:6.5px; font-weight:700; color:#1C2B6E; letter-spacing:2px; text-transform:uppercase; display:block; }
+    .logo-gasparini { font-size:13.5px; font-weight:900; color:#1C2B6E; letter-spacing:.3px; display:block; text-transform:uppercase; line-height:1.1; margin:1px 0; }
+    .logo-desde     { font-size:6px; font-weight:500; color:#4A5A8A; letter-spacing:1px; display:block; }
+
+    /* Header center */
+    .header-center { flex:1; text-align:center; }
+    .header-eyebrow { font-size:8px; font-weight:600; letter-spacing:3px; text-transform:uppercase; color:rgba(255,255,255,.38); margin-bottom:5px; }
+    .header-title   { font-size:24px; font-weight:800; color:#FFFFFF; letter-spacing:-.5px; line-height:1; }
+    .header-topics  { font-size:9.5px; color:rgba(255,255,255,.38); margin-top:5px; letter-spacing:.3px; }
+
+    /* Header date */
+    .header-date { text-align:right; flex-shrink:0; }
+    .header-weekday   { font-size:8px; font-weight:600; letter-spacing:2.5px; text-transform:uppercase; color:rgba(255,255,255,.38); }
+    .header-day-num   { font-size:30px; font-weight:800; color:#FFFFFF; line-height:1; margin:2px 0; }
+    .header-month-yr  { font-size:9.5px; color:rgba(255,255,255,.45); font-weight:500; }
+
+    /* Metallic rule */
+    .header-rule { height:3px; background:linear-gradient(90deg,#1C2B6E 0%,#7A85B8 30%,#C8CCD8 50%,#7A85B8 70%,#1C2B6E 100%); }
+
+    /* ════════════════════════════════
+       ALERT BAR (condicional)
+    ════════════════════════════════ */
+    .alert-bar { background:#0A1020; padding:11px 40px 11px 28px; display:flex; align-items:flex-start; gap:12px; border-left:4px solid #E53E3E; }
+    .alert-left { display:flex; align-items:center; gap:7px; flex-shrink:0; padding-top:2px; }
+    .alert-dot  { width:7px; height:7px; border-radius:50%; background:#E53E3E; flex-shrink:0; box-shadow:0 0 7px rgba(229,62,62,.7); }
+    .alert-lbl  { font-size:8.5px; font-weight:800; letter-spacing:2px; text-transform:uppercase; color:#E53E3E; white-space:nowrap; }
+    .alert-text { font-size:12px; line-height:1.55; color:rgba(255,255,255,.82); }
+    .alert-text strong { color:#FFFFFF; }
+
+    /* ════════════════════════════════
+       SECTION 1 — O QUE MONITORAR HOJE
+       (hero — white, large, acionável)
+    ════════════════════════════════ */
+    .monitor-hero { padding:28px 40px; background:#FFFFFF; border-bottom:1px solid #E8ECF3; }
+    .monitor-hero-header { display:flex; align-items:baseline; justify-content:space-between; margin-bottom:18px; }
+    .monitor-hero-title { font-size:17px; font-weight:800; color:#0F1729; letter-spacing:-.3px; }
+    .monitor-hero-sub   { font-size:10px; color:#8A94A8; font-weight:500; }
+    .monitor-hero-list  { display:flex; flex-direction:column; gap:10px; }
+    .monitor-hero-item  { display:flex; align-items:flex-start; gap:14px; padding:13px 16px; border-radius:10px; border:1px solid #E8ECF3; background:#FAFBFD; }
+    .monitor-hero-item.priority-1 { border-color:#FECACA; background:#FFF8F8; }
+    .monitor-hero-item.priority-2 { border-color:#FDE68A; background:#FFFDF0; }
+    .monitor-hero-item.priority-3 { border-color:#BFDBFE; background:#F5F9FF; }
+    .monitor-num-circle { width:26px; height:26px; border-radius:50%; display:flex; align-items:center; justify-content:center; font-size:11px; font-weight:800; flex-shrink:0; }
+    .num-red   { background:#FEE2E2; color:#B91C1C; }
+    .num-amber { background:#FEF3C7; color:#92400E; }
+    .num-blue  { background:#DBEAFE; color:#1E40AF; }
+    .monitor-action { flex:1; }
+    .monitor-action-title { font-size:12.5px; font-weight:700; color:#0F1729; margin-bottom:2px; }
+    .monitor-action-desc  { font-size:11.5px; color:#5A6480; line-height:1.5; }
+
+    /* ════════════════════════════════
+       SECTION 2 — BARÔMETRO + MERCADO
+    ════════════════════════════════ */
+    .baro-market-wrap { background:#F7F8FC; border-bottom:1px solid #E8ECF3; }
+
+    /* Barômetro - dark card */
+    .barometro-card { background:linear-gradient(135deg,#0A1020 0%,#1C2B6E 100%); padding:22px 40px; }
+    .baro-inner { display:flex; align-items:center; gap:28px; }
+    .baro-left { flex:1; }
+    .baro-eyebrow { font-size:8px; font-weight:700; letter-spacing:2.5px; text-transform:uppercase; color:rgba(255,255,255,.38); margin-bottom:4px; }
+    .baro-value-row { display:flex; align-items:baseline; gap:10px; margin-bottom:6px; }
+    .baro-value { font-size:28px; font-weight:900; line-height:1; }
+    .baro-val-alto  { color:#86EFAC; }
+    .baro-val-medio { color:#FDE68A; }
+    .baro-val-baixo { color:#FCA5A5; }
+    .baro-day { font-size:11px; color:rgba(255,255,255,.45); font-weight:500; }
+    .baro-track-wrap { margin-bottom:8px; }
+    .baro-track { background:rgba(255,255,255,.1); border-radius:99px; height:6px; overflow:hidden; }
+    .baro-fill  { height:100%; border-radius:99px; }
+    .baro-fill-alto  { background:linear-gradient(90deg,#4ADE80,#22C55E); width:82%; }
+    .baro-fill-medio { background:linear-gradient(90deg,#FCD34D,#F59E0B); width:52%; }
+    .baro-fill-baixo { background:linear-gradient(90deg,#F87171,#EF4444); width:22%; }
+    .baro-reason { font-size:10.5px; color:rgba(255,255,255,.58); line-height:1.55; }
+    .baro-reason strong { color:rgba(255,255,255,.85); }
+    .baro-right { flex-shrink:0; text-align:center; }
+    .baro-icon { font-size:42px; line-height:1; opacity:.85; }
+
+    /* Mercado - light area */
+    .market-area { padding:22px 40px 24px; }
+    .market-area-title { font-size:9px; font-weight:700; letter-spacing:2px; text-transform:uppercase; color:#8A94A8; margin-bottom:14px; }
+
+    /* Macro row: Brent + Câmbio grandes */
+    .macro-row { display:flex; gap:10px; margin-bottom:14px; }
+    .macro-card { flex:1; background:#FFFFFF; border:1px solid #E4E7F0; border-radius:10px; padding:14px 16px; position:relative; overflow:hidden; }
+    .macro-card::before { content:''; position:absolute; top:0; left:0; right:0; height:3px; background:linear-gradient(90deg,#1C2B6E,#2E3F8A); border-radius:10px 10px 0 0; }
+    .macro-lbl   { font-size:8px; font-weight:700; letter-spacing:1.5px; text-transform:uppercase; color:#8A94A8; margin-bottom:6px; }
+    .macro-val   { font-size:26px; font-weight:800; color:#0F1729; letter-spacing:-1px; line-height:1; }
+    .macro-unit  { font-size:9px; color:#8A94A8; margin-top:2px; }
+    .macro-delta { display:inline-flex; align-items:center; gap:3px; font-size:9.5px; font-weight:700; margin-top:8px; padding:2px 8px; border-radius:99px; }
+    .delta-up   { color:#B91C1C; background:#FEE2E2; }
+    .delta-flat { color:#92400E; background:#FEF3C7; }
+    .delta-down { color:#059669; background:#D1FAE5; }
+
+    /* Fuel strip */
+    .fuel-strip { background:#FFFFFF; border:1px solid #E4E7F0; border-radius:10px; overflow:hidden; margin-bottom:14px; }
+    .fuel-strip-header { background:#1C2B6E; padding:8px 16px; display:flex; }
+    .fuel-strip-header-lbl { font-size:8px; font-weight:700; letter-spacing:2px; text-transform:uppercase; color:rgba(255,255,255,.6); flex:1; }
+    .fuel-strip-cols { display:flex; }
+    .fuel-col { flex:1; padding:12px 16px; border-right:1px solid #E4E7F0; }
+    .fuel-col:last-child { border-right:none; }
+    .fuel-col-lbl   { font-size:8px; font-weight:700; letter-spacing:1px; text-transform:uppercase; color:#8A94A8; margin-bottom:6px; }
+    .fuel-col-val   { font-size:18px; font-weight:800; color:#0F1729; letter-spacing:-.5px; line-height:1; }
+    .fuel-col-unit  { font-size:9px; color:#8A94A8; }
+    .fuel-col-delta { font-size:9px; font-weight:700; margin-top:5px; display:inline-block; padding:1px 6px; border-radius:99px; }
+
+    /* Parity */
+    .parity-row-wrap { background:#FFFFFF; border:1px solid #E4E7F0; border-radius:10px; padding:13px 16px; }
+    .parity-top { display:flex; align-items:center; justify-content:space-between; margin-bottom:8px; }
+    .parity-lbl { font-size:11px; font-weight:600; color:#0F1729; }
+    .parity-pct { font-size:17px; font-weight:800; color:#B91C1C; }
+    .parity-track { background:#E4E7F0; border-radius:99px; height:7px; overflow:hidden; }
+    .parity-fill  { height:100%; border-radius:99px; background:linear-gradient(90deg,#22C55E 0%,#F59E0B 55%,#EF4444 76%,#EF4444 100%); }
+    .parity-marks { display:flex; justify-content:space-between; margin-top:4px; }
+    .parity-mark-txt { font-size:8px; color:#8A94A8; font-weight:500; }
+    .parity-verdict { margin-top:10px; padding:8px 12px; background:#FEE2E2; border-radius:6px; border-left:3px solid #B91C1C; font-size:11px; font-weight:600; color:#7F1D1D; }
+
+    .market-source { margin-top:10px; font-size:9px; color:#A0AAC0; line-height:1.6; }
+    .market-source a { color:#1C2B6E; font-weight:600; text-decoration:none; border-bottom:1px dotted #1C2B6E; }
+
+    /* ════════════════════════════════
+       SECTION 3 — GREVES & ALERTAS
+       (visual distinto: fundo quase-vermelho)
+    ════════════════════════════════ */
+    .greves-section { background:#FFF8F8; border-top:1px solid #FED7D7; border-bottom:1px solid #FED7D7; padding:24px 40px; }
+    .greves-header { display:flex; align-items:center; gap:10px; margin-bottom:16px; }
+    .greves-icon { font-size:18px; }
+    .greves-title { font-size:11px; font-weight:800; letter-spacing:2px; text-transform:uppercase; color:#991B1B; }
+    .greves-subtitle { font-size:9.5px; color:#B45309; margin-top:1px; }
+    .greves-list { display:flex; flex-direction:column; gap:10px; }
+    .greve-card { background:#FFFFFF; border:1px solid #FCA5A5; border-radius:10px; padding:13px 15px; }
+    .greve-card-top { display:flex; align-items:center; justify-content:space-between; margin-bottom:7px; flex-wrap:wrap; gap:6px; }
+    .greve-name { font-size:12.5px; font-weight:700; color:#0F1729; }
+    .greve-status { display:inline-flex; align-items:center; gap:5px; font-size:8.5px; font-weight:800; letter-spacing:.8px; text-transform:uppercase; padding:3px 10px; border-radius:99px; }
+    .gs-confirmado { background:#FEE2E2; color:#991B1B; border:1px solid #FECACA; }
+    .gs-provavel   { background:#FEF3C7; color:#92400E; border:1px solid #FDE68A; }
+    .gs-monitorar  { background:#DBEAFE; color:#1E40AF; border:1px solid #BFDBFE; }
+    .gs-suspenso   { background:#D1FAE5; color:#065F46; border:1px solid #A7F3D0; }
+    .greve-dot { width:5px; height:5px; border-radius:50%; background:currentColor; flex-shrink:0; }
+    .greve-desc { font-size:11.5px; color:#4A5270; line-height:1.55; }
+    .greve-desc strong { color:#0F1729; }
+    .greve-source { font-size:9px; color:#A0AAC0; margin-top:6px; display:flex; align-items:center; gap:6px; flex-wrap:wrap; font-style:italic; }
+    .greve-source a { color:#991B1B; font-weight:600; text-decoration:none; border-bottom:1px dotted #991B1B; font-style:normal; }
+    .date-badge { font-size:8.5px; font-weight:700; padding:1px 6px; border-radius:99px; font-style:normal; }
+    .db-fresh  { background:#D1FAE5; color:#065F46; }
+    .db-recent { background:#FEF3C7; color:#92400E; }
+    .db-old    { background:#FEE2E2; color:#991B1B; }
+
+    /* ════════════════════════════════
+       SECTION 4 — SETOR & DISTRIBUIÇÃO
+       (Shell + Recap + Combustíveis + Paulínia)
+    ════════════════════════════════ */
+    .setor-section { padding:0 40px; border-bottom:1px solid #E8ECF3; }
+    .setor-main-header { display:flex; align-items:center; gap:10px; padding:24px 0 18px; }
+    .setor-icon-wrap { width:32px; height:32px; background:linear-gradient(135deg,#1C2B6E,#2E3F8A); border-radius:8px; display:flex; align-items:center; justify-content:center; font-size:15px; flex-shrink:0; box-shadow:0 2px 8px rgba(28,43,110,.2); }
+    .setor-title    { font-size:11px; font-weight:800; letter-spacing:2px; text-transform:uppercase; color:#1C2B6E; }
+    .setor-subtitle { font-size:9.5px; color:#8A94A8; margin-top:1px; }
+
+    /* Sub-seção dentro de Setor */
+    .setor-subsection { padding-bottom:18px; }
+    .setor-subsection + .setor-subsection { padding-top:18px; border-top:1px dashed #E4E7F0; }
+    .setor-sub-lbl { font-size:8px; font-weight:800; letter-spacing:2px; text-transform:uppercase; color:#8A94A8; margin-bottom:10px; display:flex; align-items:center; gap:6px; }
+    .setor-sub-lbl::after { content:''; flex:1; height:1px; background:#E4E7F0; }
+
+    /* News items — redesenhados, mais leves */
+    .news-list { display:flex; flex-direction:column; gap:8px; }
+    .news-item { display:flex; gap:10px; align-items:flex-start; }
+    .news-bullet { width:5px; height:5px; border-radius:50%; background:#1C2B6E; flex-shrink:0; margin-top:6px; }
+    .news-bullet-red   { background:#E53E3E; }
+    .news-bullet-amber { background:#D97706; }
+    .news-bullet-green { background:#059669; }
+    .news-body { flex:1; }
+    .news-tag-row { display:flex; align-items:center; gap:5px; margin-bottom:3px; flex-wrap:wrap; }
+    .news-tag { font-size:8px; font-weight:700; letter-spacing:.8px; text-transform:uppercase; padding:1px 7px; border-radius:99px; }
+    .t-alert   { background:#FEE2E2; color:#991B1B; }
+    .t-info    { background:#EEF2FF; color:#3730A3; }
+    .t-oport   { background:#D1FAE5; color:#065F46; }
+    .t-warn    { background:#FEF3C7; color:#92400E; }
+    .t-neutral { background:#F0F2F5; color:#4A5270; }
+    .news-text { font-size:12.5px; line-height:1.6; color:#2D3748; }
+    .news-text strong { color:#0F1729; font-weight:700; }
+    .news-source { font-size:9px; color:#A0AAC0; margin-top:4px; display:flex; align-items:center; gap:5px; flex-wrap:wrap; font-style:italic; }
+    .news-source a { color:#1C2B6E; font-weight:600; text-decoration:none; border-bottom:1px dotted #1C2B6E; font-style:normal; }
+
+    /* Paulínia compact card */
+    .paulinia-compact { background:#F7F8FC; border:1px solid #E4E7F0; border-left:3px solid #1C2B6E; border-radius:8px; padding:12px 14px; display:flex; gap:16px; align-items:center; }
+    .paulinia-compact-main { flex:1; }
+    .paulinia-compact-title { font-size:11px; font-weight:700; color:#1C2B6E; margin-bottom:3px; }
+    .paulinia-compact-text  { font-size:11px; color:#4A5270; line-height:1.5; }
+    .paulinia-compact-text strong { color:#0F1729; }
+    .paulinia-stats-mini { display:flex; gap:16px; flex-shrink:0; text-align:center; }
+    .ps-val { font-size:14px; font-weight:800; color:#1C2B6E; line-height:1; }
+    .ps-lbl { font-size:7.5px; color:#8A94A8; font-weight:600; text-transform:uppercase; letter-spacing:.5px; margin-top:2px; }
+
+    /* ════════════════════════════════
+       SECTION 5 — EDUCAÇÃO
+       (fundo levemente azulado)
+    ════════════════════════════════ */
+    .edu-section { background:#F5F7FF; border-bottom:1px solid #E4E7F0; padding:24px 40px; }
+    .edu-header-row { display:flex; align-items:center; justify-content:space-between; margin-bottom:16px; }
+    .edu-title-block { }
+    .edu-eyebrow { font-size:8px; font-weight:700; letter-spacing:2.5px; text-transform:uppercase; color:#6B7280; margin-bottom:3px; }
+    .edu-title   { font-size:14px; font-weight:800; color:#1C2B6E; }
+    .edu-kpi { text-align:right; background:linear-gradient(135deg,#1C2B6E,#2E3F8A); border-radius:10px; padding:10px 14px; }
+    .edu-kpi-val { font-size:20px; font-weight:800; color:#FFFFFF; line-height:1; }
+    .edu-kpi-lbl { font-size:8px; color:rgba(255,255,255,.6); margin-top:2px; text-align:right; }
+    .context-note { font-size:10.5px; color:#92400E; background:#FEF9EC; border:1px solid #FDE68A; border-left:3px solid #D97706; border-radius:6px; padding:8px 12px; margin-bottom:12px; line-height:1.5; }
+    .context-note strong { font-weight:700; }
+
+    /* ════════════════════════════════
+       SECTION 6 — VINHEDO, AGENDA & TEMPO
+    ════════════════════════════════ */
+    .local-section { padding:0 40px; }
+    .local-main-header { display:flex; align-items:center; gap:10px; padding:24px 0 18px; }
+
+    /* Event highlight */
+    .event-highlight { background:linear-gradient(135deg,#EEF2FF 0%,#E8EDF8 100%); border:1px solid #C8D0E8; border-left:4px solid #1C2B6E; border-radius:10px; padding:14px 16px; margin-bottom:16px; }
+    .event-eyebrow { font-size:8px; font-weight:800; letter-spacing:2px; text-transform:uppercase; color:#3730A3; margin-bottom:4px; display:flex; align-items:center; gap:6px; }
+    .event-eyebrow-badge { background:#1C2B6E; color:#FFFFFF; padding:1px 8px; border-radius:99px; font-size:7.5px; }
+    .event-text { font-size:12.5px; color:#1C2B6E; font-weight:500; line-height:1.6; }
+    .event-text strong { font-weight:800; color:#0F1729; }
+
+    /* Agenda */
+    .agenda-wrap { border:1px solid #E4E7F0; border-radius:10px; overflow:hidden; margin-bottom:18px; }
+    .agenda-row { display:flex; align-items:stretch; }
+    .agenda-row + .agenda-row { border-top:1px solid #E4E7F0; }
+    .agenda-row.ag-today .agenda-date-col { background:#1C2B6E; }
+    .agenda-row.ag-today .agenda-d-day,.agenda-row.ag-today .agenda-d-month { color:rgba(255,255,255,.55); }
+    .agenda-row.ag-today .agenda-d-num { color:#FFFFFF; }
+    .agenda-row.ag-today { background:#F0F3FF; }
+    .agenda-date-col { width:68px; flex-shrink:0; background:#F7F8FC; display:flex; flex-direction:column; align-items:center; justify-content:center; padding:12px 6px; border-right:1px solid #E4E7F0; }
+    .agenda-d-day   { font-size:7.5px; font-weight:700; letter-spacing:1px; text-transform:uppercase; color:#8A94A8; }
+    .agenda-d-num   { font-size:18px; font-weight:800; color:#1C2B6E; line-height:1.1; }
+    .agenda-d-month { font-size:7.5px; color:#8A94A8; font-weight:500; }
+    .agenda-body { flex:1; padding:10px 14px; display:flex; flex-direction:column; justify-content:center; }
+    .agenda-body-title { font-size:12px; font-weight:700; color:#0F1729; }
+    .agenda-body-sub   { font-size:10.5px; color:#6B7280; line-height:1.4; margin-top:1px; }
+    .agenda-badge-col { flex-shrink:0; display:flex; align-items:center; padding:10px 12px; }
+    .ag-badge { font-size:8.5px; font-weight:700; padding:3px 9px; border-radius:99px; white-space:nowrap; }
+    .ag-high  { background:#D1FAE5; color:#065F46; }
+    .ag-mid   { background:#FEF3C7; color:#92400E; }
+    .ag-low   { background:#F0F2F5; color:#6B7280; }
+    .ag-alert { background:#FEE2E2; color:#991B1B; }
+
+    /* Tempo */
+    .tempo-strip { display:flex; gap:8px; margin-bottom:12px; }
+    .tempo-card { flex:1; border-radius:10px; padding:13px 6px; text-align:center; border:1px solid #E4E7F0; background:#F7F8FC; }
+    .tempo-card.tc-hoje { background:linear-gradient(145deg,#1C2B6E,#2E3F8A); border-color:transparent; }
+    .tempo-card.tc-hoje .tempo-day-lbl,.tempo-card.tc-hoje .tempo-cond { color:rgba(255,255,255,.55); }
+    .tempo-card.tc-hoje .tempo-temps { color:#FFFFFF; }
+    .tempo-day-lbl { font-size:8px; font-weight:700; letter-spacing:1.5px; text-transform:uppercase; color:#8A94A8; margin-bottom:8px; }
+    .tempo-emoji   { font-size:24px; margin-bottom:6px; line-height:1; }
+    .tempo-temps   { font-size:12.5px; font-weight:700; color:#0F1729; margin-bottom:3px; }
+    .tempo-cond    { font-size:8.5px; color:#8A94A8; line-height:1.3; }
+    .tempo-alerta  { padding:10px 14px; background:#FEF9EC; border:1px solid #FDE68A; border-left:3px solid #D97706; border-radius:8px; font-size:11px; color:#78350F; line-height:1.5; display:flex; gap:8px; align-items:flex-start; }
+    .tempo-alerta strong { font-weight:700; }
+
+    /* ════════════════════════════════
+       FONTES (compacto)
+    ════════════════════════════════ */
+    .fontes-section { background:#F7F8FC; border-top:1px solid #E4E7F0; padding:16px 40px; }
+    .fontes-title { font-size:8px; font-weight:800; letter-spacing:2px; text-transform:uppercase; color:#A0AAC0; margin-bottom:10px; }
+    .fontes-grid { display:flex; flex-wrap:wrap; gap:4px 20px; }
+    .fonte-item { font-size:9.5px; color:#6B7280; }
+    .fonte-item a { color:#1C2B6E; font-weight:600; text-decoration:none; }
+    .fontes-legenda { margin-top:10px; padding:8px 12px; background:#EEF2FF; border-radius:6px; font-size:9.5px; color:#3730A3; line-height:1.6; }
+    .legenda-pill { display:inline-block; padding:1px 7px; border-radius:99px; font-size:8.5px; font-weight:700; margin:0 3px; }
+
+    /* ════════════════════════════════
+       FOOTER
+    ════════════════════════════════ */
+    .footer-rule { height:3px; background:linear-gradient(90deg,#1C2B6E 0%,#7A85B8 30%,#C8CCD8 50%,#7A85B8 70%,#1C2B6E 100%); }
+    .footer { background:linear-gradient(150deg,#0A1020 0%,#1C2B6E 100%); padding:20px 40px; text-align:center; }
+    .footer-name { font-size:12px; font-weight:800; color:#FFFFFF; letter-spacing:1.5px; text-transform:uppercase; }
+    .footer-sub  { font-size:8.5px; color:rgba(255,255,255,.35); letter-spacing:.5px; margin-top:3px; }
+    .footer-divider { height:1px; background:rgba(255,255,255,.08); margin:10px 0; }
+    .footer-meta { font-size:9px; color:rgba(255,255,255,.28); line-height:1.7; }
+
+    /* ════════════════════════════════
+       RESPONSIVE
+    ════════════════════════════════ */
+    @media (max-width:520px) {
+      .page-wrapper { padding:12px 6px 24px; }
+      .header,.alert-bar,.monitor-hero,.barometro-card,.market-area,.greves-section,.setor-section,.edu-section,.local-section,.fontes-section,.footer { padding-left:20px; padding-right:20px; }
+      .header-inner { flex-direction:column; align-items:flex-start; gap:12px; }
+      .header-date { display:none; }
+      .macro-row { flex-direction:column; }
+      .fuel-strip-cols { flex-direction:column; }
+      .fuel-col { border-right:none; border-bottom:1px solid #E4E7F0; }
+      .baro-inner { flex-direction:column; gap:12px; }
+      .baro-right { display:none; }
+      .tempo-strip { flex-wrap:wrap; }
+      .tempo-card { min-width:calc(50% - 4px); }
+      .paulinia-stats-mini { display:none; }
+      .agenda-badge-col { display:none; }
+    }
+  </style>
+</head>
+<body>
+<div class="page-wrapper">
+<div class="wrapper">
+
+  <!-- ═══ HEADER ═══ -->
+  <div class="header">
+    <div class="header-inner">
+      <div class="logo-oval">
+        <div class="logo-oval-inner">
+          <span class="logo-postos">Postos</span>
+          <span class="logo-gasparini">Gasparini</span>
+          <span class="logo-desde">desde 1986</span>
+        </div>
+      </div>
+      <div class="header-center">
+        <div class="header-eyebrow">Grupo Gasparini · Vinhedo, SP</div>
+        <div class="header-title">Briefing Diário</div>
+        <div class="header-topics">Postos · Mercado · Educação · Local</div>
+      </div>
+      <div class="header-date">
+        <div class="header-weekday">Quinta-feira</div>
+        <div class="header-day-num">19</div>
+        <div class="header-month-yr">Março 2026</div>
+      </div>
+    </div>
+  </div>
+  <div class="header-rule"></div>
+
+  <!-- ═══ ALERTA ═══ -->
+  <div class="alert-bar">
+    <div class="alert-left">
+      <div class="alert-dot"></div>
+      <div class="alert-lbl">Urgente</div>
+    </div>
+    <div class="alert-text">
+      <strong>Greve dos Caminhoneiros — em andamento hoje, 19/03.</strong>
+      SP é o epicentro. Verifique entregas com a distribuidora de Paulínia antes das 8h.
+    </div>
+  </div>
+
+  <!-- ═══════════════════════════════════════
+       SEÇÃO 1 — O QUE MONITORAR HOJE
+       (branca, grande, leitura em 10 segundos)
+  ═══════════════════════════════════════ -->
+  <div class="monitor-hero">
+    <div class="monitor-hero-header">
+      <div class="monitor-hero-title">O que fazer hoje</div>
+      <div class="monitor-hero-sub">19 de março · 3 prioridades</div>
+    </div>
+    <div class="monitor-hero-list">
+
+      <div class="monitor-hero-item priority-1">
+        <div class="monitor-num-circle num-red">1</div>
+        <div class="monitor-action">
+          <div class="monitor-action-title">Confirmar entrega de combustível amanhã</div>
+          <div class="monitor-action-desc">Greve dos caminhoneiros pode atrasar ou cancelar a próxima carga. Ligue agora para a distribuidora em Paulínia e confirme o status.</div>
+        </div>
+      </div>
+
+      <div class="monitor-hero-item priority-2">
+        <div class="monitor-num-circle num-amber">2</div>
+        <div class="monitor-action">
+          <div class="monitor-action-title">Checar preço de bomba vs. concorrência</div>
+          <div class="monitor-action-desc">ANP registrou diesel S10 a R$ 6,89/L no Brasil (média semanal). Verificar margem contra concorrentes de Vinhedo (mín. R$ 6,44, máx. R$ 7,29).</div>
+        </div>
+      </div>
+
+      <div class="monitor-hero-item priority-3">
+        <div class="monitor-num-circle num-blue">3</div>
+        <div class="monitor-action">
+          <div class="monitor-action-title">Garantir equipe e estoque para o fim de semana</div>
+          <div class="monitor-action-desc">Último fim de semana da Festa da Uva (21–22/03) — pico de visitantes esperado. Confirmar escala completa e nível dos tanques.</div>
+        </div>
+      </div>
+
+    </div>
+  </div>
+
+  <!-- ═══════════════════════════════════════
+       SEÇÃO 2 — BARÔMETRO + MERCADO
+  ═══════════════════════════════════════ -->
+  <div class="baro-market-wrap">
+
+    <!-- Barômetro dark card -->
+    <div class="barometro-card">
+      <div class="baro-inner">
+        <div class="baro-left">
+          <div class="baro-eyebrow">Movimento esperado hoje</div>
+          <div class="baro-value-row">
+            <div class="baro-value baro-val-medio">MÉDIO</div>
+            <div class="baro-day">Quinta-feira, 19/03</div>
+          </div>
+          <div class="baro-track-wrap">
+            <div class="baro-track"><div class="baro-fill baro-fill-medio"></div></div>
+          </div>
+          <div class="baro-reason">
+            <strong>Por quê:</strong> Festa da Uva gera fluxo contínuo (+), mas greve dos caminhoneiros cria incerteza nas rodovias (−) e chuva forte prevista à tarde também reduz movimento (−). Véspera de sexta tende a aumentar o abastecimento após as 17h (+).
+          </div>
+        </div>
+        <div class="baro-right">
+          <div class="baro-icon">🧭</div>
+        </div>
+      </div>
+    </div>
+
+    <!-- Mercado light area -->
+    <div class="market-area">
+      <div class="market-area-title">Mercado &amp; Preços · 19/03/2026</div>
+
+      <!-- Macro: Brent + Câmbio -->
+      <div class="macro-row">
+        <div class="macro-card">
+          <div class="macro-lbl">Petróleo Brent</div>
+          <div class="macro-val">$114</div>
+          <div class="macro-unit">USD por barril</div>
+          <div class="macro-delta delta-up">▲ +52% no mês</div>
+        </div>
+        <div class="macro-card">
+          <div class="macro-lbl">Dólar Comercial</div>
+          <div class="macro-val">R$&nbsp;5,26</div>
+          <div class="macro-unit">câmbio hoje</div>
+          <div class="macro-delta delta-flat">→ estável</div>
+        </div>
+      </div>
+
+      <!-- Fuel strip -->
+      <div class="fuel-strip">
+        <div class="fuel-strip-header">
+          <div class="fuel-strip-header-lbl">Preço médio por litro · Brasil</div>
+        </div>
+        <div class="fuel-strip-cols">
+          <div class="fuel-col">
+            <div class="fuel-col-lbl">Gasolina</div>
+            <div class="fuel-col-val">R$ 6,46</div>
+            <div class="fuel-col-unit">média BR</div>
+            <div class="fuel-col-delta delta-up">▲ +2,5% / semana</div>
+          </div>
+          <div class="fuel-col">
+            <div class="fuel-col-lbl">Etanol</div>
+            <div class="fuel-col-val">R$ 4,64</div>
+            <div class="fuel-col-unit">média BR</div>
+            <div class="fuel-col-delta delta-down">▼ −0,6% / semana</div>
+          </div>
+          <div class="fuel-col">
+            <div class="fuel-col-lbl">Diesel S10</div>
+            <div class="fuel-col-val">R$ 6,89</div>
+            <div class="fuel-col-unit">média BR · S10</div>
+            <div class="fuel-col-delta delta-up">▲ +2,2% / semana</div>
+          </div>
+        </div>
+      </div>
+
+      <!-- Parity -->
+      <div class="parity-row-wrap">
+        <div class="parity-top">
+          <div class="parity-lbl">Paridade Etanol × Gasolina</div>
+          <div class="parity-pct">71,8%</div>
+        </div>
+        <div class="parity-track">
+          <div class="parity-fill" style="width:71.8%"></div>
+        </div>
+        <div class="parity-marks">
+          <span class="parity-mark-txt">0%</span>
+          <span class="parity-mark-txt" style="color:#059669;font-weight:700;">▼ 70% — ponto de virada</span>
+          <span class="parity-mark-txt">100%</span>
+        </div>
+        <div class="parity-verdict">⛽ &nbsp;Etanol não está vantajoso agora — oriente clientes a preferirem gasolina.</div>
+      </div>
+
+      <div class="market-source">
+        Fonte: <a href="https://www.gov.br/anp/pt-br/assuntos/precos-e-defesa-da-concorrencia/precos/arquivos-lpc/2026/resumo_semanal_lpc_2026-03-08_2026-03-14-1.xlsx" target="_blank">ANP — Resumo Semanal 08–14/03/2026</a>
+        · 4.182 postos Brasil · 1.150 postos SP
+      </div>
+    </div>
+  </div>
+
+  <!-- ═══════════════════════════════════════
+       SEÇÃO 2B — COMBUSTÍVEIS VINHEDO + CUSTO REVENDEDOR
+  ═══════════════════════════════════════ -->
+  <div style="padding:22px 40px 24px;border-bottom:1px solid #E8ECF3;">
+    <div style="font-size:11px;font-weight:800;letter-spacing:2px;text-transform:uppercase;color:#1C2B6E;margin-bottom:2px;">🔁 Combustíveis — Vinhedo</div>
+    <div style="font-size:9.5px;color:#8A94A8;margin-bottom:18px;">Preços locais · Concorrência · Custo ao revendedor</div>
+
+    <!-- BLOCO A: PREÇOS EM VINHEDO POR POSTO -->
+    <div style="font-size:8px;font-weight:800;letter-spacing:2px;text-transform:uppercase;color:#8A94A8;border-bottom:1px solid #E4E7F0;padding-bottom:6px;margin-bottom:12px;">Preços por posto · Vinhedo, SP · ANP semana 08–14/03/2026</div>
+
+    <div style="font-size:9.5px;color:#1A3A5C;background-color:#EFF6FF;border:1px solid #BFDBFE;border-left:3px solid #2563EB;border-radius:8px;padding:9px 14px;margin-bottom:14px;line-height:1.6;">
+      <strong>Fonte: ANP — Levantamento de Preços, semana 08–14/03/2026.</strong> Dados oficiais por posto revendedor. O Center Car Gasparini não foi incluído na amostra desta semana pela ANP.
+      Arquivo: <a href="https://www.gov.br/anp/pt-br/assuntos/precos-e-defesa-da-concorrencia/precos/arquivos-lpc/2026/revendas_lpc_2026-03-08_2026-03-14.xlsx" style="color:#1E40AF;font-weight:700;" target="_blank">revendas_lpc_2026-03-08_2026-03-14.xlsx</a>
+    </div>
+
+    <!-- Tabela de postos -->
+    <div style="border:1px solid #E4E7F0;border-radius:10px;overflow:hidden;margin-bottom:14px;">
+      <table width="100%" cellpadding="0" cellspacing="0" style="border-collapse:collapse;">
+        <thead>
+          <tr style="background:#1C2B6E;">
+            <th style="padding:8px 14px;font-size:8px;font-weight:700;letter-spacing:1.5px;text-transform:uppercase;color:rgba(255,255,255,0.7);text-align:left;" width="36%">Posto</th>
+            <th style="padding:8px 8px;font-size:8px;font-weight:700;letter-spacing:1.5px;text-transform:uppercase;color:rgba(255,255,255,0.7);text-align:center;" width="14%">Bandeira</th>
+            <th style="padding:8px 8px;font-size:8px;font-weight:700;letter-spacing:1.5px;text-transform:uppercase;color:rgba(255,255,255,0.7);text-align:center;" width="17%">Gasolina</th>
+            <th style="padding:8px 8px;font-size:8px;font-weight:700;letter-spacing:1.5px;text-transform:uppercase;color:rgba(255,255,255,0.7);text-align:center;" width="16%">Etanol</th>
+            <th style="padding:8px 8px;font-size:8px;font-weight:700;letter-spacing:1.5px;text-transform:uppercase;color:rgba(255,255,255,0.7);text-align:center;" width="17%">Diesel S10</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr>
+            <td style="padding:9px 14px;font-size:10.5px;font-weight:600;color:#0F1729;border-bottom:1px solid #E4E7F0;">Posto Universitário<div style="font-size:8.5px;color:#8A94A8;font-weight:400;">Av. Independência, 5600 · Centro</div></td>
+            <td style="padding:9px 8px;text-align:center;border-bottom:1px solid #E4E7F0;"><span style="font-size:8.5px;font-weight:700;background:#F0F2F5;color:#4A5270;padding:2px 7px;border-radius:99px;">Branca</span></td>
+            <td style="padding:9px 8px;text-align:center;font-size:12px;font-weight:800;color:#059669;border-bottom:1px solid #E4E7F0;">R$ 5,99</td>
+            <td style="padding:9px 8px;text-align:center;font-size:12px;font-weight:700;color:#0F1729;border-bottom:1px solid #E4E7F0;">R$ 4,27</td>
+            <td style="padding:9px 8px;text-align:center;font-size:12px;font-weight:700;color:#0F1729;border-bottom:1px solid #E4E7F0;">R$ 6,44</td>
+          </tr>
+          <tr style="background:#F7F8FC;">
+            <td style="padding:9px 14px;font-size:10.5px;font-weight:600;color:#0F1729;border-bottom:1px solid #E4E7F0;">Auto Posto Montana<div style="font-size:8.5px;color:#8A94A8;font-weight:400;">Av. Octavio Tasca, 1320 · João XXIII</div></td>
+            <td style="padding:9px 8px;text-align:center;border-bottom:1px solid #E4E7F0;"><span style="font-size:8.5px;font-weight:700;background:#FFF2CC;color:#1C2B6E;padding:2px 7px;border-radius:99px;">Vibra</span></td>
+            <td style="padding:9px 8px;text-align:center;font-size:12px;font-weight:800;color:#059669;border-bottom:1px solid #E4E7F0;">R$ 5,99</td>
+            <td style="padding:9px 8px;text-align:center;font-size:12px;font-weight:700;color:#0F1729;border-bottom:1px solid #E4E7F0;">R$ 4,19</td>
+            <td style="padding:9px 8px;text-align:center;font-size:11px;color:#A0AAC0;border-bottom:1px solid #E4E7F0;">—</td>
+          </tr>
+          <tr>
+            <td style="padding:9px 14px;font-size:10.5px;font-weight:600;color:#0F1729;border-bottom:1px solid #E4E7F0;">Principado de Vinhedo<div style="font-size:8.5px;color:#8A94A8;font-weight:400;">Av. Independência, 7683 · Santa Claudina</div></td>
+            <td style="padding:9px 8px;text-align:center;border-bottom:1px solid #E4E7F0;"><span style="font-size:8.5px;font-weight:700;background:#FFF2CC;color:#1C2B6E;padding:2px 7px;border-radius:99px;">Shell</span></td>
+            <td style="padding:9px 8px;text-align:center;font-size:12px;font-weight:700;color:#0F1729;border-bottom:1px solid #E4E7F0;">R$ 6,19</td>
+            <td style="padding:9px 8px;text-align:center;font-size:12px;font-weight:700;color:#0F1729;border-bottom:1px solid #E4E7F0;">R$ 4,59</td>
+            <td style="padding:9px 8px;text-align:center;font-size:12px;font-weight:700;color:#DC2626;border-bottom:1px solid #E4E7F0;">R$ 7,29</td>
+          </tr>
+          <tr style="background:#F7F8FC;">
+            <td style="padding:9px 14px;font-size:10.5px;font-weight:600;color:#0F1729;border-bottom:1px solid #E4E7F0;">Posto Veneto<div style="font-size:8.5px;color:#8A94A8;font-weight:400;">Av. A. Tellau Seraphim, 1850 · São Joaquim</div></td>
+            <td style="padding:9px 8px;text-align:center;border-bottom:1px solid #E4E7F0;"><span style="font-size:8.5px;font-weight:700;background:#FFF2CC;color:#1C2B6E;padding:2px 7px;border-radius:99px;">Shell</span></td>
+            <td style="padding:9px 8px;text-align:center;font-size:12px;font-weight:700;color:#0F1729;border-bottom:1px solid #E4E7F0;">R$ 6,19</td>
+            <td style="padding:9px 8px;text-align:center;font-size:12px;font-weight:700;color:#0F1729;border-bottom:1px solid #E4E7F0;">R$ 4,59</td>
+            <td style="padding:9px 8px;text-align:center;font-size:11px;color:#A0AAC0;border-bottom:1px solid #E4E7F0;">—</td>
+          </tr>
+          <tr>
+            <td style="padding:9px 14px;font-size:10.5px;font-weight:600;color:#0F1729;border-bottom:1px solid #E4E7F0;">Marambaia Combustíveis<div style="font-size:8.5px;color:#8A94A8;font-weight:400;">Estrada da Boiada, 800 · Casa Verde</div></td>
+            <td style="padding:9px 8px;text-align:center;border-bottom:1px solid #E4E7F0;"><span style="font-size:8.5px;font-weight:700;background:#FFF2CC;color:#1C2B6E;padding:2px 7px;border-radius:99px;">Shell</span></td>
+            <td style="padding:9px 8px;text-align:center;font-size:12px;font-weight:700;color:#0F1729;border-bottom:1px solid #E4E7F0;">R$ 6,29</td>
+            <td style="padding:9px 8px;text-align:center;font-size:12px;font-weight:700;color:#0F1729;border-bottom:1px solid #E4E7F0;">R$ 4,69</td>
+            <td style="padding:9px 8px;text-align:center;font-size:11px;color:#A0AAC0;border-bottom:1px solid #E4E7F0;">—</td>
+          </tr>
+          <tr style="background:#F7F8FC;">
+            <td style="padding:9px 14px;font-size:10.5px;font-weight:600;color:#0F1729;border-bottom:1px solid #E4E7F0;">Castelo Branco<div style="font-size:8.5px;color:#8A94A8;font-weight:400;">Av. Pres. Castelo Branco, 1100 · Nova Vinhedo</div></td>
+            <td style="padding:9px 8px;text-align:center;border-bottom:1px solid #E4E7F0;"><span style="font-size:8.5px;font-weight:700;background:#FFF2CC;color:#1C2B6E;padding:2px 7px;border-radius:99px;">Shell</span></td>
+            <td style="padding:9px 8px;text-align:center;font-size:12px;font-weight:700;color:#0F1729;border-bottom:1px solid #E4E7F0;">R$ 6,29</td>
+            <td style="padding:9px 8px;text-align:center;font-size:12px;font-weight:700;color:#0F1729;border-bottom:1px solid #E4E7F0;">R$ 4,59</td>
+            <td style="padding:9px 8px;text-align:center;font-size:12px;font-weight:700;color:#0F1729;border-bottom:1px solid #E4E7F0;">R$ 6,79</td>
+          </tr>
+          <tr>
+            <td style="padding:9px 14px;font-size:10.5px;font-weight:600;color:#0F1729;border-bottom:1px solid #E4E7F0;">Posto do Osnir<div style="font-size:8.5px;color:#8A94A8;font-weight:400;">Rua Manoel Matheus, 739 · Jd. Santa Rosa</div></td>
+            <td style="padding:9px 8px;text-align:center;border-bottom:1px solid #E4E7F0;"><span style="font-size:8.5px;font-weight:700;background:#EEF2FF;color:#3730A3;padding:2px 7px;border-radius:99px;">Ipiranga</span></td>
+            <td style="padding:9px 8px;text-align:center;font-size:12px;font-weight:700;color:#0F1729;border-bottom:1px solid #E4E7F0;">R$ 6,39</td>
+            <td style="padding:9px 8px;text-align:center;font-size:12px;font-weight:700;color:#0F1729;border-bottom:1px solid #E4E7F0;">R$ 4,69</td>
+            <td style="padding:9px 8px;text-align:center;font-size:12px;font-weight:700;color:#0F1729;border-bottom:1px solid #E4E7F0;">R$ 6,49</td>
+          </tr>
+          <tr style="background:#F7F8FC;">
+            <td style="padding:9px 14px;font-size:10.5px;font-weight:600;color:#0F1729;">Auto Posto Independência<div style="font-size:8.5px;color:#8A94A8;font-weight:400;">Av. Independência, 4550 · Pinheirinho</div></td>
+            <td style="padding:9px 8px;text-align:center;"><span style="font-size:8.5px;font-weight:700;background:#FFF2CC;color:#1C2B6E;padding:2px 7px;border-radius:99px;">Vibra</span></td>
+            <td style="padding:9px 8px;text-align:center;font-size:12px;font-weight:800;color:#991B1B;">R$ 6,49</td>
+            <td style="padding:9px 8px;text-align:center;font-size:12px;font-weight:700;color:#0F1729;">R$ 4,79</td>
+            <td style="padding:9px 8px;text-align:center;font-size:12px;font-weight:700;color:#0F1729;">R$ 6,54</td>
+          </tr>
+        </tbody>
+      </table>
+    </div>
+
+    <!-- Resumo range -->
+    <div style="display:flex;gap:12px;margin-bottom:22px;">
+      <div style="flex:1;background:#F0F3FF;border:1px solid #C8D0E8;border-radius:10px;padding:12px 14px;">
+        <div style="font-size:7.5px;font-weight:700;text-transform:uppercase;color:#3730A3;margin-bottom:4px;">Gasolina Vinhedo</div>
+        <div style="font-size:18px;font-weight:800;color:#1C2B6E;line-height:1.1;">R$ 5,99 – 6,49<span style="font-size:8.5px;color:#6B7280;font-weight:400;"> /L</span></div>
+        <div style="font-size:8.5px;color:#6B7280;margin-top:3px;">Média: R$ 6,23/L · 8 postos pesquisados</div>
+      </div>
+      <div style="flex:1;background:#F0FDF4;border:1px solid #A7F3D0;border-radius:10px;padding:12px 14px;">
+        <div style="font-size:7.5px;font-weight:700;text-transform:uppercase;color:#065F46;margin-bottom:4px;">Etanol Vinhedo</div>
+        <div style="font-size:18px;font-weight:800;color:#065F46;line-height:1.1;">R$ 4,19 – 4,79<span style="font-size:8.5px;color:#6B7280;font-weight:400;"> /L</span></div>
+        <div style="font-size:8.5px;color:#6B7280;margin-top:3px;">Média: R$ 4,55/L</div>
+      </div>
+      <div style="flex:1;background:#FEF2F2;border:1px solid #FECACA;border-radius:10px;padding:12px 14px;">
+        <div style="font-size:7.5px;font-weight:700;text-transform:uppercase;color:#991B1B;margin-bottom:4px;">Diesel S10 Vinhedo</div>
+        <div style="font-size:18px;font-weight:800;color:#991B1B;line-height:1.1;">R$ 6,44 – 7,29<span style="font-size:8.5px;color:#6B7280;font-weight:400;"> /L</span></div>
+        <div style="font-size:8.5px;color:#6B7280;margin-top:3px;">Média: R$ 6,71/L · 4 postos com dados</div>
+      </div>
+    </div>
+    <!-- BLOCO B: COMPARATIVO ANP — BRASIL × SP × VINHEDO -->
+    <div style="font-size:8px;font-weight:800;letter-spacing:2px;text-transform:uppercase;color:#8A94A8;border-bottom:1px solid #E4E7F0;padding-bottom:6px;margin-bottom:14px;">Preço médio na bomba · Comparativo ANP · semana 8–14/03/2026</div>
+
+    <div style="border:1px solid #E4E7F0;border-radius:10px;overflow:hidden;margin-bottom:14px;">
+      <table width="100%" cellpadding="0" cellspacing="0" style="border-collapse:collapse;">
+        <thead>
+          <tr style="background:#1C2B6E;">
+            <th style="padding:9px 16px;font-size:9px;font-weight:700;letter-spacing:1.5px;text-transform:uppercase;color:rgba(255,255,255,0.55);text-align:left;" width="34%">Combustível</th>
+            <th style="padding:9px 12px;font-size:9px;font-weight:700;letter-spacing:1.5px;text-transform:uppercase;color:rgba(255,255,255,0.9);text-align:center;" width="22%">Brasil</th>
+            <th style="padding:9px 12px;font-size:9px;font-weight:700;letter-spacing:1.5px;text-transform:uppercase;color:rgba(255,255,255,0.9);text-align:center;" width="22%">SP</th>
+            <th style="padding:9px 12px;font-size:9px;font-weight:700;letter-spacing:1.5px;text-transform:uppercase;color:#7EC8E3;text-align:center;" width="22%">Vinhedo</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr>
+            <td style="padding:11px 16px;font-size:11px;font-weight:600;color:#2D3748;border-bottom:1px solid #E4E7F0;">Gasolina Comum</td>
+            <td style="padding:11px 12px;text-align:center;font-size:13px;font-weight:800;color:#0F1729;border-bottom:1px solid #E4E7F0;">R$ 6,46</td>
+            <td style="padding:11px 12px;text-align:center;font-size:13px;font-weight:800;color:#0F1729;border-bottom:1px solid #E4E7F0;">R$ 6,28</td>
+            <td style="padding:11px 12px;text-align:center;font-size:13px;font-weight:800;color:#1C2B6E;border-bottom:1px solid #E4E7F0;">R$ 6,22</td>
+          </tr>
+          <tr style="background:#F7F8FC;">
+            <td style="padding:11px 16px;font-size:11px;font-weight:600;color:#2D3748;border-bottom:1px solid #E4E7F0;">Etanol Hidratado</td>
+            <td style="padding:11px 12px;text-align:center;font-size:13px;font-weight:800;color:#0F1729;border-bottom:1px solid #E4E7F0;">R$ 4,64</td>
+            <td style="padding:11px 12px;text-align:center;font-size:13px;font-weight:800;color:#0F1729;border-bottom:1px solid #E4E7F0;">R$ 4,47</td>
+            <td style="padding:11px 12px;text-align:center;font-size:13px;font-weight:800;color:#1C2B6E;border-bottom:1px solid #E4E7F0;">R$ 4,55</td>
+          </tr>
+          <tr>
+            <td style="padding:11px 16px;font-size:11px;font-weight:600;color:#2D3748;">Diesel S10</td>
+            <td style="padding:11px 12px;text-align:center;font-size:13px;font-weight:800;color:#0F1729;">R$ 6,89</td>
+            <td style="padding:11px 12px;text-align:center;font-size:13px;font-weight:800;color:#0F1729;">R$ 6,87</td>
+            <td style="padding:11px 12px;text-align:center;font-size:13px;font-weight:800;color:#1C2B6E;">R$ 6,71</td>
+          </tr>
+        </tbody>
+      </table>
+    </div>
+
+    <!-- Sub-linha postos pesquisados -->
+    <div style="display:flex;gap:10px;margin-bottom:14px;">
+      <div style="flex:1;text-align:center;background:#F7F8FC;border:1px solid #E4E7F0;border-radius:8px;padding:9px 12px;">
+        <div style="font-size:7.5px;font-weight:700;text-transform:uppercase;color:#8A94A8;margin-bottom:3px;">Brasil · postos pesquisados</div>
+        <div style="font-size:9.5px;color:#2D3748;line-height:1.6;">Gas: 4.182 &nbsp;·&nbsp; Etanol: 3.513 &nbsp;·&nbsp; Diesel S10: 2.902</div>
+      </div>
+      <div style="flex:1;text-align:center;background:#F7F8FC;border:1px solid #E4E7F0;border-radius:8px;padding:9px 12px;">
+        <div style="font-size:7.5px;font-weight:700;text-transform:uppercase;color:#8A94A8;margin-bottom:3px;">Vinhedo · postos pesquisados</div>
+        <div style="font-size:9.5px;color:#2D3748;line-height:1.6;">Gas: 8 &nbsp;·&nbsp; Etanol: 8 &nbsp;·&nbsp; Diesel S10: 4</div>
+      </div>
+    </div>
+
+    <!-- Nota contextual ANP -->
+    <div style="font-size:9.5px;color:#1E40AF;background:#EFF6FF;border:1px solid #BFDBFE;border-left:3px solid #2563EB;border-radius:8px;padding:9px 14px;line-height:1.6;">
+      <strong>Vinhedo vs. SP:</strong> gasolina em Vinhedo (R$ 6,22) está R$ 0,06/L abaixo da média estadual (R$ 6,28). Etanol ficou R$ 0,08/L acima da média SP. Diesel S10 R$ 0,16/L abaixo do estado.
+      Fonte: <a href="https://www.gov.br/anp/pt-br/assuntos/precos-e-defesa-da-concorrencia/precos/levantamento-de-precos-e-defesa-da-concorrencia/levantamento-de-precos/historico-semanal" style="color:#1E40AF;font-weight:700;" target="_blank">ANP — Levantamento Semanal de Preços</a>
+    </div>
+
+  </div>
+
+  <!-- ═══════════════════════════════════════
+       SEÇÃO 3 — GREVES & ALERTAS
+       (fundo rosado, visual distinto)
+  ═══════════════════════════════════════ -->
+  <div class="greves-section">
+    <div class="greves-header">
+      <div class="greves-icon">⚡</div>
+      <div>
+        <div class="greves-title">Greves &amp; Paralisações</div>
+        <div class="greves-subtitle">Status atualizado · confirmado, provável ou monitorar</div>
+      </div>
+    </div>
+    <div class="greves-list">
+
+      <div class="greve-card">
+        <div class="greve-card-top">
+          <div class="greve-name">Greve dos Caminhoneiros</div>
+          <span class="greve-status gs-confirmado"><span class="greve-dot"></span>Confirmado · Hoje</span>
+        </div>
+        <div class="greve-desc">Paralisação nacional iniciada hoje, 19/03. Motivada pela alta de <strong>18,86% no diesel</strong> desde fevereiro — conflito Irã × EUA e fechamento do Estreito de Ormuz. SP é o estado mais mobilizado. Governo zerou PIS/Cofins, mas repasse ainda não chegou ao posto.</div>
+        <div class="greve-source">
+          <span class="date-badge db-fresh">19/03/2026</span>
+          <a href="https://transportemoderno.com.br/2026/03/16/paralisacao-de-caminhoneiros-ganha-forca-apos-reuniao-no-porto-de-santos/" target="_blank">Transporte Moderno</a> ·
+          <a href="https://www.seudinheiro.com/2026/economia/caminhoneiros-confirmam-greve-por-alta-do-diesel-e-pressao-sobre-fretes-paralisacao-pode-comecar-ainda-nesta-semana-ccgg/" target="_blank">Seu Dinheiro</a> ·
+          <a href="https://gazetamercantil.com/greve-dos-caminhoneiros-2026-impactos-diesel-brasil" target="_blank">Gazeta Mercantil</a>
+        </div>
+      </div>
+
+      <div class="greve-card" style="border-color:#FDE68A;">
+        <div class="greve-card-top">
+          <div class="greve-name">Greve dos Professores Estaduais SP</div>
+          <span class="greve-status gs-provavel"><span class="greve-dot"></span>Provável · 9–10/04</span>
+        </div>
+        <div class="greve-desc">APEOESP aprovou indicativo de greve para 9 e 10 de abril. <strong>Afeta apenas rede estadual</strong> — escolas privadas não são impactadas diretamente. Nova assembleia confirmará adesão nos próximos dias. SINPRO-SP (privadas) sem indicativo no momento.</div>
+        <div class="greve-source">
+          <span class="date-badge db-fresh">mar/2026</span>
+          <a href="https://tribunadejundiai.com.br/mais/brasil/greve-professores-rede-estadual-sp-abril-2026/" target="_blank">Tribuna de Jundiaí</a> ·
+          <a href="https://iclnoticias.com.br/professores-rede-estadual-sp-greve-abril/" target="_blank">ICL Notícias</a> ·
+          <a href="https://www.apeoesp.org.br/" target="_blank">APEOESP</a>
+        </div>
+      </div>
+
+    </div>
+  </div>
+
+  <!-- ═══════════════════════════════════════
+       SEÇÃO 4 — SETOR & DISTRIBUIÇÃO
+       (Shell + Recap + Combustíveis + Paulínia)
+  ═══════════════════════════════════════ -->
+  <div class="setor-section">
+    <div class="setor-main-header">
+      <div class="setor-icon-wrap">⛽</div>
+      <div>
+        <div class="setor-title">Setor &amp; Distribuição</div>
+        <div class="setor-subtitle">Shell · Raízen · Recap · Combustíveis · Paulínia</div>
+      </div>
+    </div>
+
+    <!-- Sub: Shell & Raízen -->
+    <div class="setor-subsection">
+      <div class="setor-sub-lbl">Shell &amp; Raízen</div>
+      <div class="news-list">
+        <div class="news-item">
+          <div class="news-bullet news-bullet-red"></div>
+          <div class="news-body">
+            <div class="news-tag-row"><span class="news-tag t-alert">Atenção</span></div>
+            <div class="news-text"><strong>Raízen pediu recuperação extrajudicial</strong> para renegociar R$ 65 bilhões em dívidas. Rede Shell encolheu 200+ postos parceiros em 2025 — primeiro recuo desde 2020.</div>
+            <div class="news-source"><span class="date-badge db-fresh">18/03/2026</span> Busca web em tempo real</div>
+          </div>
+        </div>
+        <div class="news-item">
+          <div class="news-bullet"></div>
+          <div class="news-body">
+            <div class="news-tag-row"><span class="news-tag t-info">Negociação</span></div>
+            <div class="news-text"><strong>Shell comprometeu R$ 3,5 bilhões</strong> de aporte e cobra o mesmo da Cosan. Conversas travadas — credores pedem R$ 25 bilhões no total.</div>
+            <div class="news-source"><span class="date-badge db-fresh">19/03/2026</span> Busca web em tempo real</div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- Sub: Recap & Setor -->
+    <div class="setor-subsection">
+      <div class="setor-sub-lbl">Recap &amp; Regulação</div>
+      <div class="news-list">
+        <div class="news-item">
+          <div class="news-bullet news-bullet-red"></div>
+          <div class="news-body">
+            <div class="news-tag-row"><span class="news-tag t-alert">Setor</span></div>
+            <div class="news-text">Distribuidoras repassando <strong>reajustes diários</strong> nos preços do diesel e gasolina para revendedores desde a semana passada — situação atípica, exige monitoramento da margem.</div>
+            <div class="news-source"><span class="date-badge db-fresh">18/03/2026</span> <a href="https://recap.org.br/" target="_blank">Recap Sindicato SP</a></div>
+          </div>
+        </div>
+        <div class="news-item">
+          <div class="news-bullet news-bullet-amber"></div>
+          <div class="news-body">
+            <div class="news-tag-row"><span class="news-tag t-warn">Fiscalização</span></div>
+            <div class="news-text"><strong>PF abriu inquérito (17/03)</strong> para investigar preços abusivos. ANP e Senacon detectaram 214 irregularidades em 9 estados. Boas práticas de precificação protegem o posto.</div>
+            <div class="news-source"><span class="date-badge db-fresh">17–18/03/2026</span> <a href="https://revistaforum.com.br/brasil/pf-abre-inquerito-para-investigar-cobranca-de-precos-abusivos-de-combustiveis-governo-lula-fiscaliza-postos" target="_blank">Revista Fórum</a> · <a href="https://www.gov.br/mdic/pt-br/assuntos/noticias/2026/fevereiro/operacao-do-inmetro-e-da-anp-detecta-214-irregularidades-em-postos-de-combustiveis-de-oito-estados-e-do-df" target="_blank">Gov.br</a></div>
+          </div>
+        </div>
+        <div class="news-item">
+          <div class="news-bullet"></div>
+          <div class="news-body">
+            <div class="news-tag-row"><span class="news-tag t-info">Governo</span></div>
+            <div class="news-text">Lula zerou PIS/Cofins sobre diesel — redução estimada de <strong>R$ 0,64 por litro</strong> na refinaria. Repasse ao consumidor final ainda incompleto.</div>
+            <div class="news-source"><span class="date-badge db-fresh">12–18/03/2026</span> <a href="https://www.poder360.com.br/poder-governo/governo-divulga-nova-tabela-de-precos-medios-dos-combustiveis-2/" target="_blank">Poder360</a></div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- Sub: Paulínia compact -->
+    <div class="setor-subsection">
+      <div class="setor-sub-lbl">Paulínia &amp; Abastecimento Regional</div>
+      <div class="paulinia-compact">
+        <div class="paulinia-compact-main">
+          <div class="paulinia-compact-title">REPLAN — Refinaria de Paulínia (Petrobras)</div>
+          <div class="paulinia-compact-text">
+            Opera a <strong>97% de capacidade</strong>. Manutenção programada adiada de mai/26 para 2027 — sem risco de desabastecimento regional no curto prazo. <strong>Atenção hoje:</strong> com a greve em andamento, confirmar se o trecho Paulínia → Vinhedo está operando normalmente.
+          </div>
+          <div style="margin-top:6px;">
+            <a href="https://transpetro.com.br/transpetro-institucional/nossas-atividades/dutos-e-terminais/terminais-terrestres/paulinia-sp.htm" target="_blank" style="font-size:9.5px;color:#1C2B6E;font-weight:600;text-decoration:none;border-bottom:1px dotted #1C2B6E;">Terminal Transpetro Paulínia →</a>
+          </div>
+        </div>
+        <div class="paulinia-stats-mini">
+          <div>
+            <div class="ps-val">434k</div>
+            <div class="ps-lbl">barris/dia</div>
+          </div>
+          <div>
+            <div class="ps-val">97%</div>
+            <div class="ps-lbl">utilização</div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- ═══════════════════════════════════════
+       SEÇÃO 5 — EDUCAÇÃO PRIVADA
+  ═══════════════════════════════════════ -->
+  <div class="edu-section">
+    <div class="edu-header-row">
+      <div class="edu-title-block">
+        <div class="edu-eyebrow">Mercado Educacional · SP</div>
+        <div class="edu-title">Educação Privada</div>
+      </div>
+      <div class="edu-kpi">
+        <div class="edu-kpi-val">+9,8%</div>
+        <div class="edu-kpi-lbl">reajuste médio 2026</div>
+      </div>
+    </div>
+
+    <div class="context-note">
+      <strong>Sem notícias locais nos últimos 5 dias.</strong> Os itens abaixo são contexto estratégico do setor, identificados como tal. Na versão diária, esta seção só aparece com novidades recentes.
+    </div>
+
+    <div class="news-list">
+      <div class="news-item">
+        <div class="news-bullet"></div>
+        <div class="news-body">
+          <div class="news-tag-row"><span class="news-tag t-neutral">Contexto</span></div>
+          <div class="news-text">Escolas particulares em SP preveem reajuste médio de <strong>9,5%</strong> — quase o dobro da inflação. Principais causas: dissídio de professores, energia e tecnologia educacional.</div>
+          <div class="news-source"><span class="date-badge db-old">out/2025</span> <a href="https://agenciabrasil.ebc.com.br/radioagencia-nacional/educacao/audio/2025-10/mensalidades-escolares-devem-receber-reajuste-de-quase-10-em-2026" target="_blank">Agência Brasil</a> · <a href="https://www.educamaisbrasil.com.br/educacao/noticias/mensalidades-escolares-em-2026-devem-subir-ate-125" target="_blank">EducaMais Brasil</a></div>
+        </div>
+      </div>
+      <div class="news-item">
+        <div class="news-bullet news-bullet-green"></div>
+        <div class="news-body">
+          <div class="news-tag-row"><span class="news-tag t-oport">Oportunidade</span></div>
+          <div class="news-text">Famílias cada vez mais exigentes em <strong>ensino bilíngue, integral e com tecnologia</strong>. Diferencial estratégico crescente para retenção de alunos na região de Campinas.</div>
+          <div class="news-source"><span class="date-badge db-old">2025</span> <a href="https://www.gennera.com.br/blog/o-que-o-mercado-espera-das-escolas-privadas-em-2026-e-como-se-preparar-agora/" target="_blank">Gennera Educação</a></div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- ═══════════════════════════════════════
+       SEÇÃO 6 — VINHEDO, AGENDA & TEMPO
+  ═══════════════════════════════════════ -->
+  <div class="local-section">
+    <div class="local-main-header">
+      <div class="setor-icon-wrap">📍</div>
+      <div>
+        <div class="setor-title">Vinhedo, Agenda &amp; Tempo</div>
+        <div class="setor-subtitle">Eventos locais · Feriados · Previsão do clima</div>
+      </div>
+    </div>
+
+    <!-- Destaque evento -->
+    <div class="event-highlight">
+      <div class="event-eyebrow">
+        <span class="event-eyebrow-badge">Oportunidade de volume</span>
+        Últimos dias
+      </div>
+      <div class="event-text">
+        <strong>62ª Festa da Uva e 14ª Festa do Vinho de Vinhedo</strong> — encerramento no domingo 22/03 no Parque Municipal Jayme Ferragut. Expectativa de <strong>300 mil visitantes</strong> no total. Último fim de semana é historicamente o mais movimentado.
+      </div>
+    </div>
+
+    <!-- Notícias locais -->
+    <div class="news-list" style="margin-bottom:18px;">
+      <div class="news-item">
+        <div class="news-bullet news-bullet-green"></div>
+        <div class="news-body">
+          <div class="news-text">Vinhedo é <strong>finalista do 13º Prêmio Sebrae Prefeitura Empreendedora</strong> — crescimento e novos investimentos na cidade ampliam base de clientes a longo prazo.</div>
+        </div>
+      </div>
+      <div class="news-item">
+        <div class="news-bullet news-bullet-amber"></div>
+        <div class="news-body">
+          <div class="news-text">Greve dos caminhoneiros pode gerar <strong>bloqueios ou desvios na Anhanguera e Bandeirantes</strong> — impacto imprevisível no fluxo de veículos pelos postos ao longo do dia.</div>
+        </div>
+      </div>
+    </div>
+
+    <!-- Agenda -->
+    <div class="agenda-wrap" style="margin-bottom:18px;">
+      <div class="agenda-row ag-today">
+        <div class="agenda-date-col"><div class="agenda-d-day">Qui</div><div class="agenda-d-num">19</div><div class="agenda-d-month">Mar</div></div>
+        <div class="agenda-body"><div class="agenda-body-title">Greve dos Caminhoneiros</div><div class="agenda-body-sub">Em andamento — monitorar ao longo do dia</div></div>
+        <div class="agenda-badge-col"><span class="ag-badge ag-alert">⚡ Alto</span></div>
+      </div>
+      <div class="agenda-row">
+        <div class="agenda-date-col"><div class="agenda-d-day">Sáb–Dom</div><div class="agenda-d-num">21–22</div><div class="agenda-d-month">Mar</div></div>
+        <div class="agenda-body"><div class="agenda-body-title">Último fim de semana — Festa da Uva</div><div class="agenda-body-sub">Pico de visitantes — maior movimento do evento</div></div>
+        <div class="agenda-badge-col"><span class="ag-badge ag-high">⬆ Volume alto</span></div>
+      </div>
+      <div class="agenda-row" style="background:#F7F8FC;">
+        <div class="agenda-date-col"><div class="agenda-d-day">Sex</div><div class="agenda-d-num">03</div><div class="agenda-d-month">Abr</div></div>
+        <div class="agenda-body"><div class="agenda-body-title">Paixão de Cristo — Feriado Nacional</div><div class="agenda-body-sub">Véspera (02/04) com pico de saídas nas rodovias</div></div>
+        <div class="agenda-badge-col"><span class="ag-badge ag-high">⬆ Volume alto</span></div>
+      </div>
+      <div class="agenda-row">
+        <div class="agenda-date-col"><div class="agenda-d-day">Qui–Sex</div><div class="agenda-d-num">9–10</div><div class="agenda-d-month">Abr</div></div>
+        <div class="agenda-body"><div class="agenda-body-title">Greve Professores Estaduais SP</div><div class="agenda-body-sub">Provável — aguarda nova assembleia da APEOESP</div></div>
+        <div class="agenda-badge-col"><span class="ag-badge ag-mid">Monitorar</span></div>
+      </div>
+      <div class="agenda-row" style="background:#F7F8FC;">
+        <div class="agenda-date-col"><div class="agenda-d-day">Ter</div><div class="agenda-d-num">21</div><div class="agenda-d-month">Abr</div></div>
+        <div class="agenda-body"><div class="agenda-body-title">Tiradentes — Feriado Nacional</div><div class="agenda-body-sub">Ponte longa se 20/04 vira ponto facultativo</div></div>
+        <div class="agenda-badge-col"><span class="ag-badge ag-mid">⬆ Médio</span></div>
+      </div>
+    </div>
+
+    <!-- Tempo -->
+    <div class="tempo-strip">
+      <div class="tempo-card tc-hoje">
+        <div class="tempo-day-lbl">Hoje · Qui</div>
+        <div class="tempo-emoji">⛈️</div>
+        <div class="tempo-temps">24° / 18°</div>
+        <div class="tempo-cond">Chuva forte possível</div>
+      </div>
+      <div class="tempo-card">
+        <div class="tempo-day-lbl">Sex 20/03</div>
+        <div class="tempo-emoji">🌥️</div>
+        <div class="tempo-temps">26° / 17°</div>
+        <div class="tempo-cond">Nublado com aberturas</div>
+      </div>
+      <div class="tempo-card">
+        <div class="tempo-day-lbl">Sáb 21/03</div>
+        <div class="tempo-emoji">🌤️</div>
+        <div class="tempo-temps">28° / 18°</div>
+        <div class="tempo-cond">Parcialmente nublado</div>
+      </div>
+      <div class="tempo-card">
+        <div class="tempo-day-lbl">Dom 22/03</div>
+        <div class="tempo-emoji">☀️</div>
+        <div class="tempo-temps">30° / 19°</div>
+        <div class="tempo-cond">Sol · Encerr. Festa da Uva</div>
+      </div>
+    </div>
+    <div class="tempo-alerta" style="margin-top:12px;margin-bottom:28px;">
+      <span style="font-size:15px;flex-shrink:0;">🌧️</span>
+      <div class="tempo-alerta"><strong>Março chuvoso:</strong> 138 mm registrados em Vinhedo — 95% da média mensal histórica. Dias de chuva reduzem o movimento. Planeje a escala com isso em mente.</div>
+    </div>
+
+  </div><!-- /local-section -->
+
+  <!-- ═══ FONTES (compacto) ═══ -->
+  <div class="fontes-section">
+    <div class="fontes-title">Fontes desta edição · 19/03/2026</div>
+    <div class="fontes-grid">
+      <div class="fonte-item">Preços combustíveis: <a href="https://www.gov.br/anp/pt-br/assuntos/precos-e-defesa-da-concorrencia/precos/levantamento-de-precos-e-defesa-da-concorrencia/levantamento-de-precos/historico-semanal" target="_blank">ANP — Levantamento Semanal</a> · semana 08–14/03/2026</div>
+      <div class="fonte-item">Greve caminhoneiros: <a href="https://transportemoderno.com.br/2026/03/16/paralisacao-de-caminhoneiros-ganha-forca-apos-reuniao-no-porto-de-santos/" target="_blank">Transp. Moderno</a> · <a href="https://www.seudinheiro.com/2026/economia/caminhoneiros-confirmam-greve-por-alta-do-diesel-e-pressao-sobre-fretes-paralisacao-pode-comecar-ainda-nesta-semana-ccgg/" target="_blank">Seu Dinheiro</a></div>
+      <div class="fonte-item">Shell/Raízen: busca web em tempo real</div>
+      <div class="fonte-item">Recap: <a href="https://recap.org.br/" target="_blank">recap.org.br</a> · Fiscalização: <a href="https://www.gov.br/mdic/pt-br/assuntos/noticias/2026/fevereiro/operacao-do-inmetro-e-da-anp-detecta-214-irregularidades-em-postos-de-combustiveis-de-oito-estados-e-do-df" target="_blank">Gov.br</a></div>
+      <div class="fonte-item">Greve professores: <a href="https://www.apeoesp.org.br/" target="_blank">APEOESP</a> · <a href="https://iclnoticias.com.br/professores-rede-estadual-sp-greve-abril/" target="_blank">ICL Notícias</a></div>
+      <div class="fonte-item">Educação: <a href="https://agenciabrasil.ebc.com.br/radioagencia-nacional/educacao/audio/2025-10/mensalidades-escolares-devem-receber-reajuste-de-quase-10-em-2026" target="_blank">Agência Brasil</a> · <a href="https://www.gennera.com.br/blog/o-que-o-mercado-espera-das-escolas-privadas-em-2026-e-como-se-preparar-agora/" target="_blank">Gennera</a></div>
+      <div class="fonte-item">Paulínia: <a href="https://petrobras.com.br/quem-somos/refinaria-de-paulinia" target="_blank">Petrobras</a> · <a href="https://transpetro.com.br/transpetro-institucional/nossas-atividades/dutos-e-terminais/terminais-terrestres/paulinia-sp.htm" target="_blank">Transpetro</a></div>
+
+    </div>
+    <div class="fontes-legenda">
+      <span class="legenda-pill" style="background:#D1FAE5;color:#065F46;">Verde</span> últimos 5 dias &nbsp;·&nbsp;
+      <span class="legenda-pill" style="background:#FEF3C7;color:#92400E;">Amarelo</span> 6–14 dias &nbsp;·&nbsp;
+      <span class="legenda-pill" style="background:#FEE2E2;color:#991B1B;">Vermelho</span> contexto de fundo (mais antigo, incluído por relevância)
+    </div>
+  </div>
+
+  <!-- ═══ FOOTER ═══ -->
+  <div class="footer-rule"></div>
+  <div class="footer">
+    <div class="footer-name">Postos Gasparini</div>
+    <div class="footer-sub">Grupo Gasparini · Shell Select · Vinhedo, SP · desde 1986</div>
+    <div class="footer-divider"></div>
+    <div class="footer-meta">
+      Gerado automaticamente às 6h00 · Quinta-feira, 19 de março de 2026<br>
+      Notícias: busca web em tempo real · Preços locais: ANP — Levantamento Semanal (semana 08–14/03/2026)
+    </div>
+  </div>
+
+</div><!-- /wrapper -->
+</div><!-- /page-wrapper -->
+</body>
+</html>
