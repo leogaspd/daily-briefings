@@ -1,0 +1,1217 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>SunR Daily Briefing — 19 de março de 2026</title>
+    <style>
+        * { margin: 0; padding: 0; box-sizing: border-box; }
+
+        :root {
+            --blue-dark:    #0B3D91;
+            --blue-primary: #1B56B0;
+            --blue-medium:  #2D6FD9;
+            --blue-light:   #5B8FE0;
+            --blue-lighter: #A8C4F0;
+            --blue-bg:      #E8F0FC;
+            --white:        #FFFFFF;
+            --bg-page:      #F5F7FB;
+            --bg-card:      #FFFFFF;
+            --text-primary: #0F1729;
+            --text-body:    #374361;
+            --text-meta:    #6B7A99;
+            --text-muted:   #9BABC4;
+            --border:       #D4DCE8;
+            --border-light: #E0E7F2;
+            --shadow-sm: 0 1px 4px rgba(11,61,145,0.08);
+            --shadow-md: 0 4px 12px rgba(11,61,145,0.12);
+        }
+
+        body {
+            font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', 'Inter', sans-serif;
+            background: var(--bg-page);
+            color: var(--text-primary);
+            line-height: 1.6;
+        }
+
+        /* ── PROGRESS BAR ── */
+        #progress-bar {
+            position: fixed;
+            top: 0; left: 0;
+            height: 3px;
+            width: 0%;
+            background: linear-gradient(90deg, var(--blue-primary), var(--blue-light));
+            z-index: 9999;
+            transition: width 0.1s;
+        }
+
+        /* ── SIDEBAR ── */
+        .sidebar {
+            width: 260px;
+            background: linear-gradient(180deg, var(--blue-dark) 0%, var(--blue-primary) 100%);
+            color: #fff;
+            position: fixed;
+            top: 0; left: 0;
+            height: 100vh;
+            overflow-y: auto;
+            z-index: 100;
+            padding: 24px 0 24px;
+            box-shadow: 2px 0 12px rgba(11,61,145,0.18);
+        }
+        .sidebar-logo {
+            padding: 0 20px 20px;
+            border-bottom: 1px solid rgba(255,255,255,0.15);
+        }
+        .sidebar-logo img { width: 110px; filter: brightness(0) invert(1); }
+        .sidebar-date {
+            padding: 14px 20px;
+            font-size: 11px;
+            color: var(--blue-lighter);
+            text-transform: uppercase;
+            letter-spacing: 0.08em;
+            border-bottom: 1px solid rgba(255,255,255,0.1);
+            margin-bottom: 8px;
+        }
+        .nav-item {
+            display: flex;
+            align-items: center;
+            gap: 8px;
+            padding: 9px 20px;
+            font-size: 13px;
+            color: rgba(255,255,255,0.75);
+            cursor: pointer;
+            text-decoration: none;
+            border-left: 3px solid transparent;
+            transition: all 0.15s;
+        }
+        .nav-item:hover, .nav-item.active {
+            color: #fff;
+            background: rgba(255,255,255,0.1);
+            border-left-color: var(--blue-lighter);
+        }
+        .nav-dot {
+            width: 6px; height: 6px;
+            border-radius: 50%;
+            background: var(--blue-lighter);
+            flex-shrink: 0;
+        }
+        .nav-dot.urgent { background: #FFFFFF; }
+        .sidebar-footer {
+            padding: 16px 20px 0;
+            border-top: 1px solid rgba(255,255,255,0.1);
+            margin-top: 16px;
+            font-size: 11px;
+            color: rgba(255,255,255,0.45);
+        }
+
+        /* ── MAIN ── */
+        .main {
+            margin-left: 260px;
+            min-height: 100vh;
+        }
+
+        /* ── HEADER ── */
+        .header {
+            background: linear-gradient(135deg, var(--blue-dark) 0%, var(--blue-primary) 55%, var(--blue-medium) 100%);
+            color: #fff;
+            padding: 32px 40px 28px;
+        }
+        .header-tag {
+            font-size: 11px;
+            letter-spacing: 0.1em;
+            text-transform: uppercase;
+            color: var(--blue-lighter);
+            margin-bottom: 6px;
+        }
+        .header h1 {
+            font-size: 26px;
+            font-weight: 700;
+            letter-spacing: -0.3px;
+        }
+        .header-sub {
+            font-size: 13px;
+            color: rgba(255,255,255,0.7);
+            margin-top: 4px;
+        }
+        .header-badges {
+            display: flex; flex-wrap: wrap; gap: 8px;
+            margin-top: 14px;
+        }
+        .badge {
+            display: inline-block;
+            padding: 3px 10px;
+            border-radius: 12px;
+            font-size: 11px;
+            font-weight: 500;
+        }
+        .badge-outline { border: 1px solid rgba(255,255,255,0.4); color: #fff; }
+        .badge-solid { background: rgba(255,255,255,0.15); color: #fff; }
+
+        /* ── TICKER ── */
+        .ticker {
+            background: var(--blue-dark);
+            overflow: hidden;
+            padding: 0;
+            border-bottom: 1px solid rgba(255,255,255,0.1);
+        }
+        .ticker-track {
+            display: flex;
+            white-space: nowrap;
+            animation: ticker-scroll 45s linear infinite;
+        }
+        .ticker-item {
+            display: inline-flex;
+            align-items: center;
+            gap: 6px;
+            padding: 8px 24px;
+            border-right: 1px solid rgba(255,255,255,0.12);
+            font-size: 12px;
+            color: rgba(255,255,255,0.85);
+            flex-shrink: 0;
+        }
+        .ticker-label { color: var(--blue-lighter); font-size: 10px; text-transform: uppercase; letter-spacing: 0.06em; }
+        .ticker-val { font-weight: 600; color: #fff; }
+        @keyframes ticker-scroll { from { transform: translateX(0); } to { transform: translateX(-50%); } }
+
+        /* ── CONTENT AREA ── */
+        .content { padding: 32px 40px 60px; max-width: 960px; }
+
+        /* ── SECTION ── */
+        .section { margin-bottom: 28px; }
+        .section-header {
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            padding: 14px 18px;
+            background: var(--bg-card);
+            border: 1px solid var(--border);
+            border-radius: 8px 8px 0 0;
+            cursor: pointer;
+            user-select: none;
+        }
+        .section-header.no-collapse { cursor: default; border-radius: 8px 8px 0 0; }
+        .section-title {
+            display: flex; align-items: center; gap: 10px;
+            font-size: 15px; font-weight: 600;
+            color: var(--blue-dark);
+        }
+        .section-icon {
+            width: 28px; height: 28px;
+            background: var(--blue-bg);
+            border-radius: 6px;
+            display: flex; align-items: center; justify-content: center;
+            font-size: 14px;
+        }
+        .section-meta { font-size: 12px; color: var(--text-meta); }
+        .toggle-btn {
+            width: 24px; height: 24px;
+            border: 1px solid var(--border);
+            border-radius: 4px;
+            display: flex; align-items: center; justify-content: center;
+            font-size: 12px;
+            color: var(--text-meta);
+            transition: transform 0.2s;
+        }
+        .toggle-btn.collapsed { transform: rotate(-90deg); }
+
+        .section-body {
+            background: var(--bg-card);
+            border: 1px solid var(--border);
+            border-top: none;
+            border-radius: 0 0 8px 8px;
+            padding: 0;
+            overflow: hidden;
+        }
+        .section-body.collapsed { display: none; }
+
+        /* ── SITUAÇÃO / AÇÕES ── */
+        .list-item {
+            display: flex;
+            align-items: flex-start;
+            gap: 12px;
+            padding: 13px 18px;
+            border-bottom: 1px solid var(--border-light);
+        }
+        .list-item:last-child { border-bottom: none; }
+        .list-num {
+            flex-shrink: 0;
+            width: 22px; height: 22px;
+            background: var(--blue-primary);
+            color: #fff;
+            border-radius: 50%;
+            font-size: 11px; font-weight: 700;
+            display: flex; align-items: center; justify-content: center;
+        }
+        .list-bullet {
+            flex-shrink: 0;
+            width: 8px; height: 8px;
+            border-radius: 50%;
+            margin-top: 7px;
+        }
+        .bullet-critical { background: var(--blue-dark); }
+        .bullet-important { background: var(--blue-medium); }
+        .bullet-info { background: var(--blue-lighter); }
+        .list-content { flex: 1; }
+        .list-title { font-size: 13.5px; font-weight: 500; color: var(--text-primary); }
+        .list-sub { font-size: 12px; color: var(--text-meta); margin-top: 2px; }
+        .owner-tag {
+            display: inline-block;
+            background: var(--blue-bg);
+            color: var(--blue-primary);
+            font-size: 10px; font-weight: 600;
+            padding: 1px 7px; border-radius: 10px;
+            margin-left: 6px;
+        }
+
+        /* ── INSIGHT ── */
+        .insight-body {
+            padding: 20px 22px;
+            background: linear-gradient(135deg, #F0F6FF 0%, #EEF4FD 100%);
+            border-top: 3px solid var(--blue-primary);
+        }
+        .insight-body p { font-size: 13.5px; color: var(--text-body); margin-bottom: 10px; line-height: 1.7; }
+        .insight-body p:last-child { margin-bottom: 0; }
+        .insight-highlight {
+            background: var(--white);
+            border-left: 3px solid var(--blue-medium);
+            padding: 10px 14px;
+            border-radius: 0 6px 6px 0;
+            margin-top: 12px;
+            font-size: 13px;
+            color: var(--text-body);
+            font-style: italic;
+        }
+
+        /* ── AGENDA ── */
+        .agenda-day { padding: 10px 18px 0; }
+        .agenda-day-label {
+            font-size: 11px;
+            font-weight: 700;
+            text-transform: uppercase;
+            letter-spacing: 0.1em;
+            color: var(--blue-primary);
+            padding: 10px 0 6px;
+            border-bottom: 1px solid var(--border-light);
+            margin-bottom: 2px;
+        }
+        .agenda-event {
+            display: flex;
+            align-items: flex-start;
+            gap: 12px;
+            padding: 10px 0;
+            border-bottom: 1px solid var(--border-light);
+        }
+        .agenda-event:last-child { border-bottom: none; }
+        .agenda-time {
+            flex-shrink: 0;
+            width: 80px;
+            font-size: 12px;
+            font-weight: 600;
+            color: var(--text-meta);
+        }
+        .agenda-bar {
+            flex-shrink: 0;
+            width: 3px;
+            border-radius: 2px;
+            align-self: stretch;
+            min-height: 36px;
+        }
+        .bar-critical { background: var(--blue-dark); }
+        .bar-internal { background: var(--blue-primary); }
+        .bar-client { background: var(--blue-medium); }
+        .bar-personal { background: var(--blue-lighter); }
+        .agenda-info { flex: 1; }
+        .agenda-name { font-size: 13.5px; font-weight: 500; color: var(--text-primary); }
+        .agenda-sub { font-size: 12px; color: var(--text-meta); margin-top: 2px; }
+        .event-badge {
+            display: inline-block;
+            padding: 1px 7px;
+            border-radius: 10px;
+            font-size: 10px; font-weight: 600;
+        }
+        .eb-interno { background: #EBF0FB; color: var(--blue-primary); }
+        .eb-cliente { background: var(--blue-bg); color: var(--blue-dark); }
+        .eb-operacao { background: #EAF0FB; color: var(--blue-medium); }
+        .eb-pessoal { background: #F0F4FF; color: var(--blue-light); }
+        .eb-financeiro { background: var(--blue-dark); color: #fff; }
+        .eb-urgente { background: var(--blue-dark); color: #fff; }
+        .agenda-warning {
+            display: flex; align-items: center; gap: 8px;
+            background: var(--blue-bg);
+            border: 1px solid var(--blue-lighter);
+            border-radius: 6px;
+            padding: 8px 14px;
+            margin: 8px 0;
+            font-size: 12px;
+            color: var(--blue-dark);
+            font-weight: 500;
+        }
+        .agenda-day-end { padding-bottom: 14px; }
+
+        /* ── CARDS (Decisões) ── */
+        .card-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 0; }
+        .decision-card {
+            padding: 16px 18px;
+            border-bottom: 1px solid var(--border-light);
+            border-right: 1px solid var(--border-light);
+        }
+        .decision-card:nth-child(2n) { border-right: none; }
+        .decision-card:nth-last-child(-n+2) { border-bottom: none; }
+        .dc-title { font-size: 13px; font-weight: 600; color: var(--text-primary); margin-bottom: 4px; }
+        .dc-label { font-size: 10px; font-weight: 700; text-transform: uppercase; letter-spacing: 0.06em; color: var(--blue-primary); margin-bottom: 6px; }
+        .dc-text { font-size: 12px; color: var(--text-body); margin-bottom: 4px; }
+        .dc-action { font-size: 12px; color: var(--blue-primary); font-weight: 500; }
+        .priority-strip {
+            width: 3px; height: 100%;
+            position: absolute; left: 0; top: 0;
+            border-radius: 6px 0 0 6px;
+        }
+        .decision-card { position: relative; padding-left: 22px; }
+        .strip-critical { background: var(--blue-dark); }
+        .strip-medium { background: var(--blue-medium); }
+        .strip-info { background: var(--blue-lighter); }
+
+        /* ── OPERAÇÃO / TIME ── */
+        .op-item { padding: 14px 18px; border-bottom: 1px solid var(--border-light); }
+        .op-item:last-child { border-bottom: none; }
+        .op-header {
+            display: flex; align-items: center; gap: 10px;
+            cursor: pointer; justify-content: space-between;
+        }
+        .op-title { font-size: 13px; font-weight: 500; color: var(--text-primary); }
+        .op-meta { font-size: 12px; color: var(--text-meta); }
+        .op-detail {
+            margin-top: 10px;
+            padding: 10px 12px;
+            background: var(--bg-page);
+            border-radius: 6px;
+            font-size: 12px;
+            color: var(--text-body);
+            display: none;
+        }
+        .op-detail.open { display: block; }
+
+        /* ── TEAM AGENDA ── */
+        .team-row {
+            display: flex; align-items: baseline; gap: 12px;
+            padding: 10px 18px;
+            border-bottom: 1px solid var(--border-light);
+        }
+        .team-row:last-child { border-bottom: none; }
+        .team-name { width: 90px; font-size: 12px; font-weight: 600; color: var(--blue-primary); flex-shrink: 0; }
+        .team-events { font-size: 12px; color: var(--text-body); flex: 1; }
+
+        /* ── FUNIL ── */
+        .funnel-item { padding: 14px 18px; border-bottom: 1px solid var(--border-light); display: flex; gap: 14px; align-items: flex-start; }
+        .funnel-item:last-child { border-bottom: none; }
+        .funnel-stage {
+            flex-shrink: 0;
+            padding: 3px 9px;
+            border-radius: 10px;
+            font-size: 10px; font-weight: 700;
+            background: var(--blue-bg);
+            color: var(--blue-dark);
+        }
+        .funnel-info { flex: 1; }
+        .funnel-name { font-size: 13px; font-weight: 500; color: var(--text-primary); }
+        .funnel-sub { font-size: 12px; color: var(--text-meta); margin-top: 2px; }
+
+        /* ── NOTÍCIAS ── */
+        .news-category {
+            padding: 10px 18px 4px;
+            font-size: 11px; font-weight: 700; text-transform: uppercase;
+            letter-spacing: 0.08em; color: var(--blue-primary);
+            border-bottom: 1px solid var(--border-light);
+        }
+        .news-item { padding: 11px 18px 11px 28px; border-bottom: 1px solid var(--border-light); position: relative; }
+        .news-item:last-child { border-bottom: none; }
+        .news-item::before {
+            content: '';
+            position: absolute; left: 16px; top: 18px;
+            width: 5px; height: 5px;
+            border-radius: 50%;
+            background: var(--blue-lighter);
+        }
+        .news-headline { font-size: 13px; font-weight: 500; color: var(--text-primary); }
+        .news-headline a { color: inherit; text-decoration: none; }
+        .news-headline a:hover { color: var(--blue-primary); }
+        .news-impact { font-size: 12px; color: var(--text-meta); margin-top: 3px; }
+        .news-source { font-size: 11px; color: var(--blue-light); }
+
+        /* ── EMAIL ── */
+        .email-item { padding: 13px 18px; border-bottom: 1px solid var(--border-light); display: flex; gap: 12px; }
+        .email-item:last-child { border-bottom: none; }
+        .email-priority { flex-shrink: 0; font-size: 16px; }
+        .email-info { flex: 1; }
+        .email-from { font-size: 12px; font-weight: 600; color: var(--text-primary); }
+        .email-subject { font-size: 13px; color: var(--text-body); margin-top: 1px; }
+        .email-preview { font-size: 12px; color: var(--text-meta); margin-top: 3px; }
+        .email-tag {
+            font-size: 10px; font-weight: 700; text-transform: uppercase;
+            padding: 1px 7px; border-radius: 10px;
+        }
+        .et-responder { background: var(--blue-dark); color: #fff; }
+        .et-acao { background: var(--blue-primary); color: #fff; }
+        .et-fyi { background: var(--blue-bg); color: var(--blue-primary); }
+
+        /* ── RESPONSIVE ── */
+        @media (max-width: 768px) {
+            .sidebar { width: 100%; height: auto; position: relative; }
+            .main { margin-left: 0; }
+            .content { padding: 20px 16px; }
+            .header { padding: 24px 16px 20px; }
+            .card-grid { grid-template-columns: 1fr; }
+            .decision-card:nth-child(2n) { border-right: 1px solid var(--border-light); }
+        }
+    </style>
+</head>
+<body>
+
+<div id="progress-bar"></div>
+
+<!-- SIDEBAR -->
+<nav class="sidebar">
+    <div class="sidebar-logo">
+        <img src="https://sunr.com.br/wp-content/uploads/2024/08/SunR_Logotipo-2.png" alt="SunR" onerror="this.style.display='none'">
+    </div>
+    <div class="sidebar-date">Quinta, 19 de março de 2026</div>
+    <a class="nav-item" href="#situacao"><span class="nav-dot urgent"></span> Situação do Dia</a>
+    <a class="nav-item" href="#acoes"><span class="nav-dot urgent"></span> Ações do Dia</a>
+    <a class="nav-item" href="#insight"><span class="nav-dot"></span> Insight do Dia</a>
+    <a class="nav-item" href="#emails"><span class="nav-dot urgent"></span> E-mails</a>
+    <a class="nav-item" href="#agenda"><span class="nav-dot"></span> Agenda</a>
+    <a class="nav-item" href="#decisoes"><span class="nav-dot"></span> Decisões &amp; Follow-ups</a>
+    <a class="nav-item" href="#operacao"><span class="nav-dot"></span> Operação</a>
+    <a class="nav-item" href="#time"><span class="nav-dot"></span> Agenda do Time</a>
+    <a class="nav-item" href="#funil"><span class="nav-dot"></span> Funil de Vendas</a>
+    <a class="nav-item" href="#noticias"><span class="nav-dot"></span> Radar de Notícias</a>
+    <div class="sidebar-footer">Gerado 19/03/2026 · Briefing v3</div>
+</nav>
+
+<!-- MAIN -->
+<div class="main">
+
+    <!-- HEADER -->
+    <div class="header">
+        <div class="header-tag">SunR Reciclagem Fotovoltaica · Daily Briefing</div>
+        <h1>Quinta-feira, 19 de março de 2026</h1>
+        <div class="header-sub">Foco Brasil &nbsp;·&nbsp; Valinhos &nbsp;·&nbsp; MOC &nbsp;·&nbsp; Florianópolis</div>
+        <div class="header-badges">
+            <span class="badge badge-outline">Dia de ação: 3 urgências</span>
+            <span class="badge badge-solid">EWA: pagamento iminente</span>
+            <span class="badge badge-solid">CPFL: deadline 16h</span>
+            <span class="badge badge-solid">Petrobras: reunião amanhã</span>
+        </div>
+    </div>
+
+    <!-- TICKER -->
+    <div class="ticker">
+        <div class="ticker-track">
+            <!-- first set -->
+            <div class="ticker-item"><span class="ticker-label">USD/BRL</span><span class="ticker-val">R$ 5,26</span></div>
+            <div class="ticker-item"><span class="ticker-label">EUR/BRL</span><span class="ticker-val">~R$ 5,71</span></div>
+            <div class="ticker-item"><span class="ticker-label">Alumínio LME</span><span class="ticker-val">USD 3.342/t</span></div>
+            <div class="ticker-item"><span class="ticker-label">Cobre LME</span><span class="ticker-val">USD 12.661/t</span></div>
+            <div class="ticker-item"><span class="ticker-label">Selic</span><span class="ticker-val">14,75% ▼</span></div>
+            <div class="ticker-item"><span class="ticker-label">Ibovespa</span><span class="ticker-val">~179.640</span></div>
+            <div class="ticker-item"><span class="ticker-label">Petróleo Brent</span><span class="ticker-val">~USD 71–73/bbl</span></div>
+            <div class="ticker-item"><span class="ticker-label">Prata spot</span><span class="ticker-val">~USD 33/oz</span></div>
+            <div class="ticker-item"><span class="ticker-label">Clima Floripa</span><span class="ticker-val">28°C ☀ Ensolarado</span></div>
+            <!-- duplicate for seamless loop -->
+            <div class="ticker-item"><span class="ticker-label">USD/BRL</span><span class="ticker-val">R$ 5,26</span></div>
+            <div class="ticker-item"><span class="ticker-label">EUR/BRL</span><span class="ticker-val">~R$ 5,71</span></div>
+            <div class="ticker-item"><span class="ticker-label">Alumínio LME</span><span class="ticker-val">USD 3.342/t</span></div>
+            <div class="ticker-item"><span class="ticker-label">Cobre LME</span><span class="ticker-val">USD 12.661/t</span></div>
+            <div class="ticker-item"><span class="ticker-label">Selic</span><span class="ticker-val">14,75% ▼</span></div>
+            <div class="ticker-item"><span class="ticker-label">Ibovespa</span><span class="ticker-val">~179.640</span></div>
+            <div class="ticker-item"><span class="ticker-label">Petróleo Brent</span><span class="ticker-val">~USD 71–73/bbl</span></div>
+            <div class="ticker-item"><span class="ticker-label">Prata spot</span><span class="ticker-val">~USD 33/oz</span></div>
+            <div class="ticker-item"><span class="ticker-label">Clima Floripa</span><span class="ticker-val">28°C ☀ Ensolarado</span></div>
+        </div>
+    </div>
+
+    <!-- CONTENT -->
+    <div class="content">
+
+        <!-- SITUAÇÃO DO DIA -->
+        <div class="section" id="situacao">
+            <div class="section-header no-collapse">
+                <div class="section-title">
+                    <div class="section-icon">⚡</div>
+                    Situação do Dia
+                </div>
+                <div class="section-meta">Quinta · 19 mar · 5 pontos críticos</div>
+            </div>
+            <div class="section-body">
+                <div class="list-item">
+                    <div class="list-bullet bullet-critical"></div>
+                    <div class="list-content">
+                        <div class="list-title"><strong>Caixa — EWA Advance #1 iminente.</strong> Antoinette Maree (EWA) confirmou recebimento da invoice INV-2026-001 e aguarda comprovante de dados bancários para liberar USD 10.000. O pagamento depende exclusivamente dessa ação de Leo hoje.</div>
+                    </div>
+                </div>
+                <div class="list-item">
+                    <div class="list-bullet bullet-critical"></div>
+                    <div class="list-content">
+                        <div class="list-title"><strong>CPFL — deadline 16h hoje.</strong> Coupa Sourcing #15722 "1ª Rod Neg — SERV. INST. FV" expira hoje às 16h. CPFL convidou a SunR para negociação comercial de serviços de instalação FV — potencial cliente utility-scale de grande porte.</div>
+                    </div>
+                </div>
+                <div class="list-item">
+                    <div class="list-bullet bullet-important"></div>
+                    <div class="list-content">
+                        <div class="list-title"><strong>Oportunidade Petrobras (amanhã).</strong> Reunião 20/03 às 15h com CENPES/PDITEN/EN (P&amp;D em Transição Energética) para apresentação da SunR sobre reciclagem fotovoltaica. 9 participantes do corpo técnico da Petrobras confirmados. Conflito com Plenária ABRAMAR no mesmo horário — decisão necessária.</div>
+                    </div>
+                </div>
+                <div class="list-item">
+                    <div class="list-bullet bullet-important"></div>
+                    <div class="list-content">
+                        <div class="list-title"><strong>D4Sign — 3º lembrete pendente.</strong> Documento HYBRIS/KII/SUNR (regularização societária) aguarda assinatura de Leo há semanas. Terceiro lembrete recebido hoje. Risco jurídico crescente.</div>
+                    </div>
+                </div>
+                <div class="list-item">
+                    <div class="list-bullet bullet-important"></div>
+                    <div class="list-content">
+                        <div class="list-title"><strong>Macroeconomia favorável.</strong> Copom cortou Selic ontem (18/03) em 0,25pp para 14,75% — primeiro corte do ciclo. Sinaliza alívio futuro no custo de capital. Alumínio LME em USD 3.342/t e Cobre em USD 12.661/t — preços elevados ampliam margem nos byproducts da SunR.</div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- AÇÕES DO DIA -->
+        <div class="section" id="acoes">
+            <div class="section-header no-collapse">
+                <div class="section-title">
+                    <div class="section-icon">✅</div>
+                    Ações do Dia
+                </div>
+                <div class="section-meta">7 itens · hoje, 19 mar</div>
+            </div>
+            <div class="section-body">
+                <div class="list-item">
+                    <div class="list-num">1</div>
+                    <div class="list-content">
+                        <div class="list-title"><strong>Enviar dados bancários para Antoinette (EWA)</strong> <span class="owner-tag">LEO</span></div>
+                        <div class="list-sub">antoinette@ewasteafrica.net · CC: mark@ewasteafrica.net · Desbloqueia Advance Payment #1 de USD 10.000 · FAZER AGORA</div>
+                    </div>
+                </div>
+                <div class="list-item">
+                    <div class="list-num">2</div>
+                    <div class="list-content">
+                        <div class="list-title"><strong>Responder convite CPFL (Coupa Sourcing #15722)</strong> <span class="owner-tag">LEO</span></div>
+                        <div class="list-sub">Deadline: hoje 16h · Confirmar participação na 1ª Rodada de Negociação SERV. INST. FV · Coupa: sourcing@cpfl.coupahost.com</div>
+                    </div>
+                </div>
+                <div class="list-item">
+                    <div class="list-num">3</div>
+                    <div class="list-content">
+                        <div class="list-title"><strong>Assinar HYBRIS/KII/SUNR no D4Sign</strong> <span class="owner-tag">LEO</span></div>
+                        <div class="list-sub">Terceiro lembrete — regularização societária pendente · Acesso pelo e-mail de Lorena via D4Sign</div>
+                    </div>
+                </div>
+                <div class="list-item">
+                    <div class="list-num">4</div>
+                    <div class="list-content">
+                        <div class="list-title"><strong>Decidir: Petrobras vs. ABRAMAR (amanhã 15h)</strong> <span class="owner-tag">LEO</span></div>
+                        <div class="list-sub">Conflito de agenda em 20/03 às 15h · Reunião Petrobras/CENPES (15h–16h) x Plenária ABRAMAR (15h–16:30) · Prioridade sugerida: Petrobras (novo lead estratégico)</div>
+                    </div>
+                </div>
+                <div class="list-item">
+                    <div class="list-num">5</div>
+                    <div class="list-content">
+                        <div class="list-title"><strong>Preparar talking points para apresentação Petrobras</strong> <span class="owner-tag">LEO + CAROLINA</span></div>
+                        <div class="list-sub">20/03 às 15h · Microsoft Teams · Luiz Fernando Fontenele (CENPES/PDITEN/EN) · Enfoque: serviços de reciclagem FV, PV-MRC, modelo comercial gate fee</div>
+                    </div>
+                </div>
+                <div class="list-item">
+                    <div class="list-num">6</div>
+                    <div class="list-content">
+                        <div class="list-title"><strong>Alinhar reunião MRC-Mex (amanhã 13h)</strong> <span class="owner-tag">LEO + DOUGLAS</span></div>
+                        <div class="list-sub">Máquina NSL confirmou pagamento frete — em trânsito para o México · Revisar status operacional antes da call</div>
+                    </div>
+                </div>
+                <div class="list-item">
+                    <div class="list-num">7</div>
+                    <div class="list-content">
+                        <div class="list-title"><strong>Omie NFSe — corrigir credenciais</strong> <span class="owner-tag">FINANCEIRO</span></div>
+                        <div class="list-sub">Monitoramento NFSe Valinhos falhou: usuário/senha incorretos (2 alertas recebidos hoje) · Acessar Omie e atualizar dados de acesso</div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- INSIGHT DO DIA -->
+        <div class="section" id="insight">
+            <div class="section-header" onclick="toggleSection('insight-body')">
+                <div class="section-title">
+                    <div class="section-icon">💡</div>
+                    Insight do Dia
+                </div>
+                <div class="toggle-btn" id="btn-insight-body">▼</div>
+            </div>
+            <div class="section-body" id="insight-body">
+                <div class="insight-body">
+                    <p>O dia de hoje condensa três sinais que, lidos em conjunto, definem o ritmo estratégico da SunR no Q2/2026. Externamente, a chegada da Petrobras (CENPES) à mesa reforça uma tese que a empresa vinha construindo: o mercado utility-scale brasileiro está amadurecendo para o compliance ambiental, e as grandes concessionárias começam a buscar ativamente soluções de fim de vida para seus ativos solares. Uma reunião com o braço de P&amp;D da Petrobras não é oportunidade comercial imediata — é posicionamento institucional de longo prazo.</p>
+                    <p>Internamente, a convergência de três urgências financeiras hoje (EWA, CPFL, D4Sign) expõe o gargalo recorrente: a execução do fechamento de deals ainda passa por Leo de forma centralizada. O Advance Payment #1 da EWA está bloqueado num e-mail não respondido — um item operacional de 5 minutos. Cada hora de atraso é custo de oportunidade direto.</p>
+                    <p>O corte da Selic ontem (14,75%) é o primeiro sinal de alívio macroeconômico real após meses de aperto. Para a SunR, com dívidas ativas e ciclo de captação Reed/PIPE em aberto, esse movimento cria janela favorável para renegociação de prazos e estruturação de novos instrumentos no H2/2026.</p>
+                    <div class="insight-highlight">
+                        Prioridade absoluta de hoje: desbloquear EWA (5 min) e CPFL (antes das 16h). O pipeline estratégico com Petrobras vale mais se o caixa operacional estiver estabilizado.
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- E-MAILS -->
+        <div class="section" id="emails">
+            <div class="section-header" onclick="toggleSection('emails-body')">
+                <div class="section-title">
+                    <div class="section-icon">📧</div>
+                    E-mails Prioritários
+                </div>
+                <div class="toggle-btn" id="btn-emails-body">▼</div>
+            </div>
+            <div class="section-body" id="emails-body">
+                <div class="email-item">
+                    <div class="email-priority">🔵</div>
+                    <div class="email-info">
+                        <div class="email-from">Antoinette Maree &lt;antoinette@ewasteafrica.net&gt; <span class="email-tag et-responder">Resposta aguardada</span></div>
+                        <div class="email-subject">Re: PO-0213 — Comprovante de dados bancários</div>
+                        <div class="email-preview">"Thank you very much for the invoice. Could you kindly provide proof of banking details? I will schedule the payment and send you proof once it is complete." — Advance #1 USD 10.000 bloqueado aguardando essa prova.</div>
+                    </div>
+                </div>
+                <div class="email-item">
+                    <div class="email-priority">🔵</div>
+                    <div class="email-info">
+                        <div class="email-from">Lorena via D4Sign &lt;sign@d4sign.com.br&gt; <span class="email-tag et-responder">Resposta aguardada</span></div>
+                        <div class="email-subject">*Lembrete* — 2025 REGULARIZACAO HYBRIS KII SUNR (3º aviso)</div>
+                        <div class="email-preview">Terceiro lembrete para Leo assinar o documento de regularização societária HYBRIS/KII/SUNR. Assinatura pendente há semanas — risco jurídico crescente.</div>
+                    </div>
+                </div>
+                <div class="email-item">
+                    <div class="email-priority">🔵</div>
+                    <div class="email-info">
+                        <div class="email-from">Notificações Coupa Sourcing — CPFL <span class="email-tag et-acao">Requer ação</span></div>
+                        <div class="email-subject">Lembrete: 1ª Rod Neg SERV. INST. FV #15722 — TERMINA EM MENOS DE 1 DIA</div>
+                        <div class="email-preview">CPFL abriu convite de negociação comercial para serviços de instalação FV. A SunR foi convidada. Deadline: hoje 16h. Confirmar participação via Coupa.</div>
+                    </div>
+                </div>
+                <div class="email-item">
+                    <div class="email-priority">🔹</div>
+                    <div class="email-info">
+                        <div class="email-from">Marina Ghermandi Corrocher — Granito Boneli <span class="email-tag et-acao">Requer ação</span></div>
+                        <div class="email-subject">RES: Assuntos jurídicos — seguro fiança + encerramento de contas</div>
+                        <div class="email-preview">"Tudo bem? Referente a seguro fiança para aluguéis e o encerramento de contas em bancos que não estão sendo utilizadas é conosco da área negocial. Quais seriam suas dúvidas?" — Confirmar quais bancos encerrar e quais imóveis precisam de seguro fiança.</div>
+                    </div>
+                </div>
+                <div class="email-item">
+                    <div class="email-priority">🔹</div>
+                    <div class="email-info">
+                        <div class="email-from">Anna Carolina Victorino — Granito Boneli <span class="email-tag et-fyi">FYI</span></div>
+                        <div class="email-subject">RE: Jurídico — Situação dos planos de saúde</div>
+                        <div class="email-preview">Orientação jurídica emitida: gerentes coparticipam via Flash, operadores perdem o benefício. Avaliação de risco trabalhista e regulatório realizada. Decisão pode avançar com base no parecer.</div>
+                    </div>
+                </div>
+                <div class="email-item">
+                    <div class="email-priority">🔹</div>
+                    <div class="email-info">
+                        <div class="email-from">Davi Haddad — Granito Boneli <span class="email-tag et-fyi">FYI</span></div>
+                        <div class="email-subject">RES: Granito Boneli | SunR — Pauta reunião — Dívidas</div>
+                        <div class="email-preview">"Irei analisar e até sexta-feira lhe passo um panorama para darmos seguimento da melhor forma." — Panorama completo da estrutura de dívidas (planilha Marinna) esperado até amanhã, 20/03.</div>
+                    </div>
+                </div>
+                <div class="email-item">
+                    <div class="email-priority">🔸</div>
+                    <div class="email-info">
+                        <div class="email-from">Wanessa Venturi — NSL Brasil <span class="email-tag et-fyi">FYI</span></div>
+                        <div class="email-subject">FOLLOW UP EXPO MARÍTIMA — Máquina México / Booking 265208099</div>
+                        <div class="email-preview">Comprovante de pagamento do frete de exportação marítima confirmado via WhatsApp. Máquina PV-MRC em trânsito para o México. MRC-Mex call amanhã às 13h para alinhamento operacional.</div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- AGENDA -->
+        <div class="section" id="agenda">
+            <div class="section-header" onclick="toggleSection('agenda-body')">
+                <div class="section-title">
+                    <div class="section-icon">📅</div>
+                    Agenda
+                </div>
+                <div class="toggle-btn" id="btn-agenda-body">▼</div>
+            </div>
+            <div class="section-body" id="agenda-body">
+                <!-- HOJE -->
+                <div class="agenda-day">
+                    <div class="agenda-day-label">Hoje — Quinta, 19 de março</div>
+
+                    <div class="agenda-event">
+                        <div class="agenda-time">09:00–10:15</div>
+                        <div class="agenda-bar bar-personal"></div>
+                        <div class="agenda-info">
+                            <div class="agenda-name">Academia Maleo <span class="event-badge eb-pessoal">Pessoal</span></div>
+                            <div class="agenda-sub">Rotina diária com Mallu</div>
+                        </div>
+                    </div>
+                    <div class="agenda-event">
+                        <div class="agenda-time">09:30–11:00</div>
+                        <div class="agenda-bar bar-internal"></div>
+                        <div class="agenda-info">
+                            <div class="agenda-name">1:1 Ma &lt;&gt; Leo <span class="event-badge eb-interno">Interno</span></div>
+                            <div class="agenda-sub">Marinna <strong>declinou</strong> · verificar reagendamento</div>
+                        </div>
+                    </div>
+                    <div class="agenda-event">
+                        <div class="agenda-time">11:00–12:00</div>
+                        <div class="agenda-bar bar-internal"></div>
+                        <div class="agenda-info">
+                            <div class="agenda-name">1:1 Leo &lt;&gt; Douglas <span class="event-badge eb-interno">Interno</span></div>
+                            <div class="agenda-sub">Douglas confirmado · pauta: operações, MRC-Mex, manutenção</div>
+                        </div>
+                    </div>
+                    <div class="agenda-event">
+                        <div class="agenda-time">14:30–15:30</div>
+                        <div class="agenda-bar bar-internal"></div>
+                        <div class="agenda-info">
+                            <div class="agenda-name">TP Bia e Leo <span class="event-badge eb-interno">Interno</span></div>
+                            <div class="agenda-sub">Bianca <strong>declinou</strong> · Leo confirmado — reagendar ou cancelar</div>
+                        </div>
+                    </div>
+                    <div class="agenda-event">
+                        <div class="agenda-time">16:00–17:00</div>
+                        <div class="agenda-bar bar-personal"></div>
+                        <div class="agenda-info">
+                            <div class="agenda-name">Levar cafeteira e aspirador para manutenção <span class="event-badge eb-pessoal">Pessoal</span></div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- AMANHÃ -->
+                <div class="agenda-day agenda-day-end" style="margin-top:12px;">
+                    <div class="agenda-day-label">Amanhã — Sexta, 20 de março</div>
+
+                    <div class="agenda-event">
+                        <div class="agenda-time">Dia todo</div>
+                        <div class="agenda-bar bar-critical"></div>
+                        <div class="agenda-info">
+                            <div class="agenda-name">🎯 FGTS / DAS / DARF <span class="event-badge eb-financeiro">Financeiro</span></div>
+                            <div class="agenda-sub">Deadline de obrigações tributárias / DP</div>
+                        </div>
+                    </div>
+                    <div class="agenda-event">
+                        <div class="agenda-time">Dia todo</div>
+                        <div class="agenda-bar bar-critical"></div>
+                        <div class="agenda-info">
+                            <div class="agenda-name">🎯 Folha de Adiantamentos <span class="event-badge eb-financeiro">Financeiro</span></div>
+                        </div>
+                    </div>
+                    <div class="agenda-event">
+                        <div class="agenda-time">09:00–10:15</div>
+                        <div class="agenda-bar bar-personal"></div>
+                        <div class="agenda-info">
+                            <div class="agenda-name">Academia Maleo <span class="event-badge eb-pessoal">Pessoal</span></div>
+                        </div>
+                    </div>
+                    <div class="agenda-event">
+                        <div class="agenda-time">10:00–11:00</div>
+                        <div class="agenda-bar bar-internal"></div>
+                        <div class="agenda-info">
+                            <div class="agenda-name">RT Operações <span class="event-badge eb-operacao">Operação</span></div>
+                            <div class="agenda-sub">Bianca (org.) · Douglas · Eduardo · Lucas (opt.) · Leo (opt.)</div>
+                        </div>
+                    </div>
+                    <div class="agenda-event">
+                        <div class="agenda-time">13:00–14:00</div>
+                        <div class="agenda-bar bar-internal"></div>
+                        <div class="agenda-info">
+                            <div class="agenda-name">MRC-Mex <span class="event-badge eb-operacao">Operação Internacional</span></div>
+                            <div class="agenda-sub">Leo + Douglas · Marinna declinou · máquina em trânsito — confirmar ETA e logística</div>
+                        </div>
+                    </div>
+                    <div class="agenda-event">
+                        <div class="agenda-time">14:00–15:00</div>
+                        <div class="agenda-bar bar-internal"></div>
+                        <div class="agenda-info">
+                            <div class="agenda-name">TP Novos Negócios <span class="event-badge eb-interno">Interno</span></div>
+                            <div class="agenda-sub">Leo + Laís · pipeline de materiais e novos negócios</div>
+                        </div>
+                    </div>
+                    <div class="agenda-event">
+                        <div class="agenda-time">15:00–16:00</div>
+                        <div class="agenda-bar bar-client" style="background:var(--blue-dark)"></div>
+                        <div class="agenda-info">
+                            <div class="agenda-name">Reciclagem Fotovoltaica — Petrobras/CENPES <span class="event-badge eb-urgente">Cliente Estratégico ⭐</span></div>
+                            <div class="agenda-sub">Microsoft Teams · Luiz Fernando Fontenele (CENPES/PDITEN/EN) + 8 técnicos Petrobras · Leo + Carolina</div>
+                        </div>
+                    </div>
+                    <div class="agenda-warning">
+                        ⚠️ <strong>Conflito de agenda:</strong> Plenária ABRAMAR também às 15h–16:30 (20/03). Decisão necessária hoje — recomendação: priorizar Petrobras.
+                    </div>
+                    <div class="agenda-event">
+                        <div class="agenda-time">15:00–16:30</div>
+                        <div class="agenda-bar bar-internal"></div>
+                        <div class="agenda-info">
+                            <div class="agenda-name">Plenária ABRAMAR <span class="event-badge eb-interno">Associação</span></div>
+                            <div class="agenda-sub">GT de Auditoria · Finep · contato@abramar.org · Marinna confirmada</div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- DECISÕES & FOLLOW-UPS -->
+        <div class="section" id="decisoes">
+            <div class="section-header" onclick="toggleSection('decisoes-body')">
+                <div class="section-title">
+                    <div class="section-icon">⚖️</div>
+                    Decisões &amp; Follow-ups
+                </div>
+                <div class="toggle-btn" id="btn-decisoes-body">▼</div>
+            </div>
+            <div class="section-body" id="decisoes-body">
+                <div class="card-grid">
+                    <div class="decision-card">
+                        <div class="priority-strip strip-critical"></div>
+                        <div class="dc-label">EWA · Advance #1</div>
+                        <div class="dc-title">Comprovante de dados bancários</div>
+                        <div class="dc-text">Antoinette aguarda para agendar o pagamento de USD 10.000. Situação: invoice emitida, pagamento liberável hoje.</div>
+                        <div class="dc-action">→ Enviar dados bancários Itaú (PIX CNPJ) agora</div>
+                    </div>
+                    <div class="decision-card">
+                        <div class="priority-strip strip-critical"></div>
+                        <div class="dc-label">CPFL · Urgente hoje</div>
+                        <div class="dc-title">Confirmar 1ª Rodada de Negociação</div>
+                        <div class="dc-text">Convite Coupa #15722 SERV. INST. FV expira hoje 16h. CPFL é um dos maiores distribuidores de energia do BR.</div>
+                        <div class="dc-action">→ Responder via Coupa antes das 16h</div>
+                    </div>
+                    <div class="decision-card">
+                        <div class="priority-strip strip-medium"></div>
+                        <div class="dc-label">EWA · Contrato</div>
+                        <div class="dc-title">Purchase Agreement v2 pendente</div>
+                        <div class="dc-text">Pravashen retorna 23/03 para revisão e assinatura. Advance #2 (USD 10.000) com deadline 07/04.</div>
+                        <div class="dc-action">→ Aguardar Pravashen em 23/03</div>
+                    </div>
+                    <div class="decision-card">
+                        <div class="priority-strip strip-medium"></div>
+                        <div class="dc-label">Jurídico · D4Sign</div>
+                        <div class="dc-title">Assinar HYBRIS/KII/SUNR</div>
+                        <div class="dc-text">3º lembrete emitido hoje. Regularização societária — risco de bloqueio jurídico se não assinado.</div>
+                        <div class="dc-action">→ Acessar D4Sign e assinar hoje</div>
+                    </div>
+                    <div class="decision-card">
+                        <div class="priority-strip strip-medium"></div>
+                        <div class="dc-label">Granito Boneli · Dívidas</div>
+                        <div class="dc-title">Panorama completo esperado amanhã</div>
+                        <div class="dc-text">Davi Haddad comprometeu-se a entregar análise da estrutura de dívidas até 20/03 (planilha enviada por Marinna).</div>
+                        <div class="dc-action">→ Aguardar e-mail de Davi até sexta</div>
+                    </div>
+                    <div class="decision-card">
+                        <div class="priority-strip strip-medium"></div>
+                        <div class="dc-label">RH · Vesting</div>
+                        <div class="dc-title">Contratos de vesting (4 instrumentos)</div>
+                        <div class="dc-text">Giovanna Rossagnesi (Granito Boneli) confirmou entrega até 27/03 — Marinna (+3%), Bianca (1,5%), Douglas (0,75%), Laís (0,75%).</div>
+                        <div class="dc-action">→ Aguardar entrega até 27/03</div>
+                    </div>
+                    <div class="decision-card">
+                        <div class="priority-strip strip-info"></div>
+                        <div class="dc-label">Reed · LOI</div>
+                        <div class="dc-title">Antoine revisando documentos</div>
+                        <div class="dc-text">LOI esperado Q1/Q2 2026 · €7M em 3 tranches. Antoine revisando SunR_BP.xlsx e European Deployment Strategy.</div>
+                        <div class="dc-action">→ Seguir cadência de contato semanal</div>
+                    </div>
+                    <div class="decision-card">
+                        <div class="priority-strip strip-info"></div>
+                        <div class="dc-label">México · MRC</div>
+                        <div class="dc-title">Máquina em trânsito marítimo</div>
+                        <div class="dc-text">NSL confirmou pagamento do frete ontem. Máquina a caminho do México. MRC-Mex call amanhã 13h.</div>
+                        <div class="dc-action">→ Alinhar logistics / ETA na call de amanhã</div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- OPERAÇÃO (reuniões de ontem sem Leo) -->
+        <div class="section" id="operacao">
+            <div class="section-header" onclick="toggleSection('op-body')">
+                <div class="section-title">
+                    <div class="section-icon">🏭</div>
+                    Operação — Reuniões sem Leo (18/03)
+                </div>
+                <div class="toggle-btn" id="btn-op-body">▼</div>
+            </div>
+            <div class="section-body" id="op-body">
+                <div class="op-item">
+                    <div class="op-header" onclick="toggleDetail('op1')">
+                        <div>
+                            <div class="op-title">TP Operações — 18/03 · Douglas, Bianca, Eduardo</div>
+                            <div class="op-meta">Tipo: Operação · Data: 18/03/2026</div>
+                        </div>
+                        <span style="color:var(--text-meta);font-size:12px;">Ver detalhes ▾</span>
+                    </div>
+                    <div class="op-detail" id="op1">
+                        Reunião semanal de operações com time de campo. Pauta padrão: OEE, downtime, processamento em Valinhos e MOC, indicadores da semana, manutenção. Douglas atualiza planilha de Downtime diariamente às 08h — dado de entrada para acompanhamento. Ata registrada no Notion.
+                    </div>
+                </div>
+                <div class="op-item">
+                    <div class="op-header" onclick="toggleDetail('op2')">
+                        <div>
+                            <div class="op-title">Marketing — Marinna × Mateus (Biz Dev) — 18/03</div>
+                            <div class="op-meta">Tipo: Biz Dev · Data: 18/03/2026</div>
+                        </div>
+                        <span style="color:var(--text-meta);font-size:12px;">Ver detalhes ▾</span>
+                    </div>
+                    <div class="op-detail" id="op2">
+                        Alinhamento de marketing e biz dev entre Marinna e Mateus. Pauta: prospecção bottom-up comercial, criação de conteúdo, funil de leads. Mateus tem bloco de "Criação" 15:30–17:30 hoje, sugerindo continuidade de entregas pós-reunião. Saídas esperadas: materiais para campanhas e lista de leads priorizada.
+                    </div>
+                </div>
+                <div class="op-item">
+                    <div class="op-header" onclick="toggleDetail('op3')">
+                        <div>
+                            <div class="op-title">Jurídico × SunR — Marinna — 18/03</div>
+                            <div class="op-meta">Tipo: WBR / Jurídico · Data: 18/03/2026</div>
+                        </div>
+                        <span style="color:var(--text-meta);font-size:12px;">Ver detalhes ▾</span>
+                    </div>
+                    <div class="op-detail" id="op3">
+                        Alinhamento jurídico com Granito Boneli conduzido por Marinna. Temas: panorama de dívidas (planilha enviada a Davi Haddad), vesting contracts (Giovanna Rossagnesi — entrega 27/03), seguro fiança (Marina Corrocher — área negocial), planos de saúde (Anna Carolina — parecer emitido). Davi confirmou retorno com panorama até 20/03.
+                    </div>
+                </div>
+                <div class="op-item">
+                    <div class="op-header" onclick="toggleDetail('op4')">
+                        <div>
+                            <div class="op-title">Conferência MTR × CDF × DMR — HOJE 14h (Laís, Marinna, Bianca)</div>
+                            <div class="op-meta">Tipo: Ambiental · Data: 19/03 14h–15h</div>
+                        </div>
+                        <span style="color:var(--text-meta);font-size:12px;">Ver detalhes ▾</span>
+                    </div>
+                    <div class="op-detail" id="op4">
+                        Reunião ambiental/operacional organizada por Laís, com participação de Marinna e Bianca. Foco: alinhamento de documentação ambiental — Manifesto de Transporte de Resíduos (MTR), Certificado de Destinação Final (CDF) e Declaração de Movimentação de Resíduos (DMR). Importante para compliance com clientes utility-scale e certificação PV Cycle.
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- AGENDA DO TIME -->
+        <div class="section" id="time">
+            <div class="section-header" onclick="toggleSection('time-body')">
+                <div class="section-title">
+                    <div class="section-icon">👥</div>
+                    Agenda do Time — Hoje
+                </div>
+                <div class="toggle-btn" id="btn-time-body">▼</div>
+            </div>
+            <div class="section-body" id="time-body">
+                <div class="team-row">
+                    <div class="team-name">Marinna</div>
+                    <div class="team-events">11h Foco — Planejamento Financeiro · 14h Conferência MTR/CDF/DMR (c/ Laís + Bianca) · <em>1:1 Leo declinou</em></div>
+                </div>
+                <div class="team-row">
+                    <div class="team-name">Douglas</div>
+                    <div class="team-events">08h Atualizar Downtime · 11h 1:1 Leo · 14h Tecnologias · 15:30h Manutenção</div>
+                </div>
+                <div class="team-row">
+                    <div class="team-name">Laís</div>
+                    <div class="team-events">14h Conferência MTR/CDF/DMR (org.) · tarde livre para prospecção e novos negócios</div>
+                </div>
+                <div class="team-row">
+                    <div class="team-name">Bianca</div>
+                    <div class="team-events">08:15h Preencher processamento · 10h Veterinário (ausência) · 14h Conferência MTR/CDF/DMR · 15:30h Manutenção · <em>TP com Leo declinou</em></div>
+                </div>
+                <div class="team-row">
+                    <div class="team-name">Mateus</div>
+                    <div class="team-events">09h E-mails · 10h Planejamento · 14h Desenvolvimento · 15:30h Criação (2h) · 17:30h Estudo</div>
+                </div>
+                <div class="team-row">
+                    <div class="team-name">Carolina</div>
+                    <div class="team-events">Ausente 12h–15h · Manhã: atividade comercial · Participa reunião Petrobras amanhã (20/03)</div>
+                </div>
+            </div>
+        </div>
+
+        <!-- FUNIL DE VENDAS -->
+        <div class="section" id="funil">
+            <div class="section-header" onclick="toggleSection('funil-body')">
+                <div class="section-title">
+                    <div class="section-icon">📊</div>
+                    Funil de Vendas — Status Geral
+                </div>
+                <div class="toggle-btn" id="btn-funil-body">▼</div>
+            </div>
+            <div class="section-body" id="funil-body">
+                <div class="funnel-item">
+                    <div class="funnel-stage">FECHADO</div>
+                    <div class="funnel-info">
+                        <div class="funnel-name">E-Waste Africa (EWA) — Máquina PV-MRC</div>
+                        <div class="funnel-sub">PO-0213 recebido · Invoice INV-2026-001 emitida · Advance #1 USD 10k bloqueado pendente dados bancários · Advance #2 USD 10k deadline 07/04 · Contrato v2 aguarda assinatura (Pravashen retorna 23/03) · Chegada máquina: Abr/2026</div>
+                    </div>
+                </div>
+                <div class="funnel-item">
+                    <div class="funnel-stage">ATIVO</div>
+                    <div class="funnel-info">
+                        <div class="funnel-name">ENGIE — Paracatu / México</div>
+                        <div class="funnel-sub">Contrato Paracatu ativo · Piloto México em andamento · Máquina em trânsito (NSL confirmou frete) · Call MRC-Mex amanhã 13h</div>
+                    </div>
+                </div>
+                <div class="funnel-item">
+                    <div class="funnel-stage">ATIVO</div>
+                    <div class="funnel-info">
+                        <div class="funnel-name">LONGi — Certificação PV Cycle</div>
+                        <div class="funnel-sub">1ª certificação PV Cycle no Brasil · Conta ativa · Referência para novos clientes utility-scale</div>
+                    </div>
+                </div>
+                <div class="funnel-item">
+                    <div class="funnel-stage">PROPOSTA</div>
+                    <div class="funnel-info">
+                        <div class="funnel-name">Scatec — Honduras + Egito</div>
+                        <div class="funnel-sub">Honduras: 150k painéis (3.750t) · Egito: 1GW+ (60k t) · Scenarios em preparação · Target: apresentação formal Q1/Q2 2026</div>
+                    </div>
+                </div>
+                <div class="funnel-item">
+                    <div class="funnel-stage">NOVO LEAD</div>
+                    <div class="funnel-info">
+                        <div class="funnel-name">Petrobras / CENPES — P&amp;D Transição Energética</div>
+                        <div class="funnel-sub">Reunião amanhã 20/03 às 15h · Microsoft Teams · Luiz Fernando Fontenele (Engenheiro PDITEN/EN) + 8 técnicos · Foco: apresentação de portfolio e serviços FV</div>
+                    </div>
+                </div>
+                <div class="funnel-item">
+                    <div class="funnel-stage">NEGOCIAÇÃO</div>
+                    <div class="funnel-info">
+                        <div class="funnel-name">CPFL — Serv. Instalação FV</div>
+                        <div class="funnel-sub">Convite 1ª Rod Neg Coupa #15722 · Deadline hoje 16h · CPFL é uma das maiores distribuidoras de energia do Brasil · Ação urgente de Leo</div>
+                    </div>
+                </div>
+                <div class="funnel-item">
+                    <div class="funnel-stage">PIPELINE</div>
+                    <div class="funnel-info">
+                        <div class="funnel-name">Elera · Atlas · Rafiqui (JV México) · ~22 empresas-alvo</div>
+                        <div class="funnel-sub">Bottom-up comercial em andamento · Mateus e Carolina prospectando ativamente · TP Novos Negócios amanhã 14h (Leo + Laís)</div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- RADAR DE NOTÍCIAS -->
+        <div class="section" id="noticias">
+            <div class="section-header" onclick="toggleSection('noticias-body')">
+                <div class="section-title">
+                    <div class="section-icon">📡</div>
+                    Radar de Notícias
+                </div>
+                <div class="toggle-btn" id="btn-noticias-body">▼</div>
+            </div>
+            <div class="section-body" id="noticias-body">
+
+                <div class="news-category">Brasil &amp; Mundo</div>
+                <div class="news-item">
+                    <div class="news-headline"><a href="https://minasinforma.com/selic-1475-impactos-ibovespa-dolar/" target="_blank">Copom corta Selic para 14,75% — primeiro corte do ciclo de aperto</a></div>
+                    <div class="news-impact"><strong>Impacto SunR:</strong> Sinaliza alívio futuro no custo de capital. Reed Negotiation e demais instrumentos de dívida se tornam menos onerosos a médio prazo. Janela favorável para estruturar novos financiamentos no H2/2026.</div>
+                    <div class="news-source">B3 / Bora Investir · 18/03/2026</div>
+                </div>
+                <div class="news-item">
+                    <div class="news-headline"><a href="https://www.gov.br/fazenda/pt-br/assuntos/noticias/2026/marco/prisma-fiscal-de-marco-mostra-melhora-de-estimativas-para-a-evolucao-de-diversos-indicadores-macroeconomicos" target="_blank">Prisma Fiscal de março: melhora de estimativas para déficit e inflação</a></div>
+                    <div class="news-impact"><strong>Impacto SunR:</strong> Ambiente macroeconômico levemente mais favorável. IPCA projetado em 3,97% para 2026. Melhora de expectativas pode reduzir prêmio de risco em operações de crédito.</div>
+                    <div class="news-source">Ministério da Fazenda · 17/03/2026</div>
+                </div>
+
+                <div class="news-category">Solar &amp; Reciclagem FV</div>
+                <div class="news-item">
+                    <div class="news-headline"><a href="https://www.camara.leg.br/noticias/1080594-comissao-aprova-projeto-que-incentiva-reciclagem-de-paineis-fotovoltaicos/" target="_blank">Comissão aprova PL que incentiva reciclagem de painéis fotovoltaicos no Brasil</a></div>
+                    <div class="news-impact"><strong>Impacto SunR:</strong> PL 998/2024 avança. Cria estrutura nacional de responsabilidade compartilhada para fim de vida de painéis. Eleva pressão sobre fabricantes/distribuidores para contratar reciclagem certificada — exatamente o modelo SunR. Acompanhar tramitação na Câmara.</div>
+                    <div class="news-source">Portal da Câmara dos Deputados</div>
+                </div>
+                <div class="news-item">
+                    <div class="news-headline"><a href="https://canalsolar.com.br/reciclagem-de-paineis-desafios-para-promover-o-segmento-no-brasil/" target="_blank">Reciclagem de painéis FV: SunR é única recicladora exclusiva no Brasil</a></div>
+                    <div class="news-impact"><strong>Impacto SunR:</strong> Posicionamento de liderança reafirmado externamente. Mercado de reciclagem FV deve valer USD 2,7 bilhões em 2030 no Brasil. Narrativa de "infraestrutura crítica" ainda pouco explorada em comunicação — oportunidade para ABRAMAR e Revolusolar.</div>
+                    <div class="news-source">Canal Solar</div>
+                </div>
+                <div class="news-item">
+                    <div class="news-headline"><a href="https://descarbonizesolucoes.com.br/blog/taxacao-do-sol" target="_blank">Taxação do Sol 2026: 60% do Fio B entra em vigor — impacto na GD</a></div>
+                    <div class="news-impact"><strong>Impacto SunR:</strong> Encarecimento da energia GD acelera amortecimento de payback de usinas — antecipa ondas de descomissionamento. Mais painéis chegando ao fim de vida mais cedo. Aumento do volume de entrada para a SunR no médio prazo.</div>
+                    <div class="news-source">Descarbonize Soluções · Mar/2026</div>
+                </div>
+
+                <div class="news-category">Commodities &amp; Câmbio</div>
+                <div class="news-item">
+                    <div class="news-headline"><a href="https://tradingeconomics.com/commodity/aluminum" target="_blank">Alumínio LME: USD 3.342/t · Cobre: USD 12.661/t (máximas recentes)</a></div>
+                    <div class="news-impact"><strong>Impacto SunR:</strong> Preços elevados de alumínio e cobre ampliam margem de byproducts diretamente. Alumínio: cada tonelada recuperada da reciclagem vale ~3x mais do que há 2 anos. Precificar contratos de venda de materiais com base nesses patamares.</div>
+                    <div class="news-source">Trading Economics / LME · Mar/2026</div>
+                </div>
+                <div class="news-item">
+                    <div class="news-headline"><a href="https://borainvestir.b3.com.br/noticias/mercado/ibovespa-b3-recua-043-apos-decisao-do-fed-e-antes-do-copom-decidir-selic-dolar-vai-a-r-524/" target="_blank">Dólar a R$ 5,26 — Ibovespa leve recuo pós-decisão Fed + Copom</a></div>
+                    <div class="news-impact"><strong>Impacto SunR:</strong> Câmbio em R$ 5,26 beneficia receita em USD (EWA, Scatec) convertida para BRL. Invoice EWA de USD 10.000 equivale a ~R$ 52.600 — fluxo importante para liquidez.</div>
+                    <div class="news-source">Bora Investir / B3 · 18/03/2026</div>
+                </div>
+
+                <div class="news-category">Negócios &amp; Tech</div>
+                <div class="news-item">
+                    <div class="news-headline"><a href="https://canalsolar.com.br/mercado-de-reciclagem-de-paineis-fv-valera-us-27-bilhoes-ate-2030/" target="_blank">Mercado global de reciclagem FV chegará a USD 2,7 bilhões até 2030</a></div>
+                    <div class="news-impact"><strong>Impacto SunR:</strong> Dado estratégico para pitch ao Reed (LOI em negociação) e para Scatec/Petrobras. Posiciona a SunR como infraestrutura indispensável, não como prestadora de serviço. Usar nos materiais de apresentação da Petrobras amanhã.</div>
+                    <div class="news-source">Canal Solar</div>
+                </div>
+
+            </div>
+        </div>
+
+    </div><!-- /content -->
+</div><!-- /main -->
+
+<script>
+    // ── PROGRESS BAR ──
+    window.addEventListener('scroll', () => {
+        const scrollTop = window.scrollY;
+        const docHeight = document.documentElement.scrollHeight - window.innerHeight;
+        const pct = docHeight > 0 ? (scrollTop / docHeight) * 100 : 0;
+        document.getElementById('progress-bar').style.width = pct + '%';
+    });
+
+    // ── TOGGLE SECTION ──
+    function toggleSection(id) {
+        const body = document.getElementById(id);
+        const btn = document.getElementById('btn-' + id);
+        if (!body) return;
+        if (body.classList.contains('collapsed')) {
+            body.classList.remove('collapsed');
+            if (btn) { btn.textContent = '▼'; btn.classList.remove('collapsed'); }
+        } else {
+            body.classList.add('collapsed');
+            if (btn) { btn.textContent = '▼'; btn.classList.add('collapsed'); }
+        }
+    }
+
+    // ── TOGGLE DETAIL ──
+    function toggleDetail(id) {
+        const el = document.getElementById(id);
+        if (!el) return;
+        el.classList.toggle('open');
+    }
+
+    // ── INTERSECTION OBSERVER (sidebar highlight) ──
+    const sections = document.querySelectorAll('.section');
+    const navItems = document.querySelectorAll('.nav-item');
+    const observer = new IntersectionObserver((entries) => {
+        entries.forEach(entry => {
+            if (entry.isIntersecting) {
+                const id = entry.target.id;
+                navItems.forEach(nav => {
+                    nav.classList.remove('active');
+                    if (nav.getAttribute('href') === '#' + id) {
+                        nav.classList.add('active');
+                    }
+                });
+            }
+        });
+    }, { threshold: 0.25 });
+    sections.forEach(s => observer.observe(s));
+
+    // ── SMOOTH SCROLL ──
+    navItems.forEach(item => {
+        item.addEventListener('click', (e) => {
+            const href = item.getAttribute('href');
+            if (href && href.startsWith('#')) {
+                e.preventDefault();
+                const target = document.querySelector(href);
+                if (target) target.scrollIntoView({ behavior: 'smooth', block: 'start' });
+            }
+        });
+    });
+</script>
+
+</body>
+</html>
