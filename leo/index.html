@@ -1,153 +1,150 @@
 <!DOCTYPE html>
 <html lang="pt-BR">
 <head>
-  <meta charset="UTF-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>Leo — Daily Briefings</title>
-  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&display=swap" rel="stylesheet" />
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Daily Briefings — Leo · SunR</title>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet">
   <style>
-    * { margin: 0; padding: 0; box-sizing: border-box; }
-    body { font-family: 'Inter', sans-serif; background: #F5F7FB; color: #0F1729; }
-
-    .topbar {
-      background: linear-gradient(135deg, #0B3D91, #1B56B0, #2D6FD9);
-      padding: 20px 32px;
-      display: flex;
-      align-items: center;
-      gap: 16px;
+    * { box-sizing: border-box; margin: 0; padding: 0; }
+    body {
+      font-family: 'Inter', sans-serif;
+      background: #F5F7FA;
+      min-height: 100vh;
     }
-    .back-link {
-      color: rgba(255,255,255,0.6);
-      text-decoration: none;
-      font-size: 13px;
-      display: flex;
-      align-items: center;
-      gap: 6px;
-      transition: color 0.2s;
+    header {
+      background: linear-gradient(135deg, #1B3A6B 0%, #1B56B0 50%, #2D6FD9 100%);
+      border-bottom: 4px solid #F5C842;
+      padding: 32px 40px 28px;
     }
-    .back-link:hover { color: #fff; }
-    .topbar-title {
-      font-size: 16px;
-      font-weight: 700;
+    header h1 {
       color: #fff;
-    }
-    .topbar-sub {
-      font-size: 12px;
-      color: rgba(255,255,255,0.5);
-      margin-top: 2px;
-    }
-
-    .container { max-width: 720px; margin: 40px auto; padding: 0 20px 60px; }
-
-    .section-label {
-      font-size: 10px;
+      font-size: 1.8rem;
       font-weight: 700;
-      letter-spacing: 2.5px;
-      text-transform: uppercase;
-      color: #9BABC4;
-      margin-bottom: 16px;
+      letter-spacing: -0.5px;
     }
-
-    .briefing-list { display: flex; flex-direction: column; gap: 10px; }
-
+    header p {
+      color: rgba(255,255,255,0.75);
+      font-size: 0.9rem;
+      margin-top: 4px;
+    }
+    .container {
+      max-width: 720px;
+      margin: 48px auto;
+      padding: 0 24px;
+    }
+    .section-title {
+      font-size: 0.75rem;
+      font-weight: 600;
+      color: #4F5565;
+      letter-spacing: 1px;
+      text-transform: uppercase;
+      margin-bottom: 12px;
+    }
+    .briefing-list {
+      display: flex;
+      flex-direction: column;
+      gap: 10px;
+    }
     .briefing-item {
       background: #fff;
-      border: 1px solid #D4DCE8;
       border-radius: 10px;
-      padding: 16px 20px;
-      text-decoration: none;
-      color: inherit;
+      box-shadow: 0 1px 4px rgba(27,54,107,0.08);
       display: flex;
       align-items: center;
-      justify-content: space-between;
-      transition: border-color 0.2s, box-shadow 0.2s;
+      padding: 16px 20px;
+      text-decoration: none;
+      transition: box-shadow 0.15s, transform 0.15s;
+      border-left: 4px solid transparent;
     }
     .briefing-item:hover {
-      border-color: #1B56B0;
-      box-shadow: 0 4px 12px rgba(27,86,176,0.1);
+      box-shadow: 0 4px 16px rgba(27,86,176,0.15);
+      transform: translateX(2px);
     }
-    .briefing-item.latest {
-      border-color: #1B56B0;
-      background: linear-gradient(135deg, #f0f5ff, #fff);
+    .briefing-item.hoje {
+      border-left-color: #F5C842;
     }
-    .item-left { display: flex; align-items: center; gap: 14px; }
-    .item-dot {
-      width: 8px; height: 8px;
-      border-radius: 50%;
-      background: #D4DCE8;
-      flex-shrink: 0;
+    .briefing-item.hoje .badge {
+      background: #F5C842;
+      color: #1A1D2B;
     }
-    .latest .item-dot { background: #1B56B0; }
-    .item-date {
-      font-size: 15px;
+    .briefing-item .badge {
+      font-size: 0.7rem;
+      font-weight: 700;
+      text-transform: uppercase;
+      letter-spacing: 0.5px;
+      background: #E8F0FB;
+      color: #1B56B0;
+      border-radius: 5px;
+      padding: 3px 8px;
+      margin-right: 14px;
+      white-space: nowrap;
+    }
+    .briefing-item .info { flex: 1; }
+    .briefing-item .date-label {
+      font-size: 1rem;
       font-weight: 600;
-      color: #0F1729;
+      color: #1A1D2B;
     }
-    .item-label {
-      font-size: 12px;
-      color: #9BABC4;
+    .briefing-item .date-sub {
+      font-size: 0.8rem;
+      color: #4F5565;
       margin-top: 2px;
     }
-    .latest .item-label { color: #1B56B0; font-weight: 500; }
-    .item-arrow { color: #9BABC4; font-size: 16px; }
-    .latest .item-arrow { color: #1B56B0; }
-
-    .empty-state {
+    .briefing-item .arrow {
+      color: #1B56B0;
+      font-size: 1.1rem;
+      opacity: 0.5;
+    }
+    footer {
       text-align: center;
-      padding: 60px 20px;
-      color: #9BABC4;
-      font-size: 14px;
+      color: #4F5565;
+      font-size: 0.75rem;
+      padding: 40px 0 24px;
+      opacity: 0.6;
     }
   </style>
 </head>
 <body>
-
-  <div class="topbar">
-    <a href="../index.html" class="back-link">
-      ← Voltar
-    </a>
-    <div>
-      <div class="topbar-title">Leonardo — SunR CEO Briefing</div>
-      <div class="topbar-sub">Gerado todo dia às 7h05</div>
-    </div>
-  </div>
-
+  <header>
+    <h1>Daily Briefings · Leo</h1>
+    <p>SunR — Reciclagem Fotovoltaica · Chief of Staff Digital</p>
+  </header>
   <div class="container">
-    <div class="section-label">Briefings recentes</div>
-    <div class="briefing-list" id="briefing-list">
-      <!-- Preenchido dinamicamente ou manualmente -->
-    </div>
+    <div class="section-title">Selecione um briefing</div>
+    <div class="briefing-list" id="briefing-list"></div>
   </div>
+  <footer>SunR · Uso interno · Gerado automaticamente por Claude</footer>
 
   <script>
-    // Lista de briefings disponíveis — atualizada automaticamente
     const briefings = [
-      { date: "2026-03-19", label: "Hoje", file: "2026-03-19.html" }
+      { date: "2026-03-19", label: "Hoje", file: "2026-03-19.html" },
     ];
 
-    const list = document.getElementById('briefing-list');
+    const weekdays = ["Domingo","Segunda","Terça","Quarta","Quinta","Sexta","Sábado"];
+    const months = ["jan","fev","mar","abr","mai","jun","jul","ago","set","out","nov","dez"];
 
-    if (briefings.length === 0) {
-      list.innerHTML = '<div class="empty-state">Nenhum briefing disponível ainda.</div>';
-    } else {
-      briefings.forEach((b, i) => {
-        const a = document.createElement('a');
-        a.href = b.file;
-        a.className = 'briefing-item' + (i === 0 ? ' latest' : '');
-        a.innerHTML = `
-          <div class="item-left">
-            <div class="item-dot"></div>
-            <div>
-              <div class="item-date">${b.date}</div>
-              <div class="item-label">${b.label || 'SunR Daily Briefing'}</div>
-            </div>
-          </div>
-          <div class="item-arrow">→</div>
-        `;
-        list.appendChild(a);
-      });
+    function formatDate(dateStr) {
+      const [y, m, d] = dateStr.split('-').map(Number);
+      const dt = new Date(y, m - 1, d);
+      return `${weekdays[dt.getDay()]}, ${d} ${months[m-1]} ${y}`;
     }
-  </script>
 
+    const list = document.getElementById('briefing-list');
+    briefings.forEach((b, i) => {
+      const a = document.createElement('a');
+      a.href = b.file;
+      a.className = 'briefing-item' + (i === 0 ? ' hoje' : '');
+      a.innerHTML = `
+        <span class="badge">${b.label}</span>
+        <div class="info">
+          <div class="date-label">${formatDate(b.date)}</div>
+          <div class="date-sub">Daily Briefing SunR</div>
+        </div>
+        <span class="arrow">›</span>
+      `;
+      list.appendChild(a);
+    });
+  </script>
 </body>
 </html>
