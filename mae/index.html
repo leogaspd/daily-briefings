@@ -1,115 +1,140 @@
 <!DOCTYPE html>
 <html lang="pt-BR">
 <head>
-  <meta charset="UTF-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>Mamãe — Daily Briefings</title>
-  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&display=swap" rel="stylesheet" />
-  <style>
-    * { margin: 0; padding: 0; box-sizing: border-box; }
-    body { font-family: 'Inter', sans-serif; background: #F5F7FB; color: #0F1729; }
-
-    .topbar {
-      background: linear-gradient(135deg, #0A1020, #1C2B6E, #2A3E8C);
-      padding: 20px 32px;
-      display: flex;
-      align-items: center;
-      gap: 16px;
-    }
-    .back-link {
-      color: rgba(255,255,255,0.6);
-      text-decoration: none;
-      font-size: 13px;
-      display: flex;
-      align-items: center;
-      gap: 6px;
-      transition: color 0.2s;
-    }
-    .back-link:hover { color: #fff; }
-    .topbar-title { font-size: 16px; font-weight: 700; color: #fff; }
-    .topbar-sub { font-size: 12px; color: rgba(255,255,255,0.5); margin-top: 2px; }
-
-    .container { max-width: 720px; margin: 40px auto; padding: 0 20px 60px; }
-
-    .section-label {
-      font-size: 10px;
-      font-weight: 700;
-      letter-spacing: 2.5px;
-      text-transform: uppercase;
-      color: #9BABC4;
-      margin-bottom: 16px;
-    }
-
-    .briefing-list { display: flex; flex-direction: column; gap: 10px; }
-
-    .briefing-item {
-      background: #fff;
-      border: 1px solid #D4DCE8;
-      border-radius: 10px;
-      padding: 16px 20px;
-      text-decoration: none;
-      color: inherit;
-      display: flex;
-      align-items: center;
-      justify-content: space-between;
-      transition: border-color 0.2s, box-shadow 0.2s;
-    }
-    .briefing-item:hover {
-      border-color: #1C2B6E;
-      box-shadow: 0 4px 12px rgba(28,43,110,0.1);
-    }
-    .briefing-item.latest {
-      border-color: #1C2B6E;
-      background: linear-gradient(135deg, #f0f2ff, #fff);
-    }
-    .item-left { display: flex; align-items: center; gap: 14px; }
-    .item-dot { width: 8px; height: 8px; border-radius: 50%; background: #D4DCE8; flex-shrink: 0; }
-    .latest .item-dot { background: #1C2B6E; }
-    .item-date { font-size: 15px; font-weight: 600; color: #0F1729; }
-    .item-label { font-size: 12px; color: #9BABC4; margin-top: 2px; }
-    .latest .item-label { color: #1C2B6E; font-weight: 500; }
-    .item-arrow { color: #9BABC4; font-size: 16px; }
-    .latest .item-arrow { color: #1C2B6E; }
-  </style>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Briefings Postos Gasparini</title>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800;900&display=swap" rel="stylesheet">
+<style>
+  *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+  body {
+    background-color: #DDE1EE;
+    font-family: 'Inter', -apple-system, BlinkMacSystemFont, sans-serif;
+    color: #1A202C;
+    padding: 20px 12px 40px;
+    min-height: 100vh;
+  }
+  .wrapper {
+    max-width: 660px;
+    margin: 0 auto;
+    border-radius: 14px;
+    overflow: hidden;
+    box-shadow: 0 8px 40px rgba(10,16,32,0.18);
+    background: #FFFFFF;
+  }
+  .header {
+    background: linear-gradient(150deg, #0A1020, #1C2B6E, #2A3E8C);
+    padding: 28px 24px 24px;
+    text-align: center;
+  }
+  .logo-oval {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    width: 130px;
+    height: 60px;
+    border: 2.5px solid #C8CCD8;
+    border-radius: 50%;
+    background: linear-gradient(135deg, #0A1020 0%, #1C2B6E 60%, #2A3E8C 100%);
+    margin-bottom: 14px;
+  }
+  .logo-oval-inner { display: flex; flex-direction: column; align-items: center; line-height: 1.1; }
+  .logo-postos { font-size: 9px; font-weight: 700; color: #C8CCD8; letter-spacing: 2.5px; text-transform: uppercase; }
+  .logo-gasparini { font-size: 13px; font-weight: 900; color: #FFFFFF; letter-spacing: 1px; text-transform: uppercase; }
+  .logo-desde { font-size: 7px; font-weight: 400; color: #8899CC; letter-spacing: 1.5px; text-transform: uppercase; }
+  .header-title { font-size: 11px; font-weight: 500; color: #8899CC; letter-spacing: 2px; text-transform: uppercase; margin-bottom: 4px; }
+  .header-main { font-size: 20px; font-weight: 800; color: #FFFFFF; }
+  .header-sub { font-size: 12px; color: #6677AA; margin-top: 4px; }
+  .metallic-rule { height: 3px; background: linear-gradient(90deg, #1C2B6E, #C8CCD8, #1C2B6E); }
+  .list-section { padding: 24px; }
+  .list-title { font-size: 10px; font-weight: 700; letter-spacing: 2px; text-transform: uppercase; color: #718096; margin-bottom: 16px; }
+  .briefing-item {
+    display: flex;
+    align-items: center;
+    gap: 14px;
+    padding: 14px 16px;
+    border: 1px solid #E2E8F0;
+    border-radius: 10px;
+    margin-bottom: 8px;
+    text-decoration: none;
+    color: #1A202C;
+    background: #F7FAFC;
+    transition: background 0.15s;
+  }
+  .briefing-item:hover { background: #EBF8FF; border-color: #BEE3F8; }
+  .briefing-item.today {
+    background: linear-gradient(135deg, #EBF8FF, #F0FFF4);
+    border-color: #3182CE;
+    border-width: 2px;
+  }
+  .briefing-date-col { flex: 1; }
+  .briefing-date { font-size: 15px; font-weight: 700; color: #1A202C; }
+  .briefing-label-today {
+    display: inline-block;
+    background: #3182CE;
+    color: #fff;
+    font-size: 9px;
+    font-weight: 700;
+    padding: 2px 8px;
+    border-radius: 10px;
+    letter-spacing: 1px;
+    text-transform: uppercase;
+    margin-left: 8px;
+    vertical-align: middle;
+  }
+  .briefing-dow { font-size: 12px; color: #718096; margin-top: 2px; }
+  .briefing-arrow { font-size: 18px; color: #A0AEC0; }
+  .footer {
+    background: #0A1020;
+    padding: 16px 24px;
+    text-align: center;
+  }
+  .footer-text { font-size: 11px; color: #4A5568; letter-spacing: 0.5px; }
+  .footer-text span { color: #8899CC; }
+</style>
 </head>
 <body>
+<div class="wrapper">
+  <div class="header">
+    <div class="logo-oval">
+      <div class="logo-oval-inner">
+        <span class="logo-postos">POSTOS</span>
+        <span class="logo-gasparini">GASPARINI</span>
+        <span class="logo-desde">DESDE 1989</span>
+      </div>
+    </div>
+    <div class="header-title">Histórico de Briefings</div>
+    <div class="header-main">Briefings Diários</div>
+    <div class="header-sub">APIV · CCAR · VENETO &nbsp;|&nbsp; Vinhedo, SP</div>
+  </div>
+  <div class="metallic-rule"></div>
 
-  <div class="topbar">
-    <a href="../index.html" class="back-link">← Voltar</a>
-    <div>
-      <div class="topbar-title">Postos Gasparini — Briefing Diário</div>
-      <div class="topbar-sub">Gerado toda manhã</div>
+  <div class="list-section">
+    <div class="list-title">Edições disponíveis</div>
+
+    <a href="2026-03-20.html" class="briefing-item today">
+      <div class="briefing-date-col">
+        <div class="briefing-date">20 de março de 2026 <span class="briefing-label-today">Hoje</span></div>
+        <div class="briefing-dow">Sexta-feira · Greve adiada · Brent US$ 110 · Chuva em Vinhedo</div>
+      </div>
+      <div class="briefing-arrow">→</div>
+    </a>
+
+    <a href="2026-03-19.html" class="briefing-item">
+      <div class="briefing-date-col">
+        <div class="briefing-date">19 de março de 2026</div>
+        <div class="briefing-dow">Quinta-feira</div>
+      </div>
+      <div class="briefing-arrow">→</div>
+    </a>
+
+  </div>
+
+  <div class="footer">
+    <div class="footer-text">
+      Briefing gerado automaticamente · <span>Postos Gasparini</span>
     </div>
   </div>
-
-  <div class="container">
-    <div class="section-label">Briefings recentes</div>
-    <div class="briefing-list" id="briefing-list"></div>
-  </div>
-
-  <script>
-    const briefings = [
-      { date: "2026-03-19", label: "Hoje", file: "2026-03-19.html" }
-    ];
-
-    const list = document.getElementById('briefing-list');
-    briefings.forEach((b, i) => {
-      const a = document.createElement('a');
-      a.href = b.file;
-      a.className = 'briefing-item' + (i === 0 ? ' latest' : '');
-      a.innerHTML = `
-        <div class="item-left">
-          <div class="item-dot"></div>
-          <div>
-            <div class="item-date">${b.date}</div>
-            <div class="item-label">${b.label || 'Postos Gasparini Briefing'}</div>
-          </div>
-        </div>
-        <div class="item-arrow">→</div>
-      `;
-      list.appendChild(a);
-    });
-  </script>
-
+</div>
 </body>
 </html>
