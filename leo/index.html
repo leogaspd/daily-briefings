@@ -1,9 +1,9 @@
 <!DOCTYPE html>
 <html lang="pt-BR">
 <head>
-<meta charset="UTF-8">
-<meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>Daily Briefing SunR — Sexta, 20 mar 2026</title>
+<meta charset="UTF-8"/>
+<meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+<title>Daily Briefing SunR — Sábado, 21 mar 2026</title>
 <style>
 :root {
   --navy: #0F2444; --blue: #1B56B0; --blue-mid: #2D6FD9;
@@ -17,726 +17,898 @@
   --sp-1: 4px; --sp-2: 8px; --sp-3: 12px; --sp-4: 16px; --sp-5: 20px; --sp-6: 24px;
   --ticker-h: 36px; --sidebar-w: 208px; --radius: 8px;
 }
-*, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
-body { font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif; font-size: var(--t-base); color: #1a1a2e; background: var(--slate-100); }
+*{box-sizing:border-box;margin:0;padding:0;}
+body{font-family:-apple-system,BlinkMacSystemFont,'Segoe UI',sans-serif;font-size:var(--t-base);color:var(--slate-700);background:var(--white);}
 
 /* TICKER */
-#ticker { position: fixed; top: 0; left: 0; right: 0; height: var(--ticker-h); background: #07111F; z-index: 100; display: flex; align-items: center; overflow: hidden; border-bottom: 1px solid #1a2a3a; }
-.ticker-inner { display: flex; gap: 0; animation: marquee 60s linear infinite; white-space: nowrap; }
-.ticker-item { padding: 0 var(--sp-5); font-size: var(--t-xs); color: #94A3B8; letter-spacing: 0.3px; border-right: 1px solid #1a2a3a; display: flex; align-items: center; gap: var(--sp-1); height: var(--ticker-h); }
-.ticker-item .label { color: #64748B; font-size: 10px; text-transform: uppercase; }
-.ticker-item .val { color: #e2e8f0; font-weight: 600; }
-.ticker-item .up { color: #4ADE80; }
-.ticker-item .dn { color: #F87171; }
-@keyframes marquee { 0% { transform: translateX(0); } 100% { transform: translateX(-50%); } }
+#ticker{position:fixed;top:0;left:0;right:0;height:var(--ticker-h);background:#07111F;color:#fff;display:flex;align-items:center;overflow:hidden;z-index:1000;font-size:var(--t-xs);}
+.ticker-track{display:flex;animation:ticker-scroll 55s linear infinite;white-space:nowrap;}
+.ticker-track:hover{animation-play-state:paused;}
+.t-item{padding:0 var(--sp-4);display:flex;align-items:center;gap:6px;border-right:1px solid rgba(255,255,255,0.12);}
+.t-label{color:#94A3B8;font-size:10px;text-transform:uppercase;letter-spacing:0.04em;}
+.t-val{font-weight:600;font-size:12px;}
+.t-up{color:#4ADE80;}.t-dn{color:#F87171;}.t-neu{color:#FCD34D;}
+@keyframes ticker-scroll{0%{transform:translateX(0);}100%{transform:translateX(-50%);}}
 
 /* SIDEBAR */
-#sidebar { position: fixed; top: var(--ticker-h); left: 0; bottom: 0; width: var(--sidebar-w); background: var(--white); border-right: 1px solid var(--slate-200); overflow-y: auto; z-index: 90; display: flex; flex-direction: column; }
-.sb-logo { padding: var(--sp-4); border-bottom: 1px solid var(--slate-200); }
-.sb-logo img { width: 120px; display: block; }
-.sb-date { padding: var(--sp-3) var(--sp-4); font-size: var(--t-xs); color: var(--slate-500); border-bottom: 1px solid var(--slate-200); font-weight: 600; text-transform: uppercase; letter-spacing: 0.4px; }
-.sb-group-label { padding: var(--sp-2) var(--sp-4) var(--sp-1); font-size: 10px; font-weight: 700; color: var(--slate-400); text-transform: uppercase; letter-spacing: 0.6px; margin-top: var(--sp-2); }
-.sb-link { display: flex; align-items: center; gap: var(--sp-2); padding: var(--sp-2) var(--sp-4); font-size: var(--t-sm); color: var(--slate-700); text-decoration: none; cursor: pointer; border-radius: 0; transition: background 0.15s; }
-.sb-link:hover { background: var(--blue-xsoft); color: var(--blue); }
-.sb-link.active { background: var(--blue-soft); color: var(--blue); font-weight: 600; border-right: 2px solid var(--blue); }
-.sb-progress { margin-top: auto; padding: var(--sp-3) var(--sp-4); border-top: 1px solid var(--slate-200); }
-.sb-progress-label { font-size: 10px; color: var(--slate-400); margin-bottom: var(--sp-1); display: flex; justify-content: space-between; }
-.sb-progress-track { height: 3px; background: var(--slate-200); border-radius: 99px; }
-#readFill { height: 3px; background: var(--blue); border-radius: 99px; width: 0%; transition: width 0.1s; }
+#sidebar{position:fixed;top:var(--ticker-h);left:0;bottom:0;width:var(--sidebar-w);background:var(--white);border-right:1px solid var(--slate-200);display:flex;flex-direction:column;z-index:100;overflow-y:auto;}
+.sb-logo{padding:var(--sp-4) var(--sp-3) var(--sp-3);border-bottom:1px solid var(--slate-200);}
+.sb-logo img{width:100%;max-width:140px;}
+.sb-date{padding:var(--sp-3) var(--sp-3) var(--sp-2);font-size:var(--t-xs);color:var(--slate-500);font-weight:600;text-transform:uppercase;letter-spacing:0.06em;}
+.sb-group{padding:var(--sp-1) 0;}
+.sb-group-label{padding:var(--sp-2) var(--sp-3) var(--sp-1);font-size:10px;color:var(--slate-400);text-transform:uppercase;letter-spacing:0.08em;font-weight:700;}
+.sb-link{display:flex;align-items:center;gap:var(--sp-2);padding:6px var(--sp-3);font-size:var(--t-sm);color:var(--slate-500);cursor:pointer;text-decoration:none;border-radius:0;transition:background 0.15s,color 0.15s;border-left:2px solid transparent;}
+.sb-link:hover,.sb-link.active{background:var(--blue-soft);color:var(--blue);border-left-color:var(--blue);}
+.sb-link svg{flex-shrink:0;opacity:0.7;}
+.sb-link.active svg{opacity:1;}
+.sb-footer{margin-top:auto;padding:var(--sp-3);border-top:1px solid var(--slate-200);}
+.sb-progress-label{font-size:10px;color:var(--slate-400);margin-bottom:4px;}
+.sb-progress-bar{height:4px;background:var(--slate-200);border-radius:2px;overflow:hidden;}
+#readFill{height:100%;width:0%;background:var(--blue);transition:width 0.1s;}
 
 /* MAIN */
-#main { margin-left: var(--sidebar-w); padding-top: calc(var(--ticker-h) + var(--sp-5)); padding-bottom: 80px; padding-right: var(--sp-5); padding-left: var(--sp-5); max-width: 960px; }
+#main{margin-left:var(--sidebar-w);padding-top:var(--ticker-h);}
+.main-inner{max-width:960px;margin:0 auto;padding:var(--sp-6);}
 
-/* HEADER */
-.page-header { background: var(--navy); border-radius: var(--radius); padding: var(--sp-5) var(--sp-6); margin-bottom: var(--sp-5); color: white; display: flex; justify-content: space-between; align-items: flex-start; }
-.page-header h1 { font-size: var(--t-lg); font-weight: 700; margin-bottom: var(--sp-1); }
-.page-header .subtitle { font-size: var(--t-sm); opacity: 0.65; }
-.page-header .badge { background: rgba(255,255,255,0.12); border-radius: 4px; padding: 2px var(--sp-2); font-size: var(--t-xs); font-weight: 600; }
+/* SECTION */
+.section{margin-bottom:var(--sp-5);border:1px solid var(--slate-200);border-radius:var(--radius);overflow:hidden;background:var(--white);}
+.sec-header{display:flex;align-items:center;justify-content:space-between;padding:var(--sp-3) var(--sp-4);background:var(--slate-100);cursor:pointer;user-select:none;border-bottom:1px solid var(--slate-200);}
+.sec-header:hover{background:#E9EEF4;}
+.sec-title{display:flex;align-items:center;gap:var(--sp-2);font-size:var(--t-md);font-weight:700;color:var(--navy);}
+.sec-title svg{color:var(--blue);}
+.sec-arrow{color:var(--slate-400);transition:transform 0.2s;}
+.section.closed .sec-body{display:none;}
+.section.closed .sec-arrow{transform:rotate(-90deg);}
+.sec-body{padding:var(--sp-4);}
 
 /* ALERT BANNER */
-.alert-banner { border-radius: var(--radius); padding: var(--sp-3) var(--sp-4); margin-bottom: var(--sp-3); display: flex; gap: var(--sp-3); align-items: flex-start; }
-.alert-banner.crit { background: var(--red-soft); border-left: 3px solid var(--red); }
-.alert-banner.warn { background: var(--amber-soft); border-left: 3px solid #F59E0B; }
-.alert-banner-icon { flex-shrink: 0; margin-top: 1px; }
-.alert-banner-title { font-size: var(--t-sm); font-weight: 700; color: var(--red); margin-bottom: 2px; }
-.alert-banner.warn .alert-banner-title { color: var(--amber); }
-.alert-banner-body { font-size: var(--t-sm); color: var(--slate-700); }
+.alert{display:flex;gap:var(--sp-3);padding:var(--sp-3) var(--sp-4);border-radius:var(--radius);margin-bottom:var(--sp-3);}
+.alert.crit{background:var(--red-soft);border-left:4px solid var(--red);}
+.alert.warn{background:var(--amber-soft);border-left:4px solid #F59E0B;}
+.alert.info{background:var(--blue-soft);border-left:4px solid var(--blue);}
+.alert-icon{font-size:18px;line-height:1;flex-shrink:0;}
+.alert-body{}
+.alert-title{font-weight:700;font-size:var(--t-sm);margin-bottom:2px;}
+.alert.crit .alert-title{color:var(--red);}
+.alert.warn .alert-title{color:var(--amber);}
+.alert.info .alert-title{color:var(--blue);}
+.alert-text{font-size:var(--t-sm);color:var(--slate-500);}
 
-/* SECTIONS */
-.section { background: var(--white); border-radius: var(--radius); border: 1px solid var(--slate-200); margin-bottom: var(--sp-4); overflow: hidden; }
-.sec-header { display: flex; align-items: center; gap: var(--sp-2); padding: var(--sp-3) var(--sp-4); cursor: pointer; user-select: none; border-bottom: 1px solid var(--slate-200); background: var(--white); }
-.sec-header:hover { background: var(--blue-xsoft); }
-.section.closed .sec-header { border-bottom: none; }
-.sec-icon { display: flex; align-items: center; justify-content: center; width: 28px; height: 28px; border-radius: 6px; background: var(--blue-soft); flex-shrink: 0; }
-.sec-title { font-size: var(--t-md); font-weight: 700; color: var(--navy); flex: 1; }
-.sec-arrow { color: var(--slate-400); transition: transform 0.2s; flex-shrink: 0; }
-.section.closed .sec-arrow { transform: rotate(-90deg); }
-.sec-body { padding: var(--sp-4); }
-.section.closed .sec-body { display: none; }
-
-/* BULLETS */
-.bullet-list { list-style: none; display: flex; flex-direction: column; gap: var(--sp-2); }
-.bullet-list li { display: flex; gap: var(--sp-2); font-size: var(--t-sm); color: var(--slate-700); align-items: flex-start; line-height: 1.5; }
-.bullet-dot { width: 6px; height: 6px; border-radius: 50%; margin-top: 6px; flex-shrink: 0; }
-.dot-red { background: var(--red); }
-.dot-amber { background: #F59E0B; }
-.dot-blue { background: var(--blue); }
-.dot-green { background: var(--green); }
+/* SITUACAO bullets */
+.situation-list{list-style:none;}
+.situation-list li{padding:var(--sp-2) 0;border-bottom:1px solid var(--slate-200);font-size:var(--t-base);display:flex;gap:var(--sp-2);align-items:flex-start;}
+.situation-list li:last-child{border-bottom:none;}
+.s-dot{width:8px;height:8px;border-radius:50%;flex-shrink:0;margin-top:5px;}
+.s-dot.crit{background:var(--red);}
+.s-dot.warn{background:#F59E0B;}
+.s-dot.info{background:var(--blue);}
 
 /* ACTION ITEMS */
-.action-list { display: flex; flex-direction: column; gap: var(--sp-2); }
-.action-item { display: flex; gap: var(--sp-3); padding: var(--sp-3); border-radius: 6px; background: var(--slate-100); border-left: 2px solid transparent; align-items: flex-start; }
-.action-item.crit { border-left-color: var(--red); background: var(--red-soft); }
-.action-item.warn { border-left-color: #F59E0B; background: var(--amber-soft); }
-.action-item.info { border-left-color: var(--blue); background: var(--blue-soft); }
-.action-num { width: 20px; height: 20px; border-radius: 50%; display: flex; align-items: center; justify-content: center; font-size: 10px; font-weight: 700; flex-shrink: 0; margin-top: 1px; }
-.action-item.crit .action-num { background: var(--red); color: white; }
-.action-item.warn .action-num { background: #F59E0B; color: white; }
-.action-item.info .action-num { background: var(--blue); color: white; }
-.action-title { font-size: var(--t-sm); font-weight: 600; color: var(--navy); margin-bottom: 2px; }
-.action-desc { font-size: var(--t-xs); color: var(--slate-500); }
-.action-meta { display: flex; gap: var(--sp-1); flex-wrap: wrap; margin-top: var(--sp-1); }
-.owner-badge { font-size: 10px; font-weight: 600; padding: 1px 6px; border-radius: 3px; background: var(--slate-200); color: var(--slate-700); }
-.deadline-badge { font-size: 10px; padding: 1px 6px; border-radius: 3px; background: var(--red-soft); color: var(--red); font-weight: 600; }
-.deadline-badge.warn { background: var(--amber-soft); color: var(--amber); }
-
-/* EMAIL CARDS */
-.email-card { border: 1px solid var(--slate-200); border-radius: 6px; padding: var(--sp-3); margin-bottom: var(--sp-2); display: flex; gap: var(--sp-3); }
-.email-badge { flex-shrink: 0; padding: 2px 7px; border-radius: 3px; font-size: 10px; font-weight: 700; height: fit-content; margin-top: 2px; }
-.badge-urgente { background: var(--red); color: white; }
-.badge-acao { background: #F59E0B; color: white; }
-.badge-fyi { background: var(--blue); color: white; }
-.email-from { font-size: var(--t-xs); font-weight: 700; color: var(--navy); }
-.email-subject { font-size: var(--t-sm); font-weight: 600; color: var(--slate-700); margin: 2px 0; }
-.email-snippet { font-size: var(--t-xs); color: var(--slate-500); }
-
-/* AGENDA */
-.agenda-grid { display: grid; grid-template-columns: 1fr 1fr; gap: var(--sp-4); }
-.agenda-col-title { font-size: var(--t-xs); font-weight: 700; text-transform: uppercase; letter-spacing: 0.5px; color: var(--slate-400); margin-bottom: var(--sp-2); }
-.event-row { display: flex; gap: var(--sp-2); padding: var(--sp-2) var(--sp-3); border-radius: 6px; margin-bottom: var(--sp-1); align-items: flex-start; }
-.event-row.conflict { background: var(--red-soft); border: 1px solid #FECACA; }
-.event-row.high { background: var(--blue-soft); border: 1px solid #BFDBFE; }
-.event-row.normal { background: var(--slate-100); }
-.event-time { font-size: var(--t-xs); font-weight: 700; color: var(--slate-500); width: 40px; flex-shrink: 0; padding-top: 1px; }
-.event-title { font-size: var(--t-sm); font-weight: 600; color: var(--navy); }
-.event-sub { font-size: var(--t-xs); color: var(--slate-500); margin-top: 1px; }
-.conflict-tag { font-size: 10px; background: var(--red); color: white; padding: 1px 5px; border-radius: 3px; font-weight: 700; margin-left: var(--sp-1); }
-
-/* KPI CARDS */
-.kpi-grid { display: grid; grid-template-columns: repeat(4, 1fr); gap: var(--sp-3); margin-bottom: var(--sp-4); }
-.kpi-card { background: var(--slate-100); border-radius: 6px; padding: var(--sp-3); border-left: 3px solid transparent; }
-.kpi-card.warn { border-left-color: #F59E0B; background: var(--amber-soft); }
-.kpi-card.crit { border-left-color: var(--red); background: var(--red-soft); }
-.kpi-card.ok { border-left-color: var(--green); background: var(--green-soft); }
-.kpi-label { font-size: 10px; font-weight: 700; color: var(--slate-500); text-transform: uppercase; letter-spacing: 0.4px; margin-bottom: var(--sp-1); }
-.kpi-val { font-size: var(--t-lg); font-weight: 700; color: var(--navy); line-height: 1; }
-.kpi-sub { font-size: var(--t-xs); color: var(--slate-500); margin-top: 2px; }
-
-/* TABLE */
-table { width: 100%; border-collapse: collapse; font-size: var(--t-sm); }
-th { background: var(--navy); color: white; padding: var(--sp-2) var(--sp-3); text-align: left; font-size: var(--t-xs); text-transform: uppercase; letter-spacing: 0.4px; }
-td { padding: var(--sp-2) var(--sp-3); border-bottom: 1px solid var(--slate-200); color: var(--slate-700); }
-tr:last-child td { border-bottom: none; }
-.pill { padding: 2px 8px; border-radius: 10px; font-size: 10px; font-weight: 700; }
-.pill-green { background: var(--green-soft); color: var(--green); }
-.pill-amber { background: var(--amber-soft); color: var(--amber); }
-.pill-blue { background: var(--blue-soft); color: var(--blue); }
-.pill-red { background: var(--red-soft); color: var(--red); }
-
-/* FUNIL */
-.funil-grid { display: grid; grid-template-columns: repeat(3, 1fr); gap: var(--sp-3); }
-.funil-card { border: 1px solid var(--slate-200); border-radius: 6px; padding: var(--sp-3); }
-.funil-cliente { font-size: var(--t-sm); font-weight: 700; color: var(--navy); margin-bottom: var(--sp-1); }
-.funil-estagio { margin-bottom: var(--sp-2); }
-.funil-info { font-size: var(--t-xs); color: var(--slate-500); margin-bottom: 2px; }
-.funil-info strong { color: var(--slate-700); }
-
-/* TIME */
-.time-grid { display: grid; grid-template-columns: repeat(3, 1fr); gap: var(--sp-3); }
-.time-card { border: 1px solid var(--slate-200); border-radius: 6px; padding: var(--sp-3); }
-.time-name { font-size: var(--t-sm); font-weight: 700; color: var(--navy); margin-bottom: var(--sp-2); display: flex; align-items: center; gap: var(--sp-1); }
-.time-item { font-size: var(--t-xs); color: var(--slate-600); padding: 3px 0; border-bottom: 1px solid var(--slate-100); display: flex; gap: var(--sp-1); align-items: flex-start; }
-.time-item:last-child { border-bottom: none; }
-.time-dot { width: 5px; height: 5px; border-radius: 50%; background: var(--slate-400); margin-top: 5px; flex-shrink: 0; }
-
-/* NOTICIAS */
-.noticia-card { border-left: 2px solid var(--slate-200); padding: var(--sp-2) var(--sp-3); margin-bottom: var(--sp-3); }
-.noticia-cat { font-size: 10px; font-weight: 700; text-transform: uppercase; letter-spacing: 0.4px; margin-bottom: 2px; }
-.noticia-title { font-size: var(--t-sm); font-weight: 600; color: var(--navy); text-decoration: none; display: block; margin-bottom: 3px; }
-.noticia-title:hover { color: var(--blue); text-decoration: underline; }
-.noticia-impacto { font-size: var(--t-xs); color: var(--slate-500); }
+.action-list{display:flex;flex-direction:column;gap:var(--sp-2);}
+.action-item{display:flex;gap:var(--sp-3);padding:var(--sp-3);border-radius:var(--radius);border:1px solid var(--slate-200);border-left:3px solid;}
+.action-item.crit{border-left-color:var(--red);background:var(--red-soft);}
+.action-item.warn{border-left-color:#F59E0B;background:var(--amber-soft);}
+.action-item.info{border-left-color:var(--blue);background:var(--blue-soft);}
+.action-num{width:24px;height:24px;border-radius:50%;display:flex;align-items:center;justify-content:center;font-size:11px;font-weight:700;flex-shrink:0;color:#fff;}
+.action-item.crit .action-num{background:var(--red);}
+.action-item.warn .action-num{background:#F59E0B;}
+.action-item.info .action-num{background:var(--blue);}
+.action-body{flex:1;}
+.action-title{font-size:var(--t-sm);font-weight:600;color:var(--navy);margin-bottom:4px;}
+.action-meta{display:flex;gap:var(--sp-2);flex-wrap:wrap;align-items:center;}
+.owner-badge{font-size:10px;padding:2px 8px;border-radius:20px;background:var(--slate-200);color:var(--slate-700);font-weight:600;}
+.deadline-badge{font-size:10px;padding:2px 8px;border-radius:20px;background:var(--navy);color:#fff;font-weight:600;}
 
 /* INSIGHT */
-.insight-box { background: linear-gradient(135deg, var(--blue-xsoft), #EEF4FF); border-radius: var(--radius); padding: var(--sp-4); border: 1px solid #BFDBFE; }
-.insight-box p { font-size: var(--t-base); color: var(--navy); line-height: 1.65; }
+.insight-card{background:linear-gradient(135deg,var(--navy) 0%,var(--blue) 100%);border-radius:var(--radius);padding:var(--sp-5);color:#fff;}
+.insight-label{font-size:10px;text-transform:uppercase;letter-spacing:0.1em;opacity:0.7;margin-bottom:var(--sp-2);}
+.insight-text{font-size:var(--t-md);line-height:1.7;font-weight:500;}
+
+/* EMAILS */
+.email-list{display:flex;flex-direction:column;gap:var(--sp-2);}
+.email-card{padding:var(--sp-3) var(--sp-4);border:1px solid var(--slate-200);border-radius:var(--radius);display:flex;gap:var(--sp-3);}
+.email-badge{font-size:10px;padding:2px 8px;border-radius:20px;font-weight:700;white-space:nowrap;align-self:flex-start;}
+.email-badge.urgente{background:#FEE2E2;color:#DC2626;}
+.email-badge.acao{background:#FFFBEB;color:#B45309;}
+.email-badge.fyi{background:var(--blue-soft);color:var(--blue);}
+.email-body{flex:1;}
+.email-from{font-weight:700;font-size:var(--t-sm);color:var(--navy);}
+.email-subject{font-size:var(--t-sm);color:var(--slate-700);margin-bottom:4px;}
+.email-snippet{font-size:var(--t-xs);color:var(--slate-500);line-height:1.4;}
+
+/* AGENDA */
+.agenda-grid{display:grid;grid-template-columns:1fr 1fr;gap:var(--sp-4);}
+.agenda-day-label{font-size:var(--t-xs);font-weight:700;text-transform:uppercase;letter-spacing:0.06em;color:var(--slate-400);margin-bottom:var(--sp-2);}
+.event-row{padding:var(--sp-2) var(--sp-3);border-radius:6px;margin-bottom:var(--sp-1);border-left:3px solid;}
+.event-row.blue{background:var(--blue-soft);border-left-color:var(--blue);}
+.event-row.amber{background:var(--amber-soft);border-left-color:#F59E0B;}
+.event-row.green{background:var(--green-soft);border-left-color:#22C55E;}
+.event-time{font-size:10px;font-weight:600;color:var(--slate-500);}
+.event-title{font-size:var(--t-sm);font-weight:600;color:var(--navy);}
+.event-detail{font-size:10px;color:var(--slate-500);}
 
 /* DECISOES */
-.decisao-grid { display: grid; grid-template-columns: repeat(2, 1fr); gap: var(--sp-3); }
-.decisao-card { border: 1px solid var(--slate-200); border-radius: 6px; padding: var(--sp-3); border-left: 3px solid #F59E0B; }
-.decisao-titulo { font-size: var(--t-sm); font-weight: 700; color: var(--navy); margin-bottom: var(--sp-1); }
-.decisao-desc { font-size: var(--t-xs); color: var(--slate-600); margin-bottom: var(--sp-1); }
-.decisao-prazo { font-size: 10px; font-weight: 700; color: var(--amber); }
+.decisao-grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(260px,1fr));gap:var(--sp-3);}
+.decisao-card{padding:var(--sp-3) var(--sp-4);border:1px solid var(--slate-200);border-radius:var(--radius);background:var(--blue-xsoft);}
+.decisao-title{font-size:var(--t-sm);font-weight:700;color:var(--navy);margin-bottom:4px;}
+.decisao-text{font-size:var(--t-xs);color:var(--slate-500);line-height:1.5;}
+.decisao-owner{font-size:10px;color:var(--blue);font-weight:600;margin-top:6px;}
 
-/* OMIE */
-.omie-unidade-title { font-size: var(--t-sm); font-weight: 700; color: var(--navy); padding: var(--sp-2) 0; border-bottom: 2px solid var(--blue-soft); margin-bottom: var(--sp-3); display: flex; align-items: center; gap: var(--sp-2); }
-.omie-tag { font-size: 10px; background: var(--blue); color: white; padding: 2px 6px; border-radius: 3px; font-weight: 700; }
+/* OPERACAO */
+.task-item{padding:var(--sp-2) var(--sp-3);border-bottom:1px solid var(--slate-200);display:flex;gap:var(--sp-3);align-items:flex-start;}
+.task-item:last-child{border-bottom:none;}
+.task-status{font-size:10px;padding:2px 8px;border-radius:20px;white-space:nowrap;font-weight:600;}
+.task-status.doing{background:#DCFCE7;color:#15803D;}
+.task-status.high{background:#FEE2E2;color:#DC2626;}
+.task-body{flex:1;}
+.task-title{font-size:var(--t-sm);font-weight:600;color:var(--navy);}
+.task-meta{font-size:10px;color:var(--slate-500);}
 
-/* TAREFA */
-.tarefa-item { padding: var(--sp-2) var(--sp-3); border-radius: 6px; background: var(--slate-100); margin-bottom: var(--sp-2); display: flex; gap: var(--sp-2); align-items: center; }
-.tarefa-status { width: 8px; height: 8px; border-radius: 50%; flex-shrink: 0; }
-.tarefa-text { font-size: var(--t-sm); color: var(--navy); font-weight: 600; flex: 1; }
-.tarefa-area { font-size: 10px; color: var(--slate-500); padding: 1px 6px; background: white; border: 1px solid var(--slate-200); border-radius: 3px; }
+/* KPI CARDS */
+.kpi-grid{display:grid;grid-template-columns:repeat(4,1fr);gap:var(--sp-3);margin-bottom:var(--sp-4);}
+.kpi-card{padding:var(--sp-3) var(--sp-4);border:1px solid var(--slate-200);border-radius:var(--radius);border-left:3px solid;}
+.kpi-card.ok{border-left-color:var(--blue);}
+.kpi-card.warn{border-left-color:#F59E0B;background:var(--amber-soft);}
+.kpi-card.crit{border-left-color:var(--red);background:var(--red-soft);}
+.kpi-label{font-size:10px;text-transform:uppercase;letter-spacing:0.06em;color:var(--slate-500);margin-bottom:4px;}
+.kpi-val{font-size:var(--t-lg);font-weight:800;color:var(--navy);}
+.kpi-sub{font-size:10px;color:var(--slate-500);margin-top:2px;}
+.omie-section-title{font-size:var(--t-sm);font-weight:700;color:var(--navy);margin:var(--sp-4) 0 var(--sp-2);padding-bottom:var(--sp-1);border-bottom:2px solid var(--blue-soft);}
+.omie-table{width:100%;border-collapse:collapse;font-size:var(--t-sm);margin-bottom:var(--sp-4);}
+.omie-table th{padding:var(--sp-2) var(--sp-3);text-align:left;background:var(--slate-100);font-size:10px;text-transform:uppercase;letter-spacing:0.06em;color:var(--slate-500);font-weight:700;border-bottom:1px solid var(--slate-200);}
+.omie-table td{padding:var(--sp-2) var(--sp-3);border-bottom:1px solid var(--slate-200);color:var(--slate-700);}
+.omie-table tr:last-child td{border-bottom:none;}
+.ep-pill{font-size:10px;padding:2px 8px;border-radius:20px;font-weight:700;}
+.ep-60{background:#DCFCE7;color:#15803D;}
+.ep-50{background:#FFFBEB;color:#B45309;}
+.ep-30{background:#EFF6FF;color:#1D4ED8;}
+.omie-note{font-size:var(--t-sm);color:var(--slate-500);padding:var(--sp-3);background:var(--slate-100);border-radius:6px;}
+.unit-header{display:flex;align-items:center;gap:var(--sp-2);margin:var(--sp-4) 0 var(--sp-2);padding:var(--sp-2) var(--sp-3);background:var(--navy);border-radius:6px;color:#fff;font-size:var(--t-sm);font-weight:700;}
 
-/* UTILS */
-.divider { height: 1px; background: var(--slate-200); margin: var(--sp-4) 0; }
-.section-subtitle { font-size: var(--t-xs); font-weight: 700; text-transform: uppercase; letter-spacing: 0.5px; color: var(--slate-400); margin-bottom: var(--sp-3); }
-.teams-msg { display: flex; gap: var(--sp-3); padding: var(--sp-3); border-radius: 6px; background: var(--slate-100); margin-bottom: var(--sp-2); }
-.teams-avatar { width: 32px; height: 32px; border-radius: 50%; display: flex; align-items: center; justify-content: center; font-size: var(--t-sm); font-weight: 700; color: white; flex-shrink: 0; }
-.teams-meta { font-size: var(--t-xs); color: var(--slate-500); margin-bottom: 2px; }
-.teams-meta strong { color: var(--navy); }
-.teams-text { font-size: var(--t-sm); color: var(--slate-700); }
+/* TEAMS */
+.teams-note{font-size:var(--t-sm);color:var(--slate-500);padding:var(--sp-3);background:#FEF3C7;border-left:3px solid #F59E0B;border-radius:6px;}
+
+/* FUNIL */
+.funil-grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(240px,1fr));gap:var(--sp-3);}
+.funil-card{padding:var(--sp-3) var(--sp-4);border:1px solid var(--slate-200);border-radius:var(--radius);}
+.funil-cliente{font-size:var(--t-sm);font-weight:700;color:var(--navy);}
+.funil-estagio{font-size:10px;padding:2px 8px;border-radius:20px;font-weight:600;display:inline-flex;margin:4px 0;}
+.funil-estagio.prospectando{background:#EFF6FF;color:#1D4ED8;}
+.funil-estagio.proposta{background:#FFFBEB;color:#B45309;}
+.funil-estagio.negociacao{background:#FEF3C7;color:#92400E;}
+.funil-estagio.ganho{background:#DCFCE7;color:#15803D;}
+.funil-next{font-size:var(--t-xs);color:var(--slate-500);margin-top:4px;}
+.funil-owner{font-size:10px;color:var(--blue);font-weight:600;margin-top:4px;}
+
+/* NOTICIAS */
+.noticia-card{padding:var(--sp-3) var(--sp-4);border:1px solid var(--slate-200);border-radius:var(--radius);margin-bottom:var(--sp-2);}
+.noticia-cat{font-size:10px;text-transform:uppercase;letter-spacing:0.06em;color:var(--blue);font-weight:700;margin-bottom:4px;}
+.noticia-title{font-size:var(--t-sm);font-weight:700;color:var(--navy);text-decoration:none;display:block;}
+.noticia-title:hover{text-decoration:underline;}
+.noticia-impact{font-size:var(--t-xs);color:var(--slate-500);margin-top:6px;padding-top:6px;border-top:1px solid var(--slate-200);}
+.noticia-impact span{font-weight:600;color:var(--amber);}
+
+/* TIME */
+.time-grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(200px,1fr));gap:var(--sp-3);}
+.time-person{padding:var(--sp-3);border:1px solid var(--slate-200);border-radius:var(--radius);}
+.time-name{font-size:var(--t-sm);font-weight:700;color:var(--navy);margin-bottom:var(--sp-2);}
+.time-event{font-size:var(--t-xs);color:var(--slate-500);padding:3px 0;border-bottom:1px dashed var(--slate-200);}
+.time-event:last-child{border-bottom:none;}
+
+@media(max-width:768px){
+  #sidebar{transform:translateX(-100%);}
+  #main{margin-left:0;}
+  .kpi-grid{grid-template-columns:repeat(2,1fr);}
+  .agenda-grid{grid-template-columns:1fr;}
+}
 </style>
 </head>
 <body>
 
 <!-- TICKER BAR -->
 <div id="ticker">
-  <div class="ticker-inner">
-    <div class="ticker-item"><span class="label">Al LME</span>&nbsp;<span class="val">US$ 3.200<span class="dn">/t ▼</span></span></div>
-    <div class="ticker-item"><span class="label">Cu LME</span>&nbsp;<span class="val">US$ 11.826<span class="dn">/t ▼</span></span></div>
-    <div class="ticker-item"><span class="label">Ag LME</span>&nbsp;<span class="val">US$ 73,80<span class="up">/oz ▲</span></span></div>
-    <div class="ticker-item"><span class="label">Brent</span>&nbsp;<span class="val">US$ 108,65<span class="up"> ▲+1,18%</span></span></div>
-    <div class="ticker-item"><span class="label">IBOV</span>&nbsp;<span class="val">180.270<span class="up"> ▲+0,35%</span></span></div>
-    <div class="ticker-item"><span class="label">USD/BRL</span>&nbsp;<span class="val">R$ 5,2156<span class="dn"> ▼-0,59%</span></span></div>
-    <div class="ticker-item"><span class="label">Selic</span>&nbsp;<span class="val">14,75%<span class="dn"> ▼-0,25pp</span></span></div>
-    <div class="ticker-item"><span class="label">PETR4</span>&nbsp;<span class="val">R$ 47,86<span class="up"> ▲+1,83%</span></span></div>
-    <div class="ticker-item"><span class="label">Al LME</span>&nbsp;<span class="val">US$ 3.200<span class="dn">/t ▼</span></span></div>
-    <div class="ticker-item"><span class="label">Cu LME</span>&nbsp;<span class="val">US$ 11.826<span class="dn">/t ▼</span></span></div>
-    <div class="ticker-item"><span class="label">Ag LME</span>&nbsp;<span class="val">US$ 73,80<span class="up">/oz ▲</span></span></div>
-    <div class="ticker-item"><span class="label">Brent</span>&nbsp;<span class="val">US$ 108,65<span class="up"> ▲+1,18%</span></span></div>
-    <div class="ticker-item"><span class="label">IBOV</span>&nbsp;<span class="val">180.270<span class="up"> ▲+0,35%</span></span></div>
-    <div class="ticker-item"><span class="label">USD/BRL</span>&nbsp;<span class="val">R$ 5,2156<span class="dn"> ▼-0,59%</span></span></div>
-    <div class="ticker-item"><span class="label">Selic</span>&nbsp;<span class="val">14,75%<span class="dn"> ▼-0,25pp</span></span></div>
-    <div class="ticker-item"><span class="label">PETR4</span>&nbsp;<span class="val">R$ 47,86<span class="up"> ▲+1,83%</span></span></div>
+  <div class="ticker-track">
+    <div class="t-item"><span class="t-label">Cobre LME</span><span class="t-val t-up">$12.021,50/t</span></div>
+    <div class="t-item"><span class="t-label">Alumínio LME</span><span class="t-val t-up">$3.329,00/t</span></div>
+    <div class="t-item"><span class="t-label">Zinco LME</span><span class="t-val t-neu">$3.065,50/t</span></div>
+    <div class="t-item"><span class="t-label">Prata</span><span class="t-val t-up">~$33,50/oz</span></div>
+    <div class="t-item"><span class="t-label">Brent</span><span class="t-val t-dn">~$71,40/bbl</span></div>
+    <div class="t-item"><span class="t-label">IBOV</span><span class="t-val t-dn">~177.000 pts</span></div>
+    <div class="t-item"><span class="t-label">USD/BRL</span><span class="t-val t-dn">R$ 5,2587</span></div>
+    <div class="t-item"><span class="t-label">PETR4</span><span class="t-val t-neu">R$ 46,78</span></div>
+    <div class="t-item"><span class="t-label">Selic</span><span class="t-val t-neu">14,75% a.a.</span></div>
+    <div class="t-item"><span class="t-label">Cobre LME</span><span class="t-val t-up">$12.021,50/t</span></div>
+    <div class="t-item"><span class="t-label">Alumínio LME</span><span class="t-val t-up">$3.329,00/t</span></div>
+    <div class="t-item"><span class="t-label">Zinco LME</span><span class="t-val t-neu">$3.065,50/t</span></div>
+    <div class="t-item"><span class="t-label">Prata</span><span class="t-val t-up">~$33,50/oz</span></div>
+    <div class="t-item"><span class="t-label">Brent</span><span class="t-val t-dn">~$71,40/bbl</span></div>
+    <div class="t-item"><span class="t-label">IBOV</span><span class="t-val t-dn">~177.000 pts</span></div>
+    <div class="t-item"><span class="t-label">USD/BRL</span><span class="t-val t-dn">R$ 5,2587</span></div>
+    <div class="t-item"><span class="t-label">PETR4</span><span class="t-val t-neu">R$ 46,78</span></div>
+    <div class="t-item"><span class="t-label">Selic</span><span class="t-val t-neu">14,75% a.a.</span></div>
   </div>
 </div>
 
 <!-- SIDEBAR -->
-<div id="sidebar">
+<nav id="sidebar">
   <div class="sb-logo">
-    <img src="https://i0.wp.com/sunr.com.br/wp-content/uploads/2024/08/SunR_Logotipo-.png?fit=400%2C154&ssl=1" alt="SunR">
+    <img src="https://i0.wp.com/sunr.com.br/wp-content/uploads/2024/08/SunR_Logotipo-.png?fit=400%2C154&ssl=1" alt="SunR"/>
   </div>
-  <div class="sb-date">Sexta, 20 mar 2026</div>
-  <div class="sb-group-label">Executivo</div>
-  <a class="sb-link active" data-t="situacao" onclick="scrollTo('situacao')">
-    <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="10"/><line x1="12" y1="8" x2="12" y2="12"/><line x1="12" y1="16" x2="12.01" y2="16"/></svg>
-    Situação do Dia
-  </a>
-  <a class="sb-link" data-t="acoes" onclick="scrollTo('acoes')">
-    <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polyline points="9 11 12 14 22 4"/><path d="M21 12v7a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h11"/></svg>
-    Ações do Dia
-  </a>
-  <a class="sb-link" data-t="insight" onclick="scrollTo('insight')">
-    <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polygon points="13 2 3 14 12 14 11 22 21 10 12 10 13 2"/></svg>
-    Insight do Dia
-  </a>
-  <div class="sb-group-label">Comunicações</div>
-  <a class="sb-link" data-t="emails" onclick="scrollTo('emails')">
-    <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M4 4h16c1.1 0 2 .9 2 2v12c0 1.1-.9 2-2 2H4c-1.1 0-2-.9-2-2V6c0-1.1.9-2 2-2z"/><polyline points="22,6 12,13 2,6"/></svg>
-    E-mails
-  </a>
-  <a class="sb-link" data-t="agenda" onclick="scrollTo('agenda')">
-    <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="3" y="4" width="18" height="18" rx="2" ry="2"/><line x1="16" y1="2" x2="16" y2="6"/><line x1="8" y1="2" x2="8" y2="6"/><line x1="3" y1="10" x2="21" y2="10"/></svg>
-    Minha Agenda
-  </a>
-  <a class="sb-link" data-t="decisoes" onclick="scrollTo('decisoes')">
-    <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="10"/><line x1="12" y1="8" x2="12" y2="12"/><line x1="12" y1="16" x2="12.01" y2="16"/></svg>
-    Decisões &amp; Follow-ups
-  </a>
-  <a class="sb-link" data-t="teams" onclick="scrollTo('teams')">
-    <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M21 15a2 2 0 0 1-2 2H7l-4 4V5a2 2 0 0 1 2-2h14a2 2 0 0 1 2 2z"/></svg>
-    Teams
-  </a>
-  <div class="sb-group-label">Operações</div>
-  <a class="sb-link" data-t="operacao" onclick="scrollTo('operacao')">
-    <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M14.7 6.3a1 1 0 0 0 0 1.4l1.6 1.6a1 1 0 0 0 1.4 0l3.77-3.77a6 6 0 0 1-7.94 7.94l-6.91 6.91a2.12 2.12 0 0 1-3-3l6.91-6.91a6 6 0 0 1 7.94-7.94l-3.76 3.76z"/></svg>
-    Operação
-  </a>
-  <a class="sb-link" data-t="funil" onclick="scrollTo('funil')">
-    <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polygon points="22 3 2 3 10 12.46 10 19 14 21 14 12.46 22 3"/></svg>
-    Funil de Vendas
-  </a>
-  <a class="sb-link" data-t="time" onclick="scrollTo('time')">
-    <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M17 21v-2a4 4 0 0 0-4-4H5a4 4 0 0 0-4 4v2"/><circle cx="9" cy="7" r="4"/><path d="M23 21v-2a4 4 0 0 0-3-3.87"/><path d="M16 3.13a4 4 0 0 1 0 7.75"/></svg>
-    Agenda do Time
-  </a>
-  <div class="sb-group-label">Dados</div>
-  <a class="sb-link" data-t="omie" onclick="scrollTo('omie')">
-    <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><line x1="12" y1="1" x2="12" y2="23"/><path d="M17 5H9.5a3.5 3.5 0 0 0 0 7h5a3.5 3.5 0 0 1 0 7H6"/></svg>
-    Painel Omie
-  </a>
-  <a class="sb-link" data-t="noticias" onclick="scrollTo('noticias')">
-    <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M2 3h6a4 4 0 0 1 4 4v14a3 3 0 0 0-3-3H2z"/><path d="M22 3h-6a4 4 0 0 0-4 4v14a3 3 0 0 1 3-3h7z"/></svg>
-    Radar de Notícias
-  </a>
-  <div class="sb-progress">
-    <div class="sb-progress-label"><span>Leitura</span><span id="readPct">0%</span></div>
-    <div class="sb-progress-track"><div id="readFill"></div></div>
+  <div class="sb-date">Sábado, 21 mar 2026</div>
+  <div class="sb-group">
+    <div class="sb-group-label">Executivo</div>
+    <a class="sb-link" data-t="situacao" href="#situacao">
+      <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="10"/><line x1="12" y1="8" x2="12" y2="12"/><line x1="12" y1="16" x2="12.01" y2="16"/></svg>Situação do Dia
+    </a>
+    <a class="sb-link" data-t="acoes" href="#acoes">
+      <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polyline points="9 11 12 14 22 4"/><path d="M21 12v7a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h11"/></svg>Ações do Dia
+    </a>
+    <a class="sb-link" data-t="insight" href="#insight">
+      <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polygon points="13 2 3 14 12 14 11 22 21 10 12 10 13 2"/></svg>Insight do Dia
+    </a>
   </div>
-</div>
+  <div class="sb-group">
+    <div class="sb-group-label">Comunicações</div>
+    <a class="sb-link" data-t="emails" href="#emails">
+      <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M4 4h16c1.1 0 2 .9 2 2v12c0 1.1-.9 2-2 2H4c-1.1 0-2-.9-2-2V6c0-1.1.9-2 2-2z"/><polyline points="22,6 12,13 2,6"/></svg>E-mails
+    </a>
+    <a class="sb-link" data-t="teams" href="#teams">
+      <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M21 15a2 2 0 0 1-2 2H7l-4 4V5a2 2 0 0 1 2-2h14a2 2 0 0 1 2 2z"/></svg>Teams
+    </a>
+  </div>
+  <div class="sb-group">
+    <div class="sb-group-label">Agenda &amp; Decisões</div>
+    <a class="sb-link" data-t="agenda" href="#agenda">
+      <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="3" y="4" width="18" height="18" rx="2" ry="2"/><line x1="16" y1="2" x2="16" y2="6"/><line x1="8" y1="2" x2="8" y2="6"/><line x1="3" y1="10" x2="21" y2="10"/></svg>Agenda
+    </a>
+    <a class="sb-link" data-t="decisoes" href="#decisoes">
+      <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"/><polyline points="14 2 14 8 20 8"/><line x1="16" y1="13" x2="8" y2="13"/><line x1="16" y1="17" x2="8" y2="17"/></svg>Decisões
+    </a>
+  </div>
+  <div class="sb-group">
+    <div class="sb-group-label">Operações</div>
+    <a class="sb-link" data-t="operacao" href="#operacao">
+      <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="3"/><path d="M19.07 4.93a10 10 0 0 1 0 14.14M4.93 4.93a10 10 0 0 0 0 14.14"/></svg>Operação
+    </a>
+    <a class="sb-link" data-t="funil" href="#funil">
+      <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polygon points="22 3 2 3 10 12.46 10 19 14 21 14 12.46 22 3"/></svg>Funil Vendas
+    </a>
+    <a class="sb-link" data-t="time" href="#time">
+      <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M17 21v-2a4 4 0 0 0-4-4H5a4 4 0 0 0-4 4v2"/><circle cx="9" cy="7" r="4"/><path d="M23 21v-2a4 4 0 0 0-3-3.87"/><path d="M16 3.13a4 4 0 0 1 0 7.75"/></svg>Agenda do Time
+    </a>
+  </div>
+  <div class="sb-group">
+    <div class="sb-group-label">Dados</div>
+    <a class="sb-link" data-t="omie" href="#omie">
+      <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><line x1="18" y1="20" x2="18" y2="10"/><line x1="12" y1="20" x2="12" y2="4"/><line x1="6" y1="20" x2="6" y2="14"/></svg>Painel Omie
+    </a>
+    <a class="sb-link" data-t="noticias" href="#noticias">
+      <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M21 16V8a2 2 0 0 0-1-1.73l-7-4a2 2 0 0 0-2 0l-7 4A2 2 0 0 0 3 8v8a2 2 0 0 0 1 1.73l7 4a2 2 0 0 0 2 0l7-4A2 2 0 0 0 21 16z"/></svg>Radar Notícias
+    </a>
+  </div>
+  <div class="sb-footer">
+    <div class="sb-progress-label">Progresso de leitura</div>
+    <div class="sb-progress-bar"><div id="readFill"></div></div>
+  </div>
+</nav>
 
-<!-- MAIN -->
+<!-- MAIN CONTENT -->
 <div id="main">
-
-  <div class="page-header">
-    <div>
-      <h1>Daily Briefing — SunR</h1>
-      <div class="subtitle">Sexta-feira, 20 de março de 2026 &nbsp;·&nbsp; Período de referência: quinta, 19/03/2026</div>
-    </div>
-    <span class="badge">Leo · CEO</span>
-  </div>
+<div class="main-inner">
 
   <!-- ALERT BANNERS -->
-  <div class="alert-banner crit">
-    <div class="alert-banner-icon"><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="#DC2626" stroke-width="2"><path d="M10.29 3.86L1.82 18a2 2 0 0 0 1.71 3h16.94a2 2 0 0 0 1.71-3L13.71 3.86a2 2 0 0 0-3.42 0z"/><line x1="12" y1="9" x2="12" y2="13"/><line x1="12" y1="17" x2="12.01" y2="17"/></svg></div>
-    <div><div class="alert-banner-title">CONFLITO DE AGENDA — 15h HOJE</div>
-    <div class="alert-banner-body">Reunião Petrobras CENPES (15h–16h) vs. Plenária ABRAMAR (15h–16h30). Ambos simultâneos. Decisão necessária antes do almoço: qual priorizar.</div></div>
+  <div class="alert crit">
+    <div class="alert-icon">&#128308;</div>
+    <div class="alert-body">
+      <div class="alert-title">PETROBRAS CENPES — Enviar Proposta REGAP Hoje</div>
+      <div class="alert-text">Primeira reunião histórica com CENPES realizada ontem (20/03). Guido solicitou proposta incluindo termografia, eletroluminescência e reciclagem para a usina REGAP (Betim-MG) que entrou em operação com visita do presidente Lula. Pipeline de 4–5 usinas adicionais. CENPES como influenciador pode criar política de gestão para toda a Petrobras.</div>
+    </div>
   </div>
 
-  <div class="alert-banner crit">
-    <div class="alert-banner-icon"><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="#DC2626" stroke-width="2"><rect x="3" y="11" width="18" height="11" rx="2" ry="2"/><path d="M7 11V7a5 5 0 0 1 10 0v4"/></svg></div>
-    <div><div class="alert-banner-title">SISBAJUD — BLOQUEIO JUDICIAL ATIVO (Valinhos)</div>
-    <div class="alert-banner-body">JHG Transportes · R$ 4.225,55 · Conta Itaú Valinhos bloqueada. Ligar Souto Correa até 12h — 5 dias úteis para contestação.</div></div>
+  <div class="alert warn">
+    <div class="alert-icon">&#9888;&#65039;</div>
+    <div class="alert-body">
+      <div class="alert-title">VOLTALIA — Coleta 26/03: CNH do Motorista Ainda Não Enviada</div>
+      <div class="alert-text">Coleta reagendada para 26/03 confirmada pela Voltalia. Condição imprescindível: enviar documentação do motorista (CNH). Bianca / Carolina devem resolver ainda hoje ou segunda-feira 23/03 no máximo.</div>
+    </div>
   </div>
 
-  <div class="alert-banner warn">
-    <div class="alert-banner-icon"><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="#B45309" stroke-width="2"><circle cx="12" cy="12" r="10"/><polyline points="12 6 12 12 16 14"/></svg></div>
-    <div><div class="alert-banner-title">E-WASTE AFRICA — PRAZO VENCE AMANHÃ (21/03)</div>
-    <div class="alert-banner-body">Proposta US$ 50.000 enviada a Kwame Asante. Confirmar aceitação, prorrogar ou recusar antes do fim do expediente hoje.</div></div>
+  <div class="alert warn">
+    <div class="alert-icon">&#9888;&#65039;</div>
+    <div class="alert-body">
+      <div class="alert-title">MRC-MÉXICO — Instalação Elétrica Bloqueia Cronograma de Abril</div>
+      <div class="alert-text">Máquina chegou ao porto de Manzanillo. Armazém em Ciudad Guzmán previsto para ~01/04. Blocante crítico: instalação elétrica não concluída (empresa governamental lenta, equipe aguardando desde janeiro). Aguardar confirmação de Ximena antes de comprar passagens.</div>
+    </div>
   </div>
 
-  <!-- 1. SITUAÇÃO DO DIA -->
+  <!-- SEÇÃO 1: SITUAÇÃO DO DIA -->
   <div class="section" id="situacao">
     <div class="sec-header" onclick="toggle(this)">
-      <div class="sec-icon"><svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="#1B56B0" stroke-width="2"><circle cx="12" cy="12" r="10"/><line x1="12" y1="8" x2="12" y2="12"/><line x1="12" y1="16" x2="12.01" y2="16"/></svg></div>
-      <span class="sec-title">Situação do Dia</span>
+      <div class="sec-title">
+        <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="10"/><line x1="12" y1="8" x2="12" y2="12"/><line x1="12" y1="16" x2="12.01" y2="16"/></svg>
+        Situação do Dia
+      </div>
       <svg class="sec-arrow" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polyline points="6 9 12 15 18 9"/></svg>
     </div>
     <div class="sec-body">
-      <ul class="bullet-list">
-        <li><span class="bullet-dot dot-red"></span><span><strong>CONFLITO 15h:</strong> Reunião Petrobras CENPES (9 técnicos de P&D, inbound estratégico, oportunidade 1,7 GW) simultânea à Plenária ABRAMAR. Decidir antes do almoço — e definir quem representa a SunR no outro evento.</span></li>
-        <li><span class="bullet-dot dot-red"></span><span><strong>SISBAJUD ativo:</strong> Bloqueio judicial JHG Transportes na conta Itaú Valinhos (R$ 4.225,55). Prazo: 5 dias úteis para contestação. Souto Correa precisa ser acionado hoje antes do meio-dia.</span></li>
-        <li><span class="bullet-dot dot-red"></span><span><strong>E-Waste Africa:</strong> Prazo da proposta de US$ 50.000 vence AMANHÃ. Kwame Asante aguarda. Resposta obrigatória até o fim do expediente hoje.</span></li>
-        <li><span class="bullet-dot dot-amber"></span><span><strong>Ecoprogetti:</strong> 11 dias para o prazo de 31/03 (contrato ou cancelamento). Marco Falzoni fez 3º follow-up. Alinhamento interno com Marinna pendente.</span></li>
-        <li><span class="bullet-dot dot-amber"></span><span><strong>Brent US$ 108,65 (+1,18%):</strong> Conflito Irã/Oriente Médio; pico intraday a US$ 119. Logística de coleta e transporte em alerta — monitorar impacto em custos de frete.</span></li>
-        <li><span class="bullet-dot dot-blue"></span><span><strong>Selic cortada para 14,75%:</strong> Copom reduziu 0,25pp ontem por unanimidade — primeira queda em quase dois anos. Impacto positivo em refinanciamento e projetos de capital da SunR.</span></li>
-        <li><span class="bullet-dot dot-blue"></span><span><strong>ICP Workshop concluído (19/03):</strong> Mateus finalizou estrutura de ICPs para grandes usinas, pequenas usinas e gestores de resíduos. Fabricantes serão "Parceiro Profile". Próximo passo: listas de empresas via Perplexity.</span></li>
+      <ul class="situation-list">
+        <li><span class="s-dot crit"></span><strong>Petrobras CENPES (20/03):</strong> Reunião histórica realizada. 9 pessoas do CENPES presentes. Usina REGAP (Betim-MG, 10 MW) inaugurada ontem com Lula. Pedido de proposta urgente para O&amp;M + reciclagem. Pipeline: Renext-PE, Replan-SP, Boa Aventura-RJ, Tevaco-SJC, Urucum-AM. Potencial de P&amp;D via FINEP para separação de metais nobres.</li>
+        <li><span class="s-dot crit"></span><strong>Voltalia — Serra do Mel/RN:</strong> Coleta confirmada para 26/03. Blocante: CNH do motorista ainda não enviada à Isadora Benevides. Bianca/Carolina precisam resolver.</li>
+        <li><span class="s-dot warn"></span><strong>MRC-México:</strong> Máquina no porto. Previsão no armazém ~01/04. Instalação elétrica travada por empresa governamental lenta (equipe esperando desde janeiro). Ximena deve confirmar data; só depois comprar passagens. Viagem meta: semana 6/04.</li>
+        <li><span class="s-dot warn"></span><strong>EWaste Africa — PO-0213:</strong> Antoinette Maree solicita carta bancária com carimbo para agendar pagamento. Mark Williams-Wynn ausente até 23/03. Leo precisa enviar o documento.</li>
+        <li><span class="s-dot warn"></span><strong>ABRAMAR:</strong> Reunião plenária realizada ontem. Enviada ata + proposta de melhorias ao Decreto 10.240/20 (logística reversa eletroeletrônicos) para o MMA e MDIC. Leo é destinatário — importante ler e posicionar a SunR.</li>
+        <li><span class="s-dot warn"></span><strong>Contabilidade Controle:</strong> Solicita pagamento de taxa para registro do livro contábil de 2024. Após isso, seguirá com 2025 para regularizar situação contábil.</li>
+        <li><span class="s-dot info"></span><strong>INOVA 5 (Bossa Invest):</strong> Resultado adiado para 27/03/2026. SunR aguarda como inscrita no programa.</li>
       </ul>
     </div>
   </div>
 
-  <!-- 2. AÇÕES DO DIA -->
+  <!-- SEÇÃO 2: AÇÕES DO DIA -->
   <div class="section" id="acoes">
     <div class="sec-header" onclick="toggle(this)">
-      <div class="sec-icon"><svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="#1B56B0" stroke-width="2"><polyline points="9 11 12 14 22 4"/><path d="M21 12v7a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h11"/></svg></div>
-      <span class="sec-title">Ações do Dia</span>
+      <div class="sec-title">
+        <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polyline points="9 11 12 14 22 4"/><path d="M21 12v7a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h11"/></svg>
+        Ações do Dia
+      </div>
       <svg class="sec-arrow" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polyline points="6 9 12 15 18 9"/></svg>
     </div>
     <div class="sec-body">
       <div class="action-list">
         <div class="action-item crit">
           <div class="action-num">1</div>
-          <div>
-            <div class="action-title">Resolver conflito de agenda 15h — Petrobras vs. ABRAMAR</div>
-            <div class="action-desc">9 técnicos CENPES confirmados. ABRAMAR é compromisso institucional. Escolher prioridade e definir representação no outro evento antes do almoço.</div>
-            <div class="action-meta"><span class="owner-badge">Leo</span><span class="deadline-badge">Até 12h</span></div>
+          <div class="action-body">
+            <div class="action-title">Enviar proposta REGAP para Petrobras CENPES (termografia + eletroluminescência + reciclagem/O&amp;M)</div>
+            <div class="action-meta"><span class="owner-badge">Leo / Carolina</span><span class="deadline-badge">Hoje 21/03</span></div>
           </div>
         </div>
         <div class="action-item crit">
           <div class="action-num">2</div>
-          <div>
-            <div class="action-title">SISBAJUD — Ligar Souto Correa imediatamente</div>
-            <div class="action-desc">Bloqueio judicial ativo conta Itaú Valinhos (R$ 4.225,55 / JHG Transportes). 5 dias úteis para contestação ou negociação.</div>
-            <div class="action-meta"><span class="owner-badge">Leo</span><span class="deadline-badge">Até 12h</span></div>
+          <div class="action-body">
+            <div class="action-title">Voltalia — enviar CNH do motorista para Isadora Benevides antes da coleta de 26/03</div>
+            <div class="action-meta"><span class="owner-badge">Bianca / Carolina</span><span class="deadline-badge">Urgente — 22/03</span></div>
           </div>
         </div>
         <div class="action-item crit">
           <div class="action-num">3</div>
-          <div>
-            <div class="action-title">E-Waste Africa — Dar resposta definitiva (prazo vence amanhã)</div>
-            <div class="action-desc">Kwame Asante aguarda posição sobre proposta US$ 50k e parceria de coleta nos 80 pontos SP. Aceitar, prorrogar ou recusar — qualquer opção precisa sair hoje.</div>
-            <div class="action-meta"><span class="owner-badge">Leo / Marinna</span><span class="deadline-badge">Até 18h</span></div>
+          <div class="action-body">
+            <div class="action-title">EWaste Africa PO-0213 — enviar carta bancária com carimbo para Antoinette Maree</div>
+            <div class="action-meta"><span class="owner-badge">Leo</span><span class="deadline-badge">Hoje 21/03</span></div>
           </div>
         </div>
         <div class="action-item warn">
           <div class="action-num">4</div>
-          <div>
-            <div class="action-title">Container México — Reunião Rimena 10h30</div>
-            <div class="action-desc">Montserrat Vega confirma 2,4t de módulos em Valinhos. Alinhar balanço do lote, precificação e próximos 3 containers previstos para Q2.</div>
-            <div class="action-meta"><span class="owner-badge">Leo</span><span class="deadline-badge warn">10h30</span></div>
+          <div class="action-body">
+            <div class="action-title">MRC-México — aguardar confirmação de Ximena sobre elétrica; depois comprar passagens (meta: semana 6/04)</div>
+            <div class="action-meta"><span class="owner-badge">Leo / Marinna</span><span class="deadline-badge">Semana 23/03</span></div>
           </div>
         </div>
         <div class="action-item warn">
           <div class="action-num">5</div>
-          <div>
-            <div class="action-title">Petrobras CENPES 15h — Preparação final</div>
-            <div class="action-desc">Briefing completo disponível no Notion. Foco: posicionar SunR como solução end-to-end certificada, mapear power map para procurement. Perguntar sobre end-of-life policy e pipeline procurement na reunião.</div>
-            <div class="action-meta"><span class="owner-badge">Leo</span><span class="owner-badge">Marinna</span><span class="owner-badge">Bianca</span><span class="owner-badge">Laís</span><span class="owner-badge">Carol</span><span class="deadline-badge warn">15h</span></div>
+          <div class="action-body">
+            <div class="action-title">Granito Boneli — checar status do processo SISBAJUD / JHG Transportes x SunR (risco de bloqueio bancário)</div>
+            <div class="action-meta"><span class="owner-badge">Leo / Jurídico</span><span class="deadline-badge">Semana 23/03</span></div>
           </div>
         </div>
         <div class="action-item warn">
           <div class="action-num">6</div>
-          <div>
-            <div class="action-title">Ecoprogetti — Definir posição esta semana</div>
-            <div class="action-desc">3º follow-up de Marco Falzoni. Prazo 31/03 para contrato ou cancelamento. Alinhar com Marinna e tomar decisão esta semana.</div>
-            <div class="action-meta"><span class="owner-badge">Leo / Marinna</span><span class="deadline-badge warn">Prazo: 31/03</span></div>
+          <div class="action-body">
+            <div class="action-title">Contabilidade Controle — pagar taxa para registro do livro contábil de 2024</div>
+            <div class="action-meta"><span class="owner-badge">Financeiro / Marinna</span><span class="deadline-badge">Semana 23/03</span></div>
           </div>
         </div>
-        <div class="action-item info">
+        <div class="action-item warn">
           <div class="action-num">7</div>
-          <div>
-            <div class="action-title">PV Cycle — Empréstimo conversível (reunião interna)</div>
-            <div class="action-desc">Reunião interna pendente para definir posição sobre o empréstimo conversível. Prazo: semana que vem.</div>
-            <div class="action-meta"><span class="owner-badge">Leo</span></div>
+          <div class="action-body">
+            <div class="action-title">ABRAMAR — ler ata plenária e proposta de melhorias ao Decreto 10.240/20; definir posicionamento da SunR</div>
+            <div class="action-meta"><span class="owner-badge">Leo</span><span class="deadline-badge">23/03</span></div>
           </div>
         </div>
         <div class="action-item info">
           <div class="action-num">8</div>
-          <div>
-            <div class="action-title">Cobrar Mateus: listas de empresas por ICP</div>
-            <div class="action-desc">Próximos passos definidos no ICP Workshop de ontem: finalizar listas de distribuidores e fabricantes usando Perplexity com exemplos de clientes atuais nos prompts.</div>
-            <div class="action-meta"><span class="owner-badge">Leo → Mateus</span></div>
+          <div class="action-body">
+            <div class="action-title">Fox Convida 25/03 — "Estratégias corporativas para a Economia Circular" (Indústria Fox, São Paulo)</div>
+            <div class="action-meta"><span class="owner-badge">Leo (opcional)</span><span class="deadline-badge">25/03</span></div>
           </div>
         </div>
       </div>
     </div>
   </div>
 
-  <!-- 3. INSIGHT DO DIA -->
-  <div class="section" id="insight">
+  <!-- SEÇÃO 3: INSIGHT DO DIA -->
+  <div class="section closed" id="insight">
     <div class="sec-header" onclick="toggle(this)">
-      <div class="sec-icon"><svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="#1B56B0" stroke-width="2"><polygon points="13 2 3 14 12 14 11 22 21 10 12 10 13 2"/></svg></div>
-      <span class="sec-title">Insight do Dia</span>
+      <div class="sec-title">
+        <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polygon points="13 2 3 14 12 14 11 22 21 10 12 10 13 2"/></svg>
+        Insight do Dia
+      </div>
       <svg class="sec-arrow" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polyline points="6 9 12 15 18 9"/></svg>
     </div>
     <div class="sec-body">
-      <div class="insight-box">
-        <p>A reunião Petrobras de hoje acontece no momento de máximo alinhamento de ventos a favor: o Brent a US$ 108 — pressionado pelo conflito do Irã — intensifica a urgência de majors em demonstrar responsabilidade ESG para investidores institucionais; a Selic recém-cortada para 14,75% reduz o custo do capital dos US$ 13 bi em transição energética da Petrobras; e o PL 391/25 (logística reversa FV) avança no Congresso, tornando inevitável que a Petrobras — com 1,7 GW em construção e 6 GW em pipeline — defina seu parceiro de reciclagem antes de 2027. A SunR é a única solução certificada e operacional no Brasil. O objetivo de hoje não é fechar contrato: é sair da reunião com o contato da área de procurement dos projetos solares e com um piloto mapeado (refinarias Regap ou Replan são volumes gerenciáveis e aprovam rápido).</p>
+      <div class="insight-card">
+        <div class="insight-label">Insight Estratégico — 21 mar 2026</div>
+        <div class="insight-text">A reunião com Petrobras CENPES é o maior evento comercial da semana — possivelmente do mês. O CENPES não é comprador direto; é formulador de política interna. Uma parceria bem conduzida pode criar obrigação corporativa de gestão de módulos fotovoltaicos em toda a cadeia da Petrobras, incluindo as 4–5 novas usinas em construção e a futura usina de 200 MW com Lightsource BP no Ceará. Com alumínio LME a $3.329/t e cobre a $12.021/t — os maiores valores do período recente — as margens sobre byproducts do processo de reciclagem da SunR estão no melhor momento histórico. Ao mesmo tempo, os riscos jurídicos (SISBAJUD/JHG, distrato DP-Remoto) precisam de atenção preventiva antes de evoluírem para bloqueios que impactem o fluxo de caixa.</div>
       </div>
     </div>
   </div>
 
-  <!-- 4. E-MAILS -->
+  <!-- SEÇÃO 4: E-MAILS -->
   <div class="section closed" id="emails">
     <div class="sec-header" onclick="toggle(this)">
-      <div class="sec-icon"><svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="#1B56B0" stroke-width="2"><path d="M4 4h16c1.1 0 2 .9 2 2v12c0 1.1-.9 2-2 2H4c-1.1 0-2-.9-2-2V6c0-1.1.9-2 2-2z"/><polyline points="22,6 12,13 2,6"/></svg></div>
-      <span class="sec-title">E-mails</span>
-      <svg class="sec-arrow" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" style="transform:rotate(-90deg)"><polyline points="6 9 12 15 18 9"/></svg>
+      <div class="sec-title">
+        <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M4 4h16c1.1 0 2 .9 2 2v12c0 1.1-.9 2-2 2H4c-1.1 0-2-.9-2-2V6c0-1.1.9-2 2-2z"/><polyline points="22,6 12,13 2,6"/></svg>
+        E-mails — 19–20 mar 2026
+      </div>
+      <svg class="sec-arrow" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polyline points="6 9 12 15 18 9"/></svg>
     </div>
     <div class="sec-body">
-      <p style="font-size:var(--t-xs);color:var(--slate-400);margin-bottom:var(--sp-3);">Busca Gmail: sem novos e-mails externos em 19/03/2026. Itens abaixo são carry-over com ação ainda pendente.</p>
-      <div class="email-card">
-        <span class="email-badge badge-urgente">Urgente</span>
-        <div>
-          <div class="email-from">Kwame Asante — E-Waste Africa</div>
-          <div class="email-subject">Re: Partnership Proposal — US$ 50k · Prazo 21/03</div>
-          <div class="email-snippet">Aguarda resposta da SunR. Prazo original amanhã (21/03).</div>
+      <div class="email-list">
+        <div class="email-card">
+          <span class="email-badge urgente">Urgente</span>
+          <div class="email-body">
+            <div class="email-from">Isadora Benevides — Voltalia</div>
+            <div class="email-subject">RE: OS — Coleta painéis Serra do Mel/RN — 1628.Voltalia</div>
+            <div class="email-snippet">Coleta reagendada para 26/03/2026 confirmada. Condição imprescindível: enviar documentação do motorista (CNH). Sem isso a coleta não acontece.</div>
+          </div>
         </div>
-      </div>
-      <div class="email-card">
-        <span class="email-badge badge-urgente">Urgente</span>
-        <div>
-          <div class="email-from">Adv. Tiago Melo — JHG Transportes</div>
-          <div class="email-subject">SISBAJUD — Notificação de Bloqueio Judicial</div>
-          <div class="email-snippet">Bloqueio conta Itaú Valinhos (R$ 4.225,55). 5 dias úteis para contestação.</div>
+        <div class="email-card">
+          <span class="email-badge urgente">Urgente</span>
+          <div class="email-body">
+            <div class="email-from">Antoinette Maree — EWaste Africa</div>
+            <div class="email-subject">Re: Purchase Order PO-0213 from Baclan Energy / EWaste Africa</div>
+            <div class="email-snippet">Solicita carta bancária com carimbo do banco para agendar o pagamento do PO-0213. Agradeceu a fatura enviada anteriormente.</div>
+          </div>
         </div>
-      </div>
-      <div class="email-card">
-        <span class="email-badge badge-acao">Ação</span>
-        <div>
-          <div class="email-from">Marco Falzoni — Ecoprogetti</div>
-          <div class="email-subject">3º Follow-up — Proposta Técnica Equipamentos</div>
-          <div class="email-snippet">Terceiro contato. Proposta vence 31/03.</div>
+        <div class="email-card">
+          <span class="email-badge urgente">Urgente</span>
+          <div class="email-body">
+            <div class="email-from">Isabella Parisi — Granito Boneli</div>
+            <div class="email-subject">RES: Granito Boneli | Risco SISBAJUD | Execução JHG Transportes x SunR</div>
+            <div class="email-snippet">Exequente (JHG Transportes) já noticiou bloqueio nos autos. Aguardam plano de ação da SunR. Risco real de bloqueio bancário via SISBAJUD.</div>
+          </div>
         </div>
-      </div>
-      <div class="email-card">
-        <span class="email-badge badge-acao">Ação</span>
-        <div>
-          <div class="email-from">Montserrat Vega — Rimena México</div>
-          <div class="email-subject">Container chegou — 2,4t módulos — solicita reunião</div>
-          <div class="email-snippet">Confirma chegada em Valinhos. Reunião balanço agendada 10h30 hoje.</div>
+        <div class="email-card">
+          <span class="email-badge acao">Ação</span>
+          <div class="email-body">
+            <div class="email-from">Controle Contabilidade</div>
+            <div class="email-subject">BPO SunR — registro do livro contábil de 2024</div>
+            <div class="email-snippet">Solicita pagamento da taxa (boleto em anexo) para registrar o livro contábil de 2024. Após isso, seguirá com 2025.</div>
+          </div>
         </div>
-      </div>
-      <div class="email-card">
-        <span class="email-badge badge-fyi">FYI</span>
-        <div>
-          <div class="email-from">Antoinette Diderot — EWA</div>
-          <div class="email-subject">PO-0213 / INV-2026-001 — Comprovante bancário pendente</div>
-          <div class="email-snippet">Aguarda comprovante de transferência para liberar próxima etapa.</div>
+        <div class="email-card">
+          <span class="email-badge acao">Ação</span>
+          <div class="email-body">
+            <div class="email-from">Presidência ABRAMAR</div>
+            <div class="email-subject">Propostas para aprimoramento do Decreto 10.240/20</div>
+            <div class="email-snippet">Documento com sugestões de melhoria da logística reversa de eletroeletrônicos, a ser enviado ao MMA e MDIC. Leo é destinatário direto.</div>
+          </div>
+        </div>
+        <div class="email-card">
+          <span class="email-badge acao">Ação</span>
+          <div class="email-body">
+            <div class="email-from">ABRAMAR Associação</div>
+            <div class="email-subject">Encaminhamento de Ata — Reunião Plenária 20/03/2026</div>
+            <div class="email-snippet">Ata da reunião plenária realizada ontem e apresentação compartilhada para conhecimento e registro dos associados.</div>
+          </div>
+        </div>
+        <div class="email-card">
+          <span class="email-badge acao">Ação</span>
+          <div class="email-body">
+            <div class="email-from">Giovanna Rossagnesi — Granito Boneli</div>
+            <div class="email-subject">RE: Assuntos jurídicos — INPI máquina SunR</div>
+            <div class="email-snippet">Sobre o registro de nome no INPI referente à máquina SunR. Solicita mais detalhes sobre o que a SunR pretende registrar (marca, patente, modelo de utilidade?)</div>
+          </div>
+        </div>
+        <div class="email-card">
+          <span class="email-badge fyi">FYI</span>
+          <div class="email-body">
+            <div class="email-from">Théo Rodrigues — Bossa Invest</div>
+            <div class="email-subject">[INOVA 5] Adiamento da divulgação dos resultados</div>
+            <div class="email-snippet">Resultados da 5ª edição do programa INOVA adiados para 27/03/2026.</div>
+          </div>
         </div>
       </div>
     </div>
   </div>
 
-  <!-- 5. AGENDA -->
+  <!-- SEÇÃO 5: AGENDA -->
   <div class="section closed" id="agenda">
     <div class="sec-header" onclick="toggle(this)">
-      <div class="sec-icon"><svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="#1B56B0" stroke-width="2"><rect x="3" y="4" width="18" height="18" rx="2" ry="2"/><line x1="16" y1="2" x2="16" y2="6"/><line x1="8" y1="2" x2="8" y2="6"/><line x1="3" y1="10" x2="21" y2="10"/></svg></div>
-      <span class="sec-title">Minha Agenda</span>
-      <svg class="sec-arrow" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" style="transform:rotate(-90deg)"><polyline points="6 9 12 15 18 9"/></svg>
+      <div class="sec-title">
+        <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="3" y="4" width="18" height="18" rx="2" ry="2"/><line x1="16" y1="2" x2="16" y2="6"/><line x1="8" y1="2" x2="8" y2="6"/><line x1="3" y1="10" x2="21" y2="10"/></svg>
+        Minha Agenda
+      </div>
+      <svg class="sec-arrow" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polyline points="6 9 12 15 18 9"/></svg>
     </div>
     <div class="sec-body">
       <div class="agenda-grid">
         <div>
-          <div class="agenda-col-title">Hoje — Sexta, 20/03</div>
-          <div class="event-row high">
-            <div class="event-time">10h30</div>
-            <div><div class="event-title">Container México — Rimena</div><div class="event-sub">Montserrat Vega · 2,4t módulos chegaram · balanço + Q2</div></div>
+          <div class="agenda-day-label">Hoje — Sáb, 21 mar</div>
+          <div class="event-row amber">
+            <div class="event-time">Urgente</div>
+            <div class="event-title">Enviar proposta REGAP — Petrobras CENPES</div>
+            <div class="event-detail">Leo / Carolina</div>
           </div>
-          <div class="event-row conflict">
-            <div class="event-time">15h00</div>
-            <div><div class="event-title">Reunião Petrobras CENPES <span class="conflict-tag">CONFLITO</span></div><div class="event-sub">9 técnicos CENPES · Teams · Novos Negócios + Sourcing · até 16h</div></div>
-          </div>
-          <div class="event-row conflict">
-            <div class="event-time">15h00</div>
-            <div><div class="event-title">Plenária ABRAMAR <span class="conflict-tag">CONFLITO</span></div><div class="event-sub">Compromisso institucional · até 16h30</div></div>
+          <div class="event-row amber">
+            <div class="event-time">Urgente</div>
+            <div class="event-title">Enviar carta bancária (carimbo) — EWaste Africa</div>
+            <div class="event-detail">Leo</div>
           </div>
         </div>
         <div>
-          <div class="agenda-col-title">Amanhã — Sábado, 21/03</div>
-          <div class="event-row normal">
-            <div class="event-time">—</div>
-            <div><div class="event-title">Sem compromissos agendados</div><div class="event-sub">Prazo E-Waste Africa vence hoje — verificar e-mail</div></div>
+          <div class="agenda-day-label">Semana 23–28 mar</div>
+          <div class="event-row blue">
+            <div class="event-time">Seg 23/03</div>
+            <div class="event-title">WBR — Weekly Business Review</div>
+            <div class="event-detail">Time SunR — manhã</div>
+          </div>
+          <div class="event-row amber">
+            <div class="event-time">Seg–Ter</div>
+            <div class="event-title">Voltalia: confirmar envio da CNH</div>
+            <div class="event-detail">Bianca / Carolina</div>
+          </div>
+          <div class="event-row blue">
+            <div class="event-time">Qua 25/03</div>
+            <div class="event-title">Fox Convida — Economia Circular</div>
+            <div class="event-detail">Indústria Fox, São Paulo</div>
+          </div>
+          <div class="event-row green">
+            <div class="event-time">Qui 26/03</div>
+            <div class="event-title">Voltalia: Coleta Serra do Mel/RN</div>
+            <div class="event-detail">Motorista / Bianca</div>
+          </div>
+          <div class="event-row blue">
+            <div class="event-time">Sex 27/03</div>
+            <div class="event-title">INOVA 5 — Divulgação dos Resultados</div>
+            <div class="event-detail">Bossa Invest</div>
           </div>
         </div>
       </div>
     </div>
   </div>
 
-  <!-- 6. DECISÕES & FOLLOW-UPS -->
+  <!-- SEÇÃO 6: DECISÕES -->
   <div class="section closed" id="decisoes">
     <div class="sec-header" onclick="toggle(this)">
-      <div class="sec-icon"><svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="#1B56B0" stroke-width="2"><circle cx="12" cy="12" r="10"/><line x1="12" y1="8" x2="12" y2="12"/><line x1="12" y1="16" x2="12.01" y2="16"/></svg></div>
-      <span class="sec-title">Decisões &amp; Follow-ups</span>
-      <svg class="sec-arrow" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" style="transform:rotate(-90deg)"><polyline points="6 9 12 15 18 9"/></svg>
+      <div class="sec-title">
+        <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"/><polyline points="14 2 14 8 20 8"/></svg>
+        Decisões &amp; Follow-ups
+      </div>
+      <svg class="sec-arrow" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polyline points="6 9 12 15 18 9"/></svg>
     </div>
     <div class="sec-body">
       <div class="decisao-grid">
-        <div class="decisao-card"><div class="decisao-titulo">SISBAJUD — JHG Transportes</div><div class="decisao-desc">Bloqueio ativo conta Itaú Valinhos. Opções: contestar, negociar ou pagar R$ 4.225,55.</div><div class="decisao-prazo">Prazo: 5 dias úteis (urgente)</div></div>
-        <div class="decisao-card"><div class="decisao-titulo">E-Waste Africa — US$ 50k</div><div class="decisao-desc">Proposta enviada. Kwame Asante aguarda posição sobre piloto de coleta 80 pontos SP.</div><div class="decisao-prazo">Prazo: HOJE (vence amanhã 21/03)</div></div>
-        <div class="decisao-card"><div class="decisao-titulo">PV Cycle — Empréstimo Conversível</div><div class="decisao-desc">Reunião interna pendente para definir posição sobre o empréstimo conversível.</div><div class="decisao-prazo">Prazo: semana que vem</div></div>
-        <div class="decisao-card"><div class="decisao-titulo">Ecoprogetti — Contrato ou Cancelamento</div><div class="decisao-desc">Marco Falzoni (3º follow-up). Proposta de equipamentos/parceria aguarda decisão.</div><div class="decisao-prazo">Prazo: 31/03/2026</div></div>
-        <div class="decisao-card"><div class="decisao-titulo">Weee.do — Aceitar piloto ou recusar</div><div class="decisao-desc">R$ 600/ton não considerado atrativo. Gate fee precisa ser revisado antes de aceitar ou recusar.</div><div class="decisao-prazo">Em aberto</div></div>
-        <div class="decisao-card"><div class="decisao-titulo">SENAI — Parceria de Capacitação</div><div class="decisao-desc">Proposta de capacitação técnica em reciclagem FV. Análise estratégica pendente.</div><div class="decisao-prazo">Em aberto</div></div>
+        <div class="decisao-card">
+          <div class="decisao-title">MRC-México: Data da Viagem</div>
+          <div class="decisao-text">Pendente: comprar passagens somente após Ximena confirmar conclusão da instalação elétrica. Meta: semana 6/04 (Ecomondo + Ariplus em Guadalajara).</div>
+          <div class="decisao-owner">Leo / Marinna</div>
+        </div>
+        <div class="decisao-card">
+          <div class="decisao-title">Parceria EWaste Africa</div>
+          <div class="decisao-text">Mark Rae sinalizou que "o valor proposto não é muito atrativo". Decisão: revisar proposta ou manter posição? Mark retorna em 23/03.</div>
+          <div class="decisao-owner">Carolina / Leo</div>
+        </div>
+        <div class="decisao-card">
+          <div class="decisao-title">Petrobras CENPES: Estrutura da Parceria</div>
+          <div class="decisao-text">Definir modelo: contrato de serviços O&amp;M direto (REGAP imediato) + P&amp;D via FINEP (médio prazo). Luiz Fontenelle agenda reunião interna com time ambiental do CENPES.</div>
+          <div class="decisao-owner">Leo / Marinna</div>
+        </div>
+        <div class="decisao-card">
+          <div class="decisao-title">InvestSP: Novo Contato</div>
+          <div class="decisao-text">Luciana deixou a InvestSP. Laís deve contatar Natalia ou Victor para dar continuidade ao relacionamento institucional.</div>
+          <div class="decisao-owner">Laís</div>
+        </div>
+        <div class="decisao-card">
+          <div class="decisao-title">INPI: Registro da Máquina SunR</div>
+          <div class="decisao-text">Giovanna (Granito Boneli) solicita detalhes: o que registrar — marca, patente ou modelo de utilidade? Leo precisa definir escopo antes da reunião jurídica.</div>
+          <div class="decisao-owner">Leo / Jurídico</div>
+        </div>
       </div>
     </div>
   </div>
 
-  <!-- 7. TEAMS -->
-  <div class="section closed" id="teams">
-    <div class="sec-header" onclick="toggle(this)">
-      <div class="sec-icon"><svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="#1B56B0" stroke-width="2"><path d="M21 15a2 2 0 0 1-2 2H7l-4 4V5a2 2 0 0 1 2-2h14a2 2 0 0 1 2 2z"/></svg></div>
-      <span class="sec-title">Teams</span>
-      <svg class="sec-arrow" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" style="transform:rotate(-90deg)"><polyline points="6 9 12 15 18 9"/></svg>
-    </div>
-    <div class="sec-body">
-      <div class="alert-banner warn" style="margin-bottom:var(--sp-3);">
-        <div class="alert-banner-icon"><svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="#B45309" stroke-width="2"><path d="M10.29 3.86L1.82 18a2 2 0 0 0 1.71 3h16.94a2 2 0 0 0 1.71-3L13.71 3.86a2 2 0 0 0-3.42 0z"/></svg></div>
-        <div><div class="alert-banner-title">Integração Teams não disponível</div>
-        <div class="alert-banner-body">App Zapier não instalado no workspace Teams SunR. Para ativar: instalar Zapier app no Teams → canal Time SunR.</div></div>
-      </div>
-      <div class="section-subtitle">Mensagens recentes (via Notion AI — histórico)</div>
-      <div class="teams-msg">
-        <div class="teams-avatar" style="background:#1B56B0;">M</div>
-        <div><div class="teams-meta"><strong>Marinna Pivatto</strong> · Time Estratégico · Jan 2026</div>
-        <div class="teams-text">Vamos repassar valor do alumínio para eles? Vamos cobrar a taxa de reciclagem. Com certeza tem que estar no funil...</div></div>
-      </div>
-      <div class="teams-msg">
-        <div class="teams-avatar" style="background:#15803D;">L</div>
-        <div><div class="teams-meta"><strong>Laís Vidotto</strong> · Time Estratégico · Jan 2026</div>
-        <div class="teams-text">Eles vão mandar módulos, vamos tirar alumínio para vender e eles pagam o frete.</div></div>
-      </div>
-    </div>
-  </div>
-
-  <!-- 8. OPERAÇÃO -->
+  <!-- SEÇÃO 7: OPERAÇÃO -->
   <div class="section closed" id="operacao">
     <div class="sec-header" onclick="toggle(this)">
-      <div class="sec-icon"><svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="#1B56B0" stroke-width="2"><path d="M14.7 6.3a1 1 0 0 0 0 1.4l1.6 1.6a1 1 0 0 0 1.4 0l3.77-3.77a6 6 0 0 1-7.94 7.94l-6.91 6.91a2.12 2.12 0 0 1-3-3l6.91-6.91a6 6 0 0 1 7.94-7.94l-3.76 3.76z"/></svg></div>
-      <span class="sec-title">Operação</span>
-      <svg class="sec-arrow" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" style="transform:rotate(-90deg)"><polyline points="6 9 12 15 18 9"/></svg>
+      <div class="sec-title">
+        <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="3"/><path d="M19.07 4.93a10 10 0 0 1 0 14.14M4.93 4.93a10 10 0 0 0 0 14.14"/></svg>
+        Operação
+      </div>
+      <svg class="sec-arrow" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polyline points="6 9 12 15 18 9"/></svg>
     </div>
     <div class="sec-body">
-      <div class="section-subtitle">Reuniões de 19/03 (quinta-feira)</div>
-      <div style="margin-bottom:var(--sp-3);border:1px solid var(--slate-200);border-radius:6px;padding:var(--sp-3);">
-        <div style="display:flex;align-items:center;gap:var(--sp-2);margin-bottom:var(--sp-2);"><span class="pill pill-blue">ICP Workshop · 15h30</span><span style="font-size:var(--t-sm);font-weight:700;color:var(--navy);">Leo + Mateus</span></div>
-        <ul class="bullet-list">
-          <li><span class="bullet-dot dot-blue"></span><span>Integradores não serão clientes diretos — estratégia de pressão via distribuidores (modelo europeu com taxa de fim de vida incluída na venda).</span></li>
-          <li><span class="bullet-dot dot-blue"></span><span>ICPs finalizados: grandes usinas, pequenas usinas, gestores de resíduos. Distribuidores e fabricantes ainda em andamento.</span></li>
-          <li><span class="bullet-dot dot-blue"></span><span>Fabricantes internacionais: tratados como "Parceiro Profile" — não como clientes (têm políticas próprias de reciclagem).</span></li>
-          <li><span class="bullet-dot dot-amber"></span><span><strong>Ação Mateus:</strong> Construir listas de empresas via Perplexity (usando exemplos de clientes atuais nos prompts para melhorar precisão).</span></li>
-        </ul>
+      <div class="omie-section-title">Reuniões — 20/03/2026</div>
+      <div class="action-item" style="border-left:3px solid var(--red);background:var(--red-soft);margin-bottom:8px;">
+        <div class="action-num" style="background:var(--blue);">R1</div>
+        <div class="action-body">
+          <div class="action-title">Reciclagem Fotovoltaica — SunR x Petrobras CENPES | 15h00</div>
+          <div class="action-meta"><span class="owner-badge">Projeto Chave · Biz Dev</span><span class="owner-badge">Leo, Marinna, Bianca, Laís, Carolina, Mateus</span></div>
+          <div style="font-size:13px;color:#374361;margin-top:6px;line-height:1.5;">Primeira reunião com 9 pessoas do CENPES. REGAP (10 MW, Betim-MG) inaugurada hoje com Lula. Demanda imediata: proposta termografia + eletroluminescência + reciclagem. Pipeline: Renext-PE, Replan-SP, Boa Aventura-RJ, Tevaco-SJC, Urucum-AM. P&amp;D FINEP para metais nobres (Ag, Si).</div>
+        </div>
       </div>
-      <div style="margin-bottom:var(--sp-3);border:1px solid var(--slate-200);border-radius:6px;padding:var(--sp-3);">
-        <div style="display:flex;align-items:center;gap:var(--sp-2);margin-bottom:var(--sp-2);"><span class="pill pill-amber">Ambiental</span><span style="font-size:var(--t-sm);font-weight:700;color:var(--navy);">MTR e CDF de Gerador — Bianca + Laís</span></div>
-        <ul class="bullet-list">
-          <li><span class="bullet-dot dot-amber"></span><span>Discussão sobre emissão de MTR e CDF para resíduos de gerador (19/03). Desafios identificados na emissão dos documentos ambientais. Follow-up necessário.</span></li>
-        </ul>
+      <div class="action-item" style="border-left:3px solid #F59E0B;background:var(--amber-soft);margin-bottom:16px;">
+        <div class="action-num" style="background:var(--blue);">R2</div>
+        <div class="action-body">
+          <div class="action-title">MRC-México — Status Máquina e Cronograma | 13h00</div>
+          <div class="action-meta"><span class="owner-badge">Leo, Marinna, Ximena (MEX)</span></div>
+          <div style="font-size:13px;color:#374361;margin-top:6px;line-height:1.5;">Máquina chegou ao porto. Armazém ~01/04. Crítico: instalação elétrica não concluída. Aguardar confirmação de data de Ximena. Logística: forklift + 2 pessoas no recebimento; peças de reposição a comprar em Guadalajara.</div>
+        </div>
       </div>
-      <div style="border:1px solid #BFDBFE;border-radius:6px;padding:var(--sp-3);background:var(--blue-xsoft);">
-        <div style="display:flex;align-items:center;gap:var(--sp-2);margin-bottom:var(--sp-2);"><span class="pill pill-blue">Preparação Petrobras</span><span style="font-size:var(--t-sm);font-weight:700;color:var(--navy);">Briefing criado ontem — reunião HOJE 15h</span></div>
-        <ul class="bullet-list">
-          <li><span class="bullet-dot dot-blue"></span><span>9 técnicos CENPES/PDITEN/EN/GER. Luiz Fernando Fontenele (organizador, único RSVP confirmado). Via Teams tenant petrobrasglobaltrading.</span></li>
-          <li><span class="bullet-dot dot-blue"></span><span>Petrobras: JV com Lightsource BP (dez/2025), 1,7 GW solar até 2030, meta 80% reciclagem de resíduos. Repsol já é cliente SunR — argumento de fechamento.</span></li>
-          <li><span class="bullet-dot dot-amber"></span><span>Risco: CENPES é P&D, não procurement. Objetivo principal: sair com contato da área de operações/compras dos projetos solares e acordo de piloto.</span></li>
-        </ul>
-      </div>
-      <div class="divider"></div>
-      <div class="section-subtitle">Tarefas em andamento — Alta prioridade</div>
-      <div class="tarefa-item"><div class="tarefa-status" style="background:#F59E0B;"></div><div class="tarefa-text">Log Reversa — Contato Tufic (Logreversa) no LinkedIn</div><span class="tarefa-area">Novos Negócios</span></div>
-      <div class="tarefa-item"><div class="tarefa-status" style="background:#1B56B0;"></div><div class="tarefa-text">Compra de equipamentos — second-life PV system (Brazil)</div><span class="tarefa-area">P&D / Tecnologia</span></div>
-      <div class="tarefa-item"><div class="tarefa-status" style="background:#1B56B0;"></div><div class="tarefa-text">Plano Estruturado de Tecnologia e Engenharia — Douglas (cenário High Budget)</div><span class="tarefa-area">Operação</span></div>
-    </div>
-  </div>
-
-  <!-- 9. FUNIL DE VENDAS -->
-  <div class="section closed" id="funil">
-    <div class="sec-header" onclick="toggle(this)">
-      <div class="sec-icon"><svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="#1B56B0" stroke-width="2"><polygon points="22 3 2 3 10 12.46 10 19 14 21 14 12.46 22 3"/></svg></div>
-      <span class="sec-title">Funil de Vendas</span>
-      <svg class="sec-arrow" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" style="transform:rotate(-90deg)"><polyline points="6 9 12 15 18 9"/></svg>
-    </div>
-    <div class="sec-body">
-      <div class="funil-grid">
-        <div class="funil-card"><div class="funil-cliente">Petrobras CENPES</div><div class="funil-estagio"><span class="pill pill-blue">Abertura</span></div><div class="funil-info"><strong>Hoje 15h:</strong> Reunião com 9 técnicos CENPES</div><div class="funil-info"><strong>Responsável:</strong> Leo + Carol</div><div class="funil-info"><strong>Oportunidade:</strong> 1,7 GW → ~68.000 t futuras</div></div>
-        <div class="funil-card"><div class="funil-cliente">Rimena / México</div><div class="funil-estagio"><span class="pill pill-green">Fechamento</span></div><div class="funil-info"><strong>Hoje 10h30:</strong> Balanço container + planejar Q2</div><div class="funil-info"><strong>Responsável:</strong> Marinna</div><div class="funil-info"><strong>Volume:</strong> 2,4t chegou + 3 previstos Q2</div></div>
-        <div class="funil-card"><div class="funil-cliente">E-Waste Africa</div><div class="funil-estagio"><span class="pill pill-amber">Proposta</span></div><div class="funil-info"><strong>Prazo HOJE:</strong> Resposta US$ 50k</div><div class="funil-info"><strong>Responsável:</strong> Leo / Marinna</div></div>
-        <div class="funil-card"><div class="funil-cliente">Solar Clean SP</div><div class="funil-estagio"><span class="pill pill-blue">Negociação</span></div><div class="funil-info"><strong>Próximo passo:</strong> Proposta contrato recorrente</div><div class="funil-info"><strong>Responsável:</strong> Laís</div></div>
-        <div class="funil-card"><div class="funil-cliente">Copel + GD Energia Nordeste</div><div class="funil-estagio"><span class="pill pill-amber">Qualificação</span></div><div class="funil-info"><strong>Próximo passo:</strong> Qualificar demanda (Laís)</div><div class="funil-info"><strong>Responsável:</strong> Laís</div></div>
-        <div class="funil-card"><div class="funil-cliente">Weee.do</div><div class="funil-estagio"><span class="pill pill-red">Análise</span></div><div class="funil-info"><strong>Decisão pendente:</strong> gate fee R$ 600/ton não atrativo</div><div class="funil-info"><strong>Responsável:</strong> Leo / Marinna</div></div>
-      </div>
-    </div>
-  </div>
-
-  <!-- 10. AGENDA DO TIME -->
-  <div class="section closed" id="time">
-    <div class="sec-header" onclick="toggle(this)">
-      <div class="sec-icon"><svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="#1B56B0" stroke-width="2"><path d="M17 21v-2a4 4 0 0 0-4-4H5a4 4 0 0 0-4 4v2"/><circle cx="9" cy="7" r="4"/><path d="M23 21v-2a4 4 0 0 0-3-3.87"/><path d="M16 3.13a4 4 0 0 1 0 7.75"/></svg></div>
-      <span class="sec-title">Agenda do Time</span>
-      <svg class="sec-arrow" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" style="transform:rotate(-90deg)"><polyline points="6 9 12 15 18 9"/></svg>
-    </div>
-    <div class="sec-body">
-      <div class="time-grid">
-        <div class="time-card">
-          <div class="time-name"><div style="width:24px;height:24px;border-radius:50%;background:#1B56B0;display:flex;align-items:center;justify-content:center;font-size:10px;font-weight:700;color:white;flex-shrink:0;">M</div>Marinna Pivatto · CCO</div>
-          <div class="time-item"><span class="time-dot"></span>Reunião Petrobras CENPES — 15h</div>
-          <div class="time-item"><span class="time-dot"></span>Resposta E-Waste Africa (prazo hoje)</div>
-          <div class="time-item"><span class="time-dot"></span>Alinhar posição Ecoprogetti com Leo</div>
+      <div class="omie-section-title">Tarefas em Andamento (Notion)</div>
+      <div style="border:1px solid var(--slate-200);border-radius:8px;overflow:hidden;">
+        <div class="task-item">
+          <span class="task-status doing">Em Andamento</span>
+          <div class="task-body">
+            <div class="task-title">Compra de Equipamentos — P&amp;D / Second-life PV</div>
+            <div class="task-meta">Avaliação de equipamentos para laboratório · Douglas</div>
+          </div>
         </div>
-        <div class="time-card">
-          <div class="time-name"><div style="width:24px;height:24px;border-radius:50%;background:#15803D;display:flex;align-items:center;justify-content:center;font-size:10px;font-weight:700;color:white;flex-shrink:0;">B</div>Bianca Neves · Comercial</div>
-          <div class="time-item"><span class="time-dot"></span>Reunião Petrobras CENPES — 15h</div>
-          <div class="time-item"><span class="time-dot"></span>MTR e CDF de Gerador — seguimento</div>
+        <div class="task-item">
+          <span class="task-status doing">Em Andamento</span>
+          <div class="task-body">
+            <div class="task-title">Log Reversa — Parceria Logreversa (Tufic Savoia)</div>
+            <div class="task-meta">Expansão logística reversa · Comercial</div>
+          </div>
         </div>
-        <div class="time-card">
-          <div class="time-name"><div style="width:24px;height:24px;border-radius:50%;background:#B45309;display:flex;align-items:center;justify-content:center;font-size:10px;font-weight:700;color:white;flex-shrink:0;">L</div>Laís Vidotto · Comercial</div>
-          <div class="time-item"><span class="time-dot"></span>Reunião Petrobras CENPES — 15h</div>
-          <div class="time-item"><span class="time-dot"></span>MTR e CDF de Gerador — seguimento</div>
-          <div class="time-item"><span class="time-dot"></span>Pipeline Copel + GD Nordeste</div>
+        <div class="task-item">
+          <span class="task-status high">Alta Prioridade</span>
+          <div class="task-body">
+            <div class="task-title">Plano Estruturado de Tecnologia e Engenharia — Douglas</div>
+            <div class="task-meta">Cenário HIGH BUDGET em elaboração · P&amp;D</div>
+          </div>
         </div>
-        <div class="time-card">
-          <div class="time-name"><div style="width:24px;height:24px;border-radius:50%;background:#7C3AED;display:flex;align-items:center;justify-content:center;font-size:10px;font-weight:700;color:white;flex-shrink:0;">D</div>Douglas Nabinger · Operação</div>
-          <div class="time-item"><span class="time-dot"></span>Plano Estruturado Tecnologia + Engenharia</div>
-          <div class="time-item"><span class="time-dot"></span>Container México — balanço de materiais</div>
-        </div>
-        <div class="time-card">
-          <div class="time-name"><div style="width:24px;height:24px;border-radius:50%;background:#0891B2;display:flex;align-items:center;justify-content:center;font-size:10px;font-weight:700;color:white;flex-shrink:0;">M</div>Mateus Joly · Marketing</div>
-          <div class="time-item"><span class="time-dot"></span>Finalizar ICPs distribuidores + fabricantes</div>
-          <div class="time-item"><span class="time-dot"></span>Listas de empresas via Perplexity</div>
-          <div class="time-item"><span class="time-dot"></span>Verificar informações dos ICPs</div>
-        </div>
-        <div class="time-card">
-          <div class="time-name"><div style="width:24px;height:24px;border-radius:50%;background:#DC2626;display:flex;align-items:center;justify-content:center;font-size:10px;font-weight:700;color:white;flex-shrink:0;">C</div>Carolina Rodrigues · Comercial</div>
-          <div class="time-item"><span class="time-dot"></span>Reunião Petrobras CENPES — 15h (host)</div>
-          <div class="time-item"><span class="time-dot"></span>Confirmar quórum CENPES antes das 14h</div>
+        <div class="task-item">
+          <span class="task-status doing">Em Andamento</span>
+          <div class="task-body">
+            <div class="task-title">ICP — Distribuidores e Fabricantes (nacional e internacional)</div>
+            <div class="task-meta">Mateus finalizando ICPs para base de prospecção · 19/03</div>
+          </div>
         </div>
       </div>
     </div>
   </div>
 
-  <!-- 11. PAINEL OMIE -->
+  <!-- SEÇÃO 8: PAINEL OMIE -->
   <div class="section closed" id="omie">
     <div class="sec-header" onclick="toggle(this)">
-      <div class="sec-icon"><svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="#1B56B0" stroke-width="2"><line x1="12" y1="1" x2="12" y2="23"/><path d="M17 5H9.5a3.5 3.5 0 0 0 0 7h5a3.5 3.5 0 0 1 0 7H6"/></svg></div>
-      <span class="sec-title">Painel Omie</span>
-      <svg class="sec-arrow" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" style="transform:rotate(-90deg)"><polyline points="6 9 12 15 18 9"/></svg>
+      <div class="sec-title">
+        <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><line x1="18" y1="20" x2="18" y2="10"/><line x1="12" y1="20" x2="12" y2="4"/><line x1="6" y1="20" x2="6" y2="14"/></svg>
+        Painel Omie ERP
+      </div>
+      <svg class="sec-arrow" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polyline points="6 9 12 15 18 9"/></svg>
     </div>
     <div class="sec-body">
       <div class="kpi-grid">
-        <div class="kpi-card ok"><div class="kpi-label">Pedidos VAL (7d)</div><div class="kpi-val">2</div><div class="kpi-sub">R$ 325 · etapa 60 (faturado)</div></div>
-        <div class="kpi-card warn"><div class="kpi-label">Pedidos MOC (7d)</div><div class="kpi-val">0</div><div class="kpi-sub">Sem pedidos no período</div></div>
-        <div class="kpi-card warn"><div class="kpi-label">Resumo Fin. VAL</div><div class="kpi-val">R$ 0</div><div class="kpi-sub">Sem títulos abertos via API</div></div>
-        <div class="kpi-card warn"><div class="kpi-label">Resumo Fin. MOC</div><div class="kpi-val">R$ 0</div><div class="kpi-sub">Sem títulos abertos via API</div></div>
+        <div class="kpi-card ok">
+          <div class="kpi-label">Pedidos VAL (sem)</div>
+          <div class="kpi-val">2</div>
+          <div class="kpi-sub">Pedidos 97 e 98 faturados</div>
+        </div>
+        <div class="kpi-card ok">
+          <div class="kpi-label">Faturado VAL (período)</div>
+          <div class="kpi-val">R$ 325</div>
+          <div class="kpi-sub">Granalha de vidro — 18/03</div>
+        </div>
+        <div class="kpi-card warn">
+          <div class="kpi-label">Pedidos MOC</div>
+          <div class="kpi-val">—</div>
+          <div class="kpi-sub">Sem registros no período</div>
+        </div>
+        <div class="kpi-card warn">
+          <div class="kpi-label">Resumo Financeiro Março</div>
+          <div class="kpi-val">—</div>
+          <div class="kpi-sub">Sem dados disponíveis</div>
+        </div>
       </div>
 
-      <div class="omie-unidade-title"><span class="omie-tag">VAL</span>Valinhos / SP — MRC-1</div>
-      <p style="font-size:var(--t-xs);color:var(--red);font-weight:700;margin-bottom:var(--sp-2);">Conta Itaú principal com BLOQUEIO SISBAJUD ativo. Verificar manualmente saldo disponível.</p>
-      <table>
-        <thead><tr><th>Pedido</th><th>Produto</th><th>Qtd</th><th>Etapa</th><th>Valor</th><th>Vencimento</th></tr></thead>
+      <div class="unit-header">Valinhos/SP — MRC-1</div>
+      <div class="omie-section-title">Pedidos Recentes (14–21/03)</div>
+      <table class="omie-table">
+        <thead>
+          <tr><th>Pedido</th><th>Item</th><th>Qtd</th><th>Etapa</th><th>Valor</th><th>Data</th></tr>
+        </thead>
         <tbody>
-          <tr><td>#97</td><td>Granalha de Vidro GG-DG-02-06 + GG-DG-06-2</td><td>0,050 t</td><td><span class="pill pill-green">Faturado</span></td><td>R$ 125,00</td><td>18/03/2026</td></tr>
-          <tr><td>#98</td><td>Granalha de Vidro GG-BY-06-1.5</td><td>0,100 t</td><td><span class="pill pill-green">Faturado</span></td><td>R$ 200,00</td><td>18/03/2026</td></tr>
+          <tr>
+            <td><strong>#97</strong></td>
+            <td>Granalha de vidro (GG-DG-02-06 + GG-DG-06-2)</td>
+            <td>0,025 T + 0,025 T</td>
+            <td><span class="ep-pill ep-60">Faturado</span></td>
+            <td><strong>R$ 125</strong></td>
+            <td>18/03/2026</td>
+          </tr>
+          <tr>
+            <td><strong>#98</strong></td>
+            <td>Granalha de vidro GG-BY-06-1.5</td>
+            <td>0,1 T</td>
+            <td><span class="ep-pill ep-60">Faturado</span></td>
+            <td><strong>R$ 200</strong></td>
+            <td>18/03/2026</td>
+          </tr>
         </tbody>
       </table>
-      <p style="font-size:var(--t-xs);color:var(--slate-400);margin-top:var(--sp-2);">* Contas a receber/pagar: erro MCP confirmado (tag status_titulo inválida) — verificar manualmente no painel Omie.</p>
 
-      <div class="omie-unidade-title" style="margin-top:var(--sp-4);"><span class="omie-tag">MOC</span>Montes Claros / MG — MRC-2</div>
-      <p style="font-size:var(--t-xs);color:var(--slate-500);margin-bottom:var(--sp-2);">Sem pedidos registrados no período 13–20/03/2026. Pipeline comercial MOC precisa de atenção.</p>
-      <table>
-        <thead><tr><th>Pedido</th><th>Produto</th><th>Qtd</th><th>Etapa</th><th>Valor</th><th>Vencimento</th></tr></thead>
-        <tbody><tr><td colspan="6" style="text-align:center;color:var(--slate-400);font-style:italic;">Nenhum pedido no período</td></tr></tbody>
+      <div class="omie-section-title">Saldo Bancário — Valinhos</div>
+      <table class="omie-table">
+        <thead><tr><th>Conta</th><th>Banco</th><th>Observação</th></tr></thead>
+        <tbody>
+          <tr><td>Itaú Unibanco (97802-9)</td><td>341 — Itaú</td><td>Saldo desatualizado (mai/2024)</td></tr>
+          <tr><td>Banco do Brasil (100540-5)</td><td>001 — BB</td><td>Saldo desatualizado (jan/2024)</td></tr>
+          <tr><td>Sicoob — Vinhedo (34408-7)</td><td>756 — Sicoob</td><td>Saldo desatualizado (dez/2023)</td></tr>
+          <tr><td>Banco Inter (5091869-9)</td><td>077 — Inter</td><td>Saldo desatualizado (fev/2024)</td></tr>
+          <tr><td>Nubank / Wise</td><td>260 / 193</td><td>Sem saldo inicial registrado</td></tr>
+        </tbody>
       </table>
 
-      <div class="divider"></div>
-      <div class="section-subtitle">Análise Estratégica</div>
-      <div class="insight-box">
-        <p>Valinhos faturou apenas R$ 325 em granalha de vidro esta semana — volume baixo comparado ao histórico Q1. Montes Claros zerou pedidos. O resumo financeiro retornando R$ 0 em ambas as unidades sugere ausência de títulos abertos na API — verificar manualmente se há recebíveis em aberto no painel Omie, especialmente dado o contexto de pressão de caixa. MOC precisa atenção urgente no pipeline: contato com Douglas para verificar se há projetos em execução sem OS registrada no ERP.</p>
+      <div class="unit-header">Montes Claros/MG — MRC-2</div>
+      <div class="omie-section-title">Pedidos Recentes (14–21/03)</div>
+      <div class="omie-note">Sem registros de pedidos no período consultado (14–21/03).</div>
+
+      <div class="omie-section-title">Análise Estratégica</div>
+      <div class="omie-note" style="background:var(--blue-xsoft);border-left:3px solid var(--blue);">
+        <strong>Atenção:</strong> Os pedidos de granalha de vidro (R$325 em 18/03) são vendas de byproducts do processo de reciclagem. Com alumínio LME a $3.329/t e cobre a $12.021/t — os maiores valores recentes — as margens sobre materiais recuperados estão no melhor momento. Cada módulo reciclado contém ~2,37 kg de alumínio e ~131g de cobre: com esses preços, o valor recuperado por tonelada de módulos aumenta significativamente. Recomenda-se atualizar saldos bancários no Omie e verificar pendência de lançamentos financeiros de março.
       </div>
     </div>
   </div>
 
-  <!-- 12. RADAR DE NOTÍCIAS -->
-  <div class="section closed" id="noticias">
+  <!-- SEÇÃO 9: TEAMS -->
+  <div class="section closed" id="teams">
     <div class="sec-header" onclick="toggle(this)">
-      <div class="sec-icon"><svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="#1B56B0" stroke-width="2"><path d="M2 3h6a4 4 0 0 1 4 4v14a3 3 0 0 0-3-3H2z"/><path d="M22 3h-6a4 4 0 0 0-4 4v14a3 3 0 0 1 3-3h7z"/></svg></div>
-      <span class="sec-title">Radar de Notícias</span>
-      <svg class="sec-arrow" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" style="transform:rotate(-90deg)"><polyline points="6 9 12 15 18 9"/></svg>
+      <div class="sec-title">
+        <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M21 15a2 2 0 0 1-2 2H7l-4 4V5a2 2 0 0 1 2-2h14a2 2 0 0 1 2 2z"/></svg>
+        Microsoft Teams
+      </div>
+      <svg class="sec-arrow" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polyline points="6 9 12 15 18 9"/></svg>
     </div>
     <div class="sec-body">
-      <div class="noticia-card" style="border-left-color:var(--red);">
-        <div class="noticia-cat" style="color:var(--red);">Geopolítica / Commodities</div>
-        <a class="noticia-title" href="https://www.moneytimes.com.br/tempo-real-ibovespa-hoje-mercado-ao-vivo-19-03-2026-jals-lils-apsa-ceci/" target="_blank">Brent sobe para US$ 108,65 — Conflito Irã pressiona Estreito de Ormuz; pico intraday US$ 119</a>
-        <div class="noticia-impacto">Impacto SunR: custos de frete e logística de coleta sob pressão. Monitorar cláusulas de combustível em contratos. Positivo para narrativa de ESG — majors de petróleo pressionadas a demonstrar transição energética responsável, incluindo reciclagem de ativos solares.</div>
+      <div class="teams-note">
+        <strong>Integração Teams via Zapier:</strong> Sem mensagens recentes nas últimas 24h. A busca retornou apenas mensagens de janeiro e fevereiro 2026. Para receber updates em tempo real, verificar se o Zapier Bot está instalado e ativo nos canais "Time Estratégico" e "General" do Time SunR.
       </div>
-      <div class="noticia-card" style="border-left-color:var(--blue);">
-        <div class="noticia-cat" style="color:var(--blue);">Regulação / Logística Reversa</div>
-        <a class="noticia-title" href="https://www.camara.leg.br/noticias/1138206-projeto-preve-logistica-reversa-na-industria-e-no-comercio-de-paineis-solares/" target="_blank">PL 391/25 — Logística reversa obrigatória para painéis FV avança na Câmara dos Deputados</a>
-        <div class="noticia-impacto">Impacto SunR: quando aprovado, cria demanda estrutural garantida e obrigatória para reciclagem certificada. Usar como argumento na reunião Petrobras hoje: "obrigação legal em caminho — melhor definir parceiro agora".</div>
-      </div>
-      <div class="noticia-card" style="border-left-color:var(--green);">
-        <div class="noticia-cat" style="color:var(--green);">Mercado Solar / ABSOLAR</div>
-        <a class="noticia-title" href="https://www.absolar.org.br/home/energia-solar-avanca-no-brasil-e-adiciona-106-gw-em-2025-com-mais-de-r-329-bi-em-investimentos/" target="_blank">Brasil adiciona 10,6 GW solar em 2025 com R$ 32,9 bi em investimentos — ABSOLAR</a>
-        <div class="noticia-impacto">Impacto SunR: crescimento acelerado do parque instalado nacional amplia o pipeline de reciclagem dos próximos 25–30 anos. Reforça urgência de fechar contratos de longo prazo já nos próximos trimestres.</div>
-      </div>
-      <div class="noticia-card" style="border-left-color:var(--amber);">
-        <div class="noticia-cat" style="color:var(--amber);">Regulação / MMA</div>
-        <a class="noticia-title" href="https://canalsolar.com.br/portaria-mma-logistica-modulos/" target="_blank">Portaria MMA 1.560/2026 mantém metas de logística reversa para módulos FV durante 2026</a>
-        <div class="noticia-impacto">Impacto SunR: metas do Decreto 10.240/2020 (Fase 2) mantidas em 2026 enquanto novo regulamento é elaborado. Compliance atual obrigatório para clientes industriais e geradores — reforça proposta de valor da SunR como solução certificada.</div>
+      <div style="margin-top:12px;font-size:13px;color:var(--slate-500);">
+        Última atividade relevante registrada (fev 2026): Marinna comunicou sobre Gympass e Plano de Saúde — seria discutido na WBR seguinte.
       </div>
     </div>
   </div>
 
-</div><!-- /main -->
+  <!-- SEÇÃO 10: FUNIL DE VENDAS -->
+  <div class="section closed" id="funil">
+    <div class="sec-header" onclick="toggle(this)">
+      <div class="sec-title">
+        <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polygon points="22 3 2 3 10 12.46 10 19 14 21 14 12.46 22 3"/></svg>
+        Funil de Vendas
+      </div>
+      <svg class="sec-arrow" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polyline points="6 9 12 15 18 9"/></svg>
+    </div>
+    <div class="sec-body">
+      <div class="funil-grid">
+        <div class="funil-card">
+          <div class="funil-cliente">Petrobras / CENPES</div>
+          <span class="funil-estagio negociacao">Proposta Técnica</span>
+          <div class="funil-next">Enviar proposta REGAP (O&amp;M + reciclagem + termografia). Pipeline de 4–5 usinas. Potencial parceria P&amp;D via FINEP.</div>
+          <div class="funil-owner">Carolina / Leo</div>
+        </div>
+        <div class="funil-card">
+          <div class="funil-cliente">Voltalia — Serra do Mel/RN</div>
+          <span class="funil-estagio ganho">OS Ativa</span>
+          <div class="funil-next">Coleta confirmada 26/03. Blocante: CNH motorista. Bianca/Carolina resolver urgente.</div>
+          <div class="funil-owner">Bianca / Carolina</div>
+        </div>
+        <div class="funil-card">
+          <div class="funil-cliente">EWaste Africa</div>
+          <span class="funil-estagio negociacao">Negociação</span>
+          <div class="funil-next">Mark Rae sinalizou valor "não atrativo". Mark retorna 23/03. Antoinette aguarda carta bancária para PO-0213.</div>
+          <div class="funil-owner">Carolina / Leo</div>
+        </div>
+        <div class="funil-card">
+          <div class="funil-cliente">Longi — Colômbia</div>
+          <span class="funil-estagio proposta">Proposta</span>
+          <div class="funil-next">SunR apresentou tool móvel de reciclagem (1t). Acompanhamento pendente com Marinna.</div>
+          <div class="funil-owner">Marinna</div>
+        </div>
+        <div class="funil-card">
+          <div class="funil-cliente">Weee.do (Parceria Op.)</div>
+          <span class="funil-estagio negociacao">Negociação</span>
+          <div class="funil-next">Módulos enviados, alumínio vendido, frete pago pelo cliente. Estrutura avaliada por Mark Rae.</div>
+          <div class="funil-owner">Carolina</div>
+        </div>
+        <div class="funil-card">
+          <div class="funil-cliente">Associação Verbum Vitae</div>
+          <span class="funil-estagio prospectando">Prospecção</span>
+          <div class="funil-next">Tarefa identificada no Notion. Escopo a confirmar com time comercial.</div>
+          <div class="funil-owner">Time Comercial</div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- SEÇÃO 11: AGENDA DO TIME -->
+  <div class="section closed" id="time">
+    <div class="sec-header" onclick="toggle(this)">
+      <div class="sec-title">
+        <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M17 21v-2a4 4 0 0 0-4-4H5a4 4 0 0 0-4 4v2"/><circle cx="9" cy="7" r="4"/><path d="M23 21v-2a4 4 0 0 0-3-3.87"/><path d="M16 3.13a4 4 0 0 1 0 7.75"/></svg>
+        Agenda do Time
+      </div>
+      <svg class="sec-arrow" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polyline points="6 9 12 15 18 9"/></svg>
+    </div>
+    <div class="sec-body">
+      <div class="time-grid">
+        <div class="time-person">
+          <div class="time-name">Marinna Pivatto (CCO)</div>
+          <div class="time-event">Reunião Petrobras CENPES (20/03) — participou</div>
+          <div class="time-event">MRC-México: follow-up Ximena sobre elétrica</div>
+          <div class="time-event">WBR seg 23/03 — pauta Gympass/Saúde</div>
+        </div>
+        <div class="time-person">
+          <div class="time-name">Laís Vidotto</div>
+          <div class="time-event">InvestSP: contatar Natalia ou Victor (Luciana saiu)</div>
+          <div class="time-event">Proposta Granalha / BPO Levits (PO 2240)</div>
+          <div class="time-event">Novos negócios: acompanhamento materiais</div>
+        </div>
+        <div class="time-person">
+          <div class="time-name">Douglas Nabinger</div>
+          <div class="time-event">Plano Tecnologia e Engenharia — HIGH BUDGET</div>
+          <div class="time-event">Compra equipamentos P&amp;D / second-life</div>
+          <div class="time-event">Coordenação MRC-2 Montes Claros</div>
+        </div>
+        <div class="time-person">
+          <div class="time-name">Bianca Neves</div>
+          <div class="time-event">Voltalia: envio CNH motorista — URGENTE (22/03)</div>
+          <div class="time-event">Reunião Petrobras CENPES — participou</div>
+          <div class="time-event">Operação MRC-2: acompanhamento geral</div>
+        </div>
+        <div class="time-person">
+          <div class="time-name">Mateus Joly Pessoa</div>
+          <div class="time-event">ICP: finalizar distribuidores/fabricantes</div>
+          <div class="time-event">Construir listas de prospecção</div>
+          <div class="time-event">Reunião Petrobras CENPES — participou</div>
+        </div>
+        <div class="time-person">
+          <div class="time-name">Carolina Rodrigues</div>
+          <div class="time-event">Proposta REGAP Petrobras — enviar hoje</div>
+          <div class="time-event">Voltalia: acompanhar CNH motorista</div>
+          <div class="time-event">EWaste Africa: aguardar retorno Mark (23/03)</div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- SEÇÃO 12: RADAR DE NOTÍCIAS -->
+  <div class="section closed" id="noticias">
+    <div class="sec-header" onclick="toggle(this)">
+      <div class="sec-title">
+        <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M21 16V8a2 2 0 0 0-1-1.73l-7-4a2 2 0 0 0-2 0l-7 4A2 2 0 0 0 3 8v8a2 2 0 0 0 1 1.73l7 4a2 2 0 0 0 2 0l7-4A2 2 0 0 0 21 16z"/></svg>
+        Radar de Notícias
+      </div>
+      <svg class="sec-arrow" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polyline points="6 9 12 15 18 9"/></svg>
+    </div>
+    <div class="sec-body">
+      <div class="noticia-card">
+        <div class="noticia-cat">Setor Solar Brasil</div>
+        <a class="noticia-title" href="https://www.absolar.org.br/home/setor-solar-mostra-resiliencia-para-superar-obstaculos-em-2026/" target="_blank">ABSOLAR: Setor solar mostra resiliência para superar obstáculos em 2026</a>
+        <div class="noticia-impact"><span>Impacto SunR:</span> R$ 31 bilhões em investimentos esperados geram demanda crescente de reciclagem nos próximos anos. Cortes de geração podem antecipar descomissionamento de módulos — oportunidade operacional imediata. Obstáculos principais: dupla tarifação e ausência do "Agente Armazenador" na legislação.</div>
+      </div>
+      <div class="noticia-card">
+        <div class="noticia-cat">Regulação</div>
+        <a class="noticia-title" href="https://megawhat.energy/geracao/solar/projeto-define-regras-de-incentivos-a-reciclagem-de-paineis-solares/" target="_blank">Megawhat: Projeto define regras de incentivos à reciclagem de painéis solares</a>
+        <div class="noticia-impact"><span>Impacto SunR:</span> Regulação de incentivos à reciclagem fotovoltaica avança no Congresso. Se aprovada, cria vantagem competitiva estrutural para a SunR como única recicladora homologada PV CYCLE no Brasil.</div>
+      </div>
+      <div class="noticia-card">
+        <div class="noticia-cat">Mercado de Metais</div>
+        <a class="noticia-title" href="https://shockmetais.com.br/lme" target="_blank">LME (20/03/2026): Cobre $12.021/t e Alumínio $3.329/t — máximas recentes</a>
+        <div class="noticia-impact"><span>Impacto SunR:</span> Cada módulo contém ~2,37 kg de alumínio e ~131g de cobre. Com esses preços, o valor de recuperação por tonelada de módulos reciclados aumenta significativamente. Revisar tabela de preços de byproducts.</div>
+      </div>
+      <div class="noticia-card">
+        <div class="noticia-cat">Mercado Solar</div>
+        <a class="noticia-title" href="https://canalsolar.com.br/reciclagem-de-paineis-desafios-para-promover-o-segmento-no-brasil/" target="_blank">Canal Solar: Reciclagem de painéis — desafios para o segmento no Brasil</a>
+        <div class="noticia-impact"><span>Impacto SunR:</span> 550.000 toneladas de placas fotovoltaicas serão descartadas no Brasil nos próximos 30 anos. Acordo setorial em formação (ABRAMAR discutiu ontem na plenária). Posicionamento precoce da SunR como referência nacional é vantagem de longo prazo.</div>
+      </div>
+    </div>
+  </div>
+
+  <div style="text-align:center;padding:20px 0;font-size:11px;color:#94A3B8;border-top:1px solid #E2E8F0;margin-top:24px;">
+    SunR Daily Briefing — Sábado, 21/03/2026 &nbsp;|&nbsp; Fontes: Gmail, Notion (Rotinas de Reuniões, Base de Tarefas), Omie ERP (VAL + MOC), LME Shockmetais, ABSOLAR, Canal Solar
+  </div>
+
+</div>
+</div>
 
 <script>
 function toggle(headerEl) {
@@ -747,18 +919,12 @@ function toggle(headerEl) {
     arrow.style.transform = isClosed ? 'rotate(-90deg)' : 'rotate(0deg)';
   }
 }
-function scrollTo(id) {
-  const el = document.getElementById(id);
-  if (el) window.scrollTo({ top: el.getBoundingClientRect().top + window.scrollY - 44, behavior: 'smooth' });
-}
 window.addEventListener('scroll', () => {
-  const total = document.documentElement.scrollHeight - window.innerHeight;
-  const pct = total > 0 ? Math.round((window.scrollY / total) * 100) : 0;
-  document.getElementById('readFill').style.width = pct + '%';
-  const el = document.getElementById('readPct');
-  if (el) el.textContent = pct + '%';
+  const pct = window.scrollY / (document.documentElement.scrollHeight - window.innerHeight);
+  const fill = document.getElementById('readFill');
+  if(fill) fill.style.width = Math.round(pct * 100) + '%';
 }, { passive: true });
-const sectionIds = ['situacao','acoes','insight','emails','agenda','decisoes','teams','operacao','funil','time','omie','noticias'];
+const sectionIds = ['situacao','acoes','insight','emails','agenda','decisoes','operacao','omie','teams','funil','time','noticias'];
 window.addEventListener('scroll', () => {
   let active = sectionIds[0];
   for (const id of sectionIds) {
@@ -767,6 +933,13 @@ window.addEventListener('scroll', () => {
   }
   document.querySelectorAll('.sb-link').forEach(l => l.classList.toggle('active', l.getAttribute('data-t') === active));
 }, { passive: true });
+document.querySelectorAll('.sb-link').forEach(link => {
+  link.addEventListener('click', e => {
+    e.preventDefault();
+    const t = document.getElementById(link.getAttribute('data-t'));
+    if (t) window.scrollTo({ top: t.getBoundingClientRect().top + window.scrollY - 44, behavior: 'smooth' });
+  });
+});
 </script>
 </body>
 </html>
