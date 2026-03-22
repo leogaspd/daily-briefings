@@ -1,154 +1,132 @@
 <!DOCTYPE html>
 <html lang="pt-BR">
 <head>
-<meta charset="UTF-8">
-<meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>Briefings Diários — Postos Gasparini</title>
-<link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800;900&display=swap" rel="stylesheet">
-<style>
-  *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
-  body {
-    background-color: #DDE1EE;
-    font-family: 'Inter', -apple-system, BlinkMacSystemFont, sans-serif;
-    color: #1A202C;
-    padding: 20px 12px 40px;
-    min-height: 100vh;
-  }
-  .wrapper {
-    max-width: 660px;
-    margin: 0 auto;
-    border-radius: 14px;
-    overflow: hidden;
-    box-shadow: 0 8px 40px rgba(10,16,32,0.18);
-    background: #FFFFFF;
-  }
-  .header {
-    background: linear-gradient(150deg, #0A1020, #1C2B6E, #2A3E8C);
-    padding: 28px 24px 24px;
-    text-align: center;
-  }
-  .logo-oval {
-    display: inline-flex;
-    align-items: center;
-    justify-content: center;
-    width: 130px;
-    height: 60px;
-    border: 2.5px solid #C8CCD8;
-    border-radius: 50%;
-    background: linear-gradient(135deg, #0A1020 0%, #1C2B6E 60%, #2A3E8C 100%);
-    margin-bottom: 14px;
-  }
-  .logo-oval-inner { display: flex; flex-direction: column; align-items: center; line-height: 1.1; }
-  .logo-postos { font-size: 9px; font-weight: 700; color: #C8CCD8; letter-spacing: 2.5px; text-transform: uppercase; }
-  .logo-gasparini { font-size: 13px; font-weight: 900; color: #FFFFFF; letter-spacing: 1px; text-transform: uppercase; }
-  .logo-desde { font-size: 7px; font-weight: 400; color: #8899CC; letter-spacing: 1.5px; text-transform: uppercase; }
-  .header-title { font-size: 11px; font-weight: 500; color: #8899CC; letter-spacing: 2px; text-transform: uppercase; margin-bottom: 4px; }
-  .header-date { font-size: 20px; font-weight: 800; color: #FFFFFF; letter-spacing: -0.5px; }
-  .header-sub { font-size: 12px; color: #6677AA; margin-top: 4px; }
-  .metallic-rule { height: 3px; background: linear-gradient(90deg, #1C2B6E, #C8CCD8, #1C2B6E); }
-
-  .section { padding: 24px; }
-  .section-title { font-size: 10px; font-weight: 700; letter-spacing: 2px; text-transform: uppercase; color: #718096; margin-bottom: 16px; }
-
-  .briefing-list { list-style: none; }
-  .briefing-item {
-    display: flex;
-    align-items: center;
-    justify-content: space-between;
-    padding: 14px 16px;
-    border-radius: 10px;
-    margin-bottom: 8px;
-    text-decoration: none;
-    transition: background 0.15s;
-    border: 1px solid #E2E8F0;
-  }
-  .briefing-item:hover { background: #F7FAFC; }
-  .briefing-item-today {
-    background: linear-gradient(145deg, #0A1020, #1C2B6E);
-    border-color: transparent;
-  }
-  .briefing-item-today:hover { background: linear-gradient(145deg, #1C2B6E, #2A3E8C); }
-
-  .briefing-date { font-size: 15px; font-weight: 700; color: #1A202C; }
-  .briefing-item-today .briefing-date { color: #FFFFFF; }
-  .briefing-label {
-    font-size: 10px;
-    font-weight: 700;
-    padding: 3px 8px;
-    border-radius: 20px;
-    text-transform: uppercase;
-    letter-spacing: 0.5px;
-  }
-  .label-hoje { background: #C6F6D5; color: #22543D; }
-  .label-ontem { background: #EBF8FF; color: #2C5282; }
-  .label-old { background: #EDF2F7; color: #718096; }
-  .briefing-arrow { color: #718096; font-size: 14px; }
-  .briefing-item-today .briefing-arrow { color: #8899CC; }
-
-  .footer {
-    background: #F7FAFC;
-    padding: 16px 24px;
-    text-align: center;
-    border-top: 1px solid #EDF2F7;
-  }
-  .footer-text { font-size: 11px; color: #A0AEC0; line-height: 1.5; }
-</style>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Briefings Diários · Postos Gasparini</title>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800;900&display=swap" rel="stylesheet" />
+  <style>
+    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+    body {
+      font-family: 'Inter', sans-serif;
+      background: #DDE1EE;
+      min-height: 100vh;
+      padding: 20px 16px 40px;
+    }
+    .wrapper { max-width: 660px; margin: 0 auto; }
+    .header {
+      background: linear-gradient(150deg, #0A1020, #1C2B6E, #2A3E8C);
+      border-radius: 14px 14px 0 0;
+      padding: 28px 28px 24px;
+      display: flex;
+      align-items: center;
+      gap: 20px;
+    }
+    .logo-oval {
+      width: 72px; height: 72px;
+      background: linear-gradient(135deg, #C8CCD8, #ffffff, #C8CCD8);
+      border-radius: 50%;
+      display: flex; align-items: center; justify-content: center;
+      flex-shrink: 0;
+      box-shadow: 0 0 0 3px rgba(200,204,216,0.3);
+    }
+    .logo-oval-inner { display: flex; flex-direction: column; align-items: center; line-height: 1; gap: 1px; }
+    .logo-postos { font-size: 9px; font-weight: 800; color: #1C2B6E; letter-spacing: 1.5px; text-transform: uppercase; }
+    .logo-gasparini { font-size: 7.5px; font-weight: 900; color: #0A1020; letter-spacing: 0.8px; text-transform: uppercase; }
+    .logo-desde { font-size: 6px; font-weight: 500; color: #4A5568; letter-spacing: 0.5px; }
+    .header-text h1 { font-size: 20px; font-weight: 800; color: #fff; }
+    .header-text p { font-size: 13px; color: #A0AEC0; margin-top: 3px; }
+    .rule { height: 3px; background: linear-gradient(90deg, #1C2B6E, #C8CCD8, #1C2B6E); }
+    .section {
+      background: #fff;
+      padding: 24px;
+      border-radius: 0 0 14px 14px;
+    }
+    .section-label {
+      font-size: 10px; font-weight: 700; color: #718096;
+      letter-spacing: 1.5px; text-transform: uppercase; margin-bottom: 16px;
+    }
+    .briefing-list { list-style: none; }
+    .briefing-item {
+      display: flex; align-items: center; gap: 14px;
+      padding: 12px 14px;
+      border-radius: 10px;
+      margin-bottom: 8px;
+      text-decoration: none;
+      border: 1px solid #E8ECF4;
+      transition: background 0.15s;
+    }
+    .briefing-item:hover { background: #F7F9FC; }
+    .briefing-item.today {
+      background: linear-gradient(135deg, #EBF4FF, #F0F4FF);
+      border-color: #BEE3F8;
+    }
+    .briefing-date {
+      font-size: 15px; font-weight: 700; color: #1a202c; flex: 1;
+    }
+    .briefing-tag {
+      font-size: 10px; font-weight: 700; border-radius: 4px;
+      padding: 2px 8px; background: #BEE3F8; color: #2B6CB0;
+    }
+    .briefing-arrow { font-size: 16px; color: #A0AEC0; }
+    .footer {
+      background: linear-gradient(150deg, #0A1020, #1C2B6E, #2A3E8C);
+      border-radius: 0 0 14px 14px;
+      padding: 14px 24px; text-align: center;
+      margin-top: -14px;
+    }
+    .footer p { font-size: 11px; color: #718096; }
+  </style>
 </head>
 <body>
-<div class="wrapper">
-  <div class="header">
-    <div class="logo-oval">
-      <div class="logo-oval-inner">
-        <span class="logo-postos">POSTOS</span>
-        <span class="logo-gasparini">GASPARINI</span>
-        <span class="logo-desde">DESDE 1989</span>
+  <div class="wrapper">
+    <div class="header">
+      <div class="logo-oval">
+        <div class="logo-oval-inner">
+          <span class="logo-postos">POSTOS</span>
+          <span class="logo-gasparini">GASPARINI</span>
+          <span class="logo-desde">DESDE 1989</span>
+        </div>
+      </div>
+      <div class="header-text">
+        <h1>Briefings Diários</h1>
+        <p>Arquivo de briefings · Postos Gasparini · Vinhedo, SP</p>
       </div>
     </div>
-    <div class="header-title">Briefings Diários</div>
-    <div class="header-date">Arquivo de Briefings</div>
-    <div class="header-sub">APIV · CCAR · VENETO — Vinhedo, SP</div>
-  </div>
-  <div class="metallic-rule"></div>
-
-  <div class="section">
-    <div class="section-title">Selecione o briefing</div>
-    <ul class="briefing-list">
-      <li>
-        <a class="briefing-item briefing-item-today" href="2026-03-21.html">
-          <span class="briefing-date">Sábado, 21 de março de 2026</span>
-          <div style="display:flex;align-items:center;gap:8px;">
-            <span class="briefing-label label-hoje">Hoje</span>
+    <div class="rule"></div>
+    <div class="section">
+      <div class="section-label">Histórico de briefings</div>
+      <ul class="briefing-list">
+        <li>
+          <a href="2026-03-22.html" class="briefing-item today">
+            <div class="briefing-date">22 de março de 2026 — Domingo</div>
+            <span class="briefing-tag">HOJE</span>
             <span class="briefing-arrow">→</span>
-          </div>
-        </a>
-      </li>
-      <li>
-        <a class="briefing-item" href="2026-03-20.html">
-          <span class="briefing-date">Sexta-feira, 20 de março de 2026</span>
-          <div style="display:flex;align-items:center;gap:8px;">
-            <span class="briefing-label label-ontem">Ontem</span>
+          </a>
+        </li>
+        <li>
+          <a href="2026-03-21.html" class="briefing-item">
+            <div class="briefing-date">21 de março de 2026 — Sábado</div>
             <span class="briefing-arrow">→</span>
-          </div>
-        </a>
-      </li>
-      <li>
-        <a class="briefing-item" href="2026-03-19.html">
-          <span class="briefing-date">Quinta-feira, 19 de março de 2026</span>
-          <div style="display:flex;align-items:center;gap:8px;">
-            <span class="briefing-label label-old">Arquivo</span>
+          </a>
+        </li>
+        <li>
+          <a href="2026-03-20.html" class="briefing-item">
+            <div class="briefing-date">20 de março de 2026 — Sexta-feira</div>
             <span class="briefing-arrow">→</span>
-          </div>
-        </a>
-      </li>
-    </ul>
-  </div>
-
-  <div class="footer">
-    <div class="footer-text">
-      Briefings Diários — Postos Gasparini · Vinhedo, SP<br>
-      <span style="color:#CBD5E0;">Gerado automaticamente com dados de mercado em tempo real</span>
+          </a>
+        </li>
+        <li>
+          <a href="2026-03-19.html" class="briefing-item">
+            <div class="briefing-date">19 de março de 2026 — Quinta-feira</div>
+            <span class="briefing-arrow">→</span>
+          </a>
+        </li>
+      </ul>
+    </div>
+    <div class="footer">
+      <p>Briefing gerado automaticamente · Postos Gasparini · APIV · CCAR · VENETO</p>
     </div>
   </div>
-</div>
 </body>
 </html>
