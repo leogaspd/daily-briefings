@@ -3,7 +3,7 @@
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>Briefings · Postos Gasparini</title>
+  <title>Briefings Diários · Postos Gasparini</title>
   <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800;900&display=swap" rel="stylesheet" />
   <style>
     *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
@@ -41,93 +41,96 @@
     .header-text h1 { font-size: 20px; font-weight: 800; color: #ffffff; letter-spacing: -0.3px; }
     .header-text p { font-size: 13px; color: #A0AEC0; margin-top: 3px; }
     .rule { height: 3px; background: linear-gradient(90deg, #1C2B6E, #C8CCD8, #1C2B6E); }
-    .content { background: #fff; border-radius: 0 0 14px 14px; padding: 24px; }
+    .content { background: #ffffff; padding: 24px; border-radius: 0 0 14px 14px; }
     .section-label { font-size: 10px; font-weight: 700; color: #718096; letter-spacing: 1.5px; text-transform: uppercase; margin-bottom: 16px; }
-    .briefing-item {
-      display: flex; align-items: center; gap: 14px;
-      padding: 14px 16px; margin-bottom: 8px;
-      background: #F7F9FC; border: 1px solid #E8ECF4;
-      border-radius: 10px; text-decoration: none;
-      transition: background 0.15s, border-color 0.15s;
+    .briefing-list { list-style: none; }
+    .briefing-item { margin-bottom: 10px; }
+    .briefing-link {
+      display: flex; align-items: center; gap: 12px;
+      padding: 14px 16px;
+      background: #F7F9FC;
+      border: 1px solid #E8ECF4;
+      border-radius: 10px;
+      text-decoration: none;
+      color: #1a202c;
+      transition: all 0.15s ease;
     }
-    .briefing-item:hover { background: #EBF0FF; border-color: #C3CFF7; }
-    .briefing-date { font-size: 15px; font-weight: 700; color: #1C2B6E; }
-    .briefing-day { font-size: 12px; color: #718096; margin-top: 1px; }
-    .badge-hoje {
-      background: #C6F6D5; color: #276749;
+    .briefing-link:hover { background: #EDF2F7; border-color: #CBD5E0; }
+    .briefing-date { font-size: 15px; font-weight: 700; color: #1C2B6E; min-width: 110px; }
+    .briefing-day { font-size: 13px; color: #718096; }
+    .briefing-badge {
       font-size: 10px; font-weight: 700;
-      border-radius: 20px; padding: 2px 10px;
+      background: #C6F6D5; color: #276749;
+      border-radius: 20px; padding: 3px 10px;
       letter-spacing: 0.5px; text-transform: uppercase;
-      margin-left: auto; flex-shrink: 0;
-    }
-    @media (max-width: 480px) {
-      .header { flex-direction: column; text-align: center; gap: 12px; }
+      margin-left: auto;
     }
   </style>
 </head>
 <body>
-<div class="wrapper">
-  <div class="header">
-    <div class="logo-oval">
-      <div class="logo-oval-inner">
-        <span class="logo-postos">POSTOS</span>
-        <span class="logo-gasparini">GASPARINI</span>
-        <span class="logo-desde">DESDE 1989</span>
+  <div class="wrapper">
+    <div class="header">
+      <div class="logo-oval">
+        <div class="logo-oval-inner">
+          <span class="logo-postos">POSTOS</span>
+          <span class="logo-gasparini">GASPARINI</span>
+          <span class="logo-desde">DESDE 1989</span>
+        </div>
+      </div>
+      <div class="header-text">
+        <h1>Briefings Diários</h1>
+        <p>Arquivo de briefings · Postos Gasparini</p>
       </div>
     </div>
-    <div class="header-text">
-      <h1>Briefings Diários</h1>
-      <p>Arquivo de briefings · Postos Gasparini</p>
+    <div class="rule"></div>
+    <div class="content">
+      <div class="section-label">Briefings Disponíveis</div>
+      <ul class="briefing-list">
+        <li class="briefing-item">
+          <a class="briefing-link" href="2026-03-25.html">
+            <span class="briefing-date">25/03/2026</span>
+            <span class="briefing-day">Quarta-feira</span>
+            <span class="briefing-badge">Hoje</span>
+          </a>
+        </li>
+        <li class="briefing-item">
+          <a class="briefing-link" href="2026-03-24.html">
+            <span class="briefing-date">24/03/2026</span>
+            <span class="briefing-day">Terça-feira</span>
+          </a>
+        </li>
+        <li class="briefing-item">
+          <a class="briefing-link" href="2026-03-23.html">
+            <span class="briefing-date">23/03/2026</span>
+            <span class="briefing-day">Domingo</span>
+          </a>
+        </li>
+        <li class="briefing-item">
+          <a class="briefing-link" href="2026-03-22.html">
+            <span class="briefing-date">22/03/2026</span>
+            <span class="briefing-day">Sábado</span>
+          </a>
+        </li>
+        <li class="briefing-item">
+          <a class="briefing-link" href="2026-03-21.html">
+            <span class="briefing-date">21/03/2026</span>
+            <span class="briefing-day">Sexta-feira</span>
+          </a>
+        </li>
+        <li class="briefing-item">
+          <a class="briefing-link" href="2026-03-20.html">
+            <span class="briefing-date">20/03/2026</span>
+            <span class="briefing-day">Quinta-feira</span>
+          </a>
+        </li>
+        <li class="briefing-item">
+          <a class="briefing-link" href="2026-03-19.html">
+            <span class="briefing-date">19/03/2026</span>
+            <span class="briefing-day">Quarta-feira</span>
+          </a>
+        </li>
+      </ul>
     </div>
   </div>
-  <div class="rule"></div>
-  <div class="content">
-    <div class="section-label">Briefings disponíveis</div>
-
-    <a class="briefing-item" href="2026-03-24.html">
-      <div>
-        <div class="briefing-date">24/03/2026</div>
-        <div class="briefing-day">Terça-feira</div>
-      </div>
-      <span class="badge-hoje">Hoje</span>
-    </a>
-
-    <a class="briefing-item" href="2026-03-23.html">
-      <div>
-        <div class="briefing-date">23/03/2026</div>
-        <div class="briefing-day">Segunda-feira</div>
-      </div>
-    </a>
-
-    <a class="briefing-item" href="2026-03-22.html">
-      <div>
-        <div class="briefing-date">22/03/2026</div>
-        <div class="briefing-day">Domingo</div>
-      </div>
-    </a>
-
-    <a class="briefing-item" href="2026-03-21.html">
-      <div>
-        <div class="briefing-date">21/03/2026</div>
-        <div class="briefing-day">Sábado</div>
-      </div>
-    </a>
-
-    <a class="briefing-item" href="2026-03-20.html">
-      <div>
-        <div class="briefing-date">20/03/2026</div>
-        <div class="briefing-day">Sexta-feira</div>
-      </div>
-    </a>
-
-    <a class="briefing-item" href="2026-03-19.html">
-      <div>
-        <div class="briefing-date">19/03/2026</div>
-        <div class="briefing-day">Quinta-feira</div>
-      </div>
-    </a>
-
-  </div>
-</div>
 </body>
 </html>
