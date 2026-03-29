@@ -1,1837 +1,618 @@
 <!DOCTYPE html>
 <html lang="pt-BR">
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Daily Briefing SunR | 28 de março de 2026</title>
-    <style>
-        :root {
-            --navy: #0F2444;
-            --blue: #1B56B0;
-            --blue-mid: #2D6FD9;
-            --blue-soft: #EBF2FF;
-            --blue-xsoft: #F4F7FD;
-            --slate-700: #374361;
-            --slate-500: #64748B;
-            --slate-400: #94A3B8;
-            --slate-200: #E2E8F0;
-            --slate-100: #F1F5F9;
-            --white: #FFFFFF;
-            --red: #DC2626;
-            --red-soft: #FEF2F2;
-            --amber: #B45309;
-            --amber-soft: #FFFBEB;
-            --green: #15803D;
-            --green-soft: #F0FDF4;
-            --t-xs: 11px;
-            --t-sm: 13px;
-            --t-base: 14px;
-            --t-md: 15px;
-            --t-lg: 20px;
-            --sp-1: 4px;
-            --sp-2: 8px;
-            --sp-3: 12px;
-            --sp-4: 16px;
-            --sp-5: 20px;
-            --sp-6: 24px;
-            --ticker-h: 36px;
-            --sidebar-w: 208px;
-            --radius: 8px;
-        }
-
-        * {
-            margin: 0;
-            padding: 0;
-            box-sizing: border-box;
-        }
-
-        body {
-            font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen, Ubuntu, Cantarell, sans-serif;
-            background: var(--slate-100);
-            color: var(--slate-700);
-            line-height: 1.5;
-        }
-
-        /* ========== TICKER BAR ========== */
-        #ticker {
-            position: fixed;
-            top: 0;
-            left: 0;
-            right: 0;
-            height: var(--ticker-h);
-            background: var(--navy);
-            border-bottom: 1px solid var(--slate-200);
-            display: flex;
-            align-items: center;
-            overflow: hidden;
-            z-index: 999;
-            box-shadow: 0 2px 8px rgba(0,0,0,0.1);
-        }
-
-        .ticker-label {
-            color: var(--slate-400);
-            font-size: var(--t-xs);
-            font-weight: 600;
-            padding: 0 var(--sp-3);
-            text-transform: uppercase;
-            letter-spacing: 0.5px;
-            white-space: nowrap;
-            flex-shrink: 0;
-        }
-
-        .ticker-content {
-            display: flex;
-            gap: var(--sp-6);
-            animation: scroll-left 55s linear infinite;
-            white-space: nowrap;
-            padding-left: var(--sp-4);
-        }
-
-        @keyframes scroll-left {
-            0% {
-                transform: translateX(0);
-            }
-            100% {
-                transform: translateX(-50%);
-            }
-        }
-
-        .ticker-item {
-            display: flex;
-            align-items: center;
-            gap: var(--sp-2);
-            color: var(--white);
-            font-size: var(--t-sm);
-            font-weight: 500;
-            flex-shrink: 0;
-        }
-
-        .ticker-symbol {
-            color: var(--slate-400);
-            font-weight: 600;
-        }
-
-        .ticker-value {
-            color: var(--white);
-            font-weight: 700;
-        }
-
-        .ticker-value.up {
-            color: var(--green);
-        }
-
-        .ticker-value.down {
-            color: var(--red);
-        }
-
-        /* ========== SIDEBAR ========== */
-        #sidebar {
-            position: fixed;
-            left: 0;
-            top: var(--ticker-h);
-            width: var(--sidebar-w);
-            height: calc(100vh - var(--ticker-h));
-            background: var(--white);
-            border-right: 1px solid var(--slate-200);
-            display: flex;
-            flex-direction: column;
-            z-index: 99;
-            overflow-y: auto;
-            padding: var(--sp-4);
-        }
-
-        .sidebar-logo {
-            margin-bottom: var(--sp-5);
-        }
-
-        .sidebar-logo img {
-            max-width: 100%;
-            height: auto;
-        }
-
-        .sidebar-date {
-            font-size: var(--t-xs);
-            color: var(--slate-500);
-            margin-bottom: var(--sp-4);
-            text-transform: uppercase;
-            letter-spacing: 0.5px;
-        }
-
-        .sidebar-nav-group {
-            margin-bottom: var(--sp-5);
-        }
-
-        .sidebar-nav-label {
-            font-size: var(--t-xs);
-            color: var(--slate-500);
-            font-weight: 600;
-            text-transform: uppercase;
-            letter-spacing: 0.5px;
-            margin-bottom: var(--sp-2);
-            padding-left: var(--sp-2);
-        }
-
-        .sidebar-nav-item {
-            display: flex;
-            align-items: center;
-            gap: var(--sp-2);
-            padding: var(--sp-2) var(--sp-3);
-            margin-bottom: var(--sp-1);
-            border-radius: var(--radius);
-            cursor: pointer;
-            transition: all 0.2s ease;
-            font-size: var(--t-sm);
-            color: var(--slate-700);
-            text-decoration: none;
-            border-left: 3px solid transparent;
-        }
-
-        .sidebar-nav-item:hover {
-            background: var(--blue-xsoft);
-            color: var(--blue);
-        }
-
-        .sidebar-nav-item.active {
-            background: var(--blue-soft);
-            color: var(--blue);
-            border-left-color: var(--blue);
-            font-weight: 600;
-        }
-
-        .sidebar-nav-icon {
-            width: 14px;
-            height: 14px;
-            stroke-width: 2;
-            flex-shrink: 0;
-        }
-
-        .progress-container {
-            margin-top: auto;
-            padding-top: var(--sp-4);
-            border-top: 1px solid var(--slate-200);
-        }
-
-        .progress-label {
-            font-size: var(--t-xs);
-            color: var(--slate-500);
-            font-weight: 600;
-            margin-bottom: var(--sp-2);
-        }
-
-        .progress-bar {
-            width: 100%;
-            height: 6px;
-            background: var(--slate-200);
-            border-radius: 3px;
-            overflow: hidden;
-        }
-
-        .progress-fill {
-            height: 100%;
-            background: var(--blue);
-            border-radius: 3px;
-            transition: width 0.3s ease;
-            width: 0%;
-        }
-
-        /* ========== MAIN CONTENT ========== */
-        #main-content {
-            margin-left: var(--sidebar-w);
-            margin-top: var(--ticker-h);
-            padding: var(--sp-6);
-            max-width: 1400px;
-        }
-
-        .alert-banner {
-            background: var(--red-soft);
-            border-left: 4px solid var(--red);
-            padding: var(--sp-4);
-            border-radius: var(--radius);
-            margin-bottom: var(--sp-5);
-            display: flex;
-            gap: var(--sp-3);
-            align-items: flex-start;
-        }
-
-        .alert-icon {
-            width: 20px;
-            height: 20px;
-            color: var(--red);
-            flex-shrink: 0;
-            margin-top: 2px;
-        }
-
-        .alert-content {
-            flex: 1;
-        }
-
-        .alert-title {
-            font-size: var(--t-md);
-            font-weight: 700;
-            color: var(--red);
-            margin-bottom: var(--sp-1);
-        }
-
-        .alert-text {
-            font-size: var(--t-sm);
-            color: var(--slate-700);
-            line-height: 1.6;
-        }
-
-        .alert-deadline {
-            font-weight: 600;
-            color: var(--red);
-        }
-
-        /* ========== SECTIONS ========== */
-        .section {
-            background: var(--white);
-            border-radius: var(--radius);
-            border: 1px solid var(--slate-200);
-            margin-bottom: var(--sp-5);
-            overflow: hidden;
-            box-shadow: 0 1px 3px rgba(0,0,0,0.05);
-            transition: all 0.2s ease;
-        }
-
-        .section.closed .sec-body {
-            display: none;
-        }
-
-        .sec-header {
-            display: flex;
-            align-items: center;
-            gap: var(--sp-3);
-            padding: var(--sp-4);
-            cursor: pointer;
-            user-select: none;
-            border-bottom: 1px solid var(--slate-200);
-            background: var(--slate-100);
-            transition: background 0.2s ease;
-        }
-
-        .sec-header:hover {
-            background: var(--blue-xsoft);
-        }
-
-        .sec-header.always-open {
-            cursor: default;
-        }
-
-        .sec-header.always-open:hover {
-            background: var(--slate-100);
-        }
-
-        .sec-toggle-icon {
-            width: 16px;
-            height: 16px;
-            color: var(--slate-500);
-            flex-shrink: 0;
-            transition: transform 0.2s ease;
-        }
-
-        .section.closed .sec-toggle-icon {
-            transform: rotate(-90deg);
-        }
-
-        .sec-title {
-            font-size: var(--t-md);
-            font-weight: 700;
-            color: var(--navy);
-            flex: 1;
-        }
-
-        .sec-subtitle {
-            font-size: var(--t-sm);
-            color: var(--slate-500);
-        }
-
-        .sec-body {
-            padding: var(--sp-5);
-        }
-
-        /* ========== SITUAÇÃO ========== */
-        .situation-item {
-            display: flex;
-            gap: var(--sp-3);
-            margin-bottom: var(--sp-4);
-            padding-bottom: var(--sp-4);
-            border-bottom: 1px solid var(--slate-200);
-        }
-
-        .situation-item:last-child {
-            border-bottom: none;
-            margin-bottom: 0;
-            padding-bottom: 0;
-        }
-
-        .situation-badge {
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            width: 28px;
-            height: 28px;
-            border-radius: 50%;
-            background: var(--blue-soft);
-            color: var(--blue);
-            font-size: var(--t-xs);
-            font-weight: 700;
-            flex-shrink: 0;
-            margin-top: 2px;
-        }
-
-        .situation-badge.urgente {
-            background: var(--red-soft);
-            color: var(--red);
-        }
-
-        .situation-badge.acao {
-            background: var(--amber-soft);
-            color: var(--amber);
-        }
-
-        .situation-content {
-            flex: 1;
-            min-width: 0;
-        }
-
-        .situation-label {
-            display: inline-block;
-            font-size: var(--t-xs);
-            font-weight: 700;
-            text-transform: uppercase;
-            letter-spacing: 0.5px;
-            margin-bottom: var(--sp-1);
-        }
-
-        .situation-label.urgente {
-            color: var(--red);
-        }
-
-        .situation-label.acao {
-            color: var(--amber);
-        }
-
-        .situation-label.operacao {
-            color: var(--blue);
-        }
-
-        .situation-label.pipeline {
-            color: var(--blue-mid);
-        }
-
-        .situation-label.financeiro {
-            color: var(--red);
-        }
-
-        .situation-text {
-            font-size: var(--t-sm);
-            color: var(--slate-700);
-            line-height: 1.6;
-        }
-
-        .situation-emphasis {
-            font-weight: 600;
-            color: var(--navy);
-        }
-
-        /* ========== AÇÕES ========== */
-        .action-list {
-            display: flex;
-            flex-direction: column;
-            gap: var(--sp-3);
-        }
-
-        .action-item {
-            display: flex;
-            gap: var(--sp-3);
-            padding: var(--sp-3);
-            background: var(--slate-100);
-            border-radius: var(--radius);
-            border-left: 4px solid;
-            transition: background 0.2s ease;
-        }
-
-        .action-item:hover {
-            background: var(--blue-xsoft);
-        }
-
-        .action-item.crit {
-            border-left-color: var(--red);
-        }
-
-        .action-item.warn {
-            border-left-color: var(--amber);
-        }
-
-        .action-item.info {
-            border-left-color: var(--blue);
-        }
-
-        .action-number {
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            width: 28px;
-            height: 28px;
-            border-radius: 50%;
-            background: var(--white);
-            color: var(--navy);
-            font-size: var(--t-sm);
-            font-weight: 700;
-            flex-shrink: 0;
-        }
-
-        .action-item.crit .action-number {
-            background: var(--red-soft);
-            color: var(--red);
-        }
-
-        .action-item.warn .action-number {
-            background: var(--amber-soft);
-            color: var(--amber);
-        }
-
-        .action-item.info .action-number {
-            background: var(--blue-soft);
-            color: var(--blue);
-        }
-
-        .action-content {
-            flex: 1;
-            min-width: 0;
-        }
-
-        .action-priority {
-            display: inline-block;
-            font-size: var(--t-xs);
-            font-weight: 700;
-            text-transform: uppercase;
-            letter-spacing: 0.5px;
-            margin-bottom: var(--sp-1);
-        }
-
-        .action-item.crit .action-priority {
-            color: var(--red);
-        }
-
-        .action-item.warn .action-priority {
-            color: var(--amber);
-        }
-
-        .action-item.info .action-priority {
-            color: var(--blue);
-        }
-
-        .action-text {
-            font-size: var(--t-sm);
-            color: var(--slate-700);
-            line-height: 1.6;
-        }
-
-        .action-owner {
-            font-size: var(--t-xs);
-            color: var(--slate-500);
-            margin-top: var(--sp-2);
-        }
-
-        /* ========== INSIGHT ========== */
-        .insight-box {
-            background: var(--blue-xsoft);
-            border-left: 4px solid var(--blue);
-            padding: var(--sp-4);
-            border-radius: var(--radius);
-        }
-
-        .insight-text {
-            font-size: var(--t-sm);
-            color: var(--slate-700);
-            line-height: 1.7;
-        }
-
-        /* ========== E-MAILS ========== */
-        .email-card {
-            background: var(--slate-100);
-            border-left: 4px solid var(--slate-300);
-            padding: var(--sp-4);
-            border-radius: var(--radius);
-            margin-bottom: var(--sp-3);
-        }
-
-        .email-card.urgente {
-            background: var(--red-soft);
-            border-left-color: var(--red);
-        }
-
-        .email-card.acao {
-            background: var(--amber-soft);
-            border-left-color: var(--amber);
-        }
-
-        .email-header {
-            display: flex;
-            align-items: center;
-            gap: var(--sp-2);
-            margin-bottom: var(--sp-2);
-        }
-
-        .email-badge {
-            display: inline-block;
-            font-size: var(--t-xs);
-            font-weight: 700;
-            text-transform: uppercase;
-            letter-spacing: 0.5px;
-            padding: var(--sp-1) var(--sp-2);
-            border-radius: 3px;
-            background: var(--white);
-        }
-
-        .email-card.urgente .email-badge {
-            background: var(--red);
-            color: var(--white);
-        }
-
-        .email-card.acao .email-badge {
-            background: var(--amber);
-            color: var(--white);
-        }
-
-        .email-card.fyi .email-badge {
-            background: var(--slate-500);
-            color: var(--white);
-        }
-
-        .email-from {
-            font-size: var(--t-sm);
-            font-weight: 600;
-            color: var(--slate-700);
-        }
-
-        .email-subject {
-            font-size: var(--t-sm);
-            color: var(--slate-500);
-            margin-top: var(--sp-2);
-        }
-
-        .email-detail {
-            font-size: var(--t-sm);
-            color: var(--slate-700);
-            margin-top: var(--sp-2);
-            line-height: 1.6;
-        }
-
-        /* ========== AGENDA ========== */
-        .agenda-empty {
-            color: var(--slate-500);
-            font-size: var(--t-sm);
-            padding: var(--sp-3) 0;
-            text-align: center;
-        }
-
-        .agenda-item {
-            display: flex;
-            gap: var(--sp-3);
-            padding: var(--sp-3);
-            background: var(--slate-100);
-            border-radius: var(--radius);
-            margin-bottom: var(--sp-3);
-            border-left: 4px solid var(--blue);
-        }
-
-        .agenda-time {
-            font-weight: 600;
-            color: var(--navy);
-            font-size: var(--t-sm);
-            white-space: nowrap;
-        }
-
-        .agenda-event {
-            flex: 1;
-            min-width: 0;
-        }
-
-        .agenda-title {
-            font-weight: 600;
-            color: var(--navy);
-            font-size: var(--t-sm);
-        }
-
-        .agenda-desc {
-            font-size: var(--t-xs);
-            color: var(--slate-500);
-            margin-top: var(--sp-1);
-        }
-
-        /* ========== DECISÕES ========== */
-        .decision-card {
-            background: var(--slate-100);
-            border-left: 4px solid var(--blue);
-            padding: var(--sp-4);
-            border-radius: var(--radius);
-            margin-bottom: var(--sp-3);
-        }
-
-        .decision-title {
-            font-size: var(--t-sm);
-            font-weight: 600;
-            color: var(--navy);
-            margin-bottom: var(--sp-2);
-        }
-
-        .decision-detail {
-            font-size: var(--t-sm);
-            color: var(--slate-700);
-            line-height: 1.6;
-        }
-
-        /* ========== OPERAÇÃO ========== */
-        .operation-group {
-            margin-bottom: var(--sp-5);
-        }
-
-        .operation-group-title {
-            font-size: var(--t-md);
-            font-weight: 700;
-            color: var(--navy);
-            margin-bottom: var(--sp-3);
-            padding-bottom: var(--sp-2);
-            border-bottom: 2px solid var(--slate-200);
-        }
-
-        .operation-item {
-            display: flex;
-            gap: var(--sp-2);
-            padding: var(--sp-2) 0;
-            font-size: var(--t-sm);
-            color: var(--slate-700);
-        }
-
-        .operation-bullet {
-            color: var(--blue);
-            font-weight: 700;
-            flex-shrink: 0;
-            margin-top: 2px;
-        }
-
-        .operation-content {
-            flex: 1;
-            min-width: 0;
-        }
-
-        /* ========== OMIE PANEL ========== */
-        .kpi-grid {
-            display: grid;
-            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
-            gap: var(--sp-4);
-            margin-bottom: var(--sp-5);
-        }
-
-        .kpi-card {
-            background: var(--slate-100);
-            padding: var(--sp-4);
-            border-radius: var(--radius);
-            border-left: 4px solid var(--blue);
-        }
-
-        .kpi-card.alert-kpi {
-            border-left-color: var(--amber);
-            background: var(--amber-soft);
-        }
-
-        .kpi-label {
-            font-size: var(--t-xs);
-            color: var(--slate-500);
-            font-weight: 600;
-            text-transform: uppercase;
-            letter-spacing: 0.5px;
-            margin-bottom: var(--sp-2);
-        }
-
-        .kpi-value {
-            font-size: var(--t-lg);
-            font-weight: 700;
-            color: var(--navy);
-        }
-
-        .omie-table {
-            width: 100%;
-            border-collapse: collapse;
-            margin-bottom: var(--sp-4);
-        }
-
-        .omie-table thead {
-            background: var(--slate-200);
-        }
-
-        .omie-table th {
-            padding: var(--sp-3);
-            text-align: left;
-            font-size: var(--t-sm);
-            font-weight: 600;
-            color: var(--navy);
-            border-bottom: 2px solid var(--slate-300);
-        }
-
-        .omie-table td {
-            padding: var(--sp-3);
-            font-size: var(--t-sm);
-            color: var(--slate-700);
-            border-bottom: 1px solid var(--slate-200);
-        }
-
-        .omie-table tr:hover {
-            background: var(--blue-xsoft);
-        }
-
-        .etapa-pill {
-            display: inline-block;
-            padding: var(--sp-1) var(--sp-2);
-            border-radius: 4px;
-            font-size: var(--t-xs);
-            font-weight: 600;
-        }
-
-        .etapa-60 {
-            background: var(--green-soft);
-            color: var(--green);
-        }
-
-        .etapa-50 {
-            background: var(--amber-soft);
-            color: var(--amber);
-        }
-
-        .bank-account {
-            display: grid;
-            grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
-            gap: var(--sp-3);
-            margin-top: var(--sp-3);
-        }
-
-        .bank-card {
-            background: var(--slate-100);
-            padding: var(--sp-3);
-            border-radius: var(--radius);
-            border-left: 4px solid var(--blue);
-        }
-
-        .bank-name {
-            font-size: var(--t-sm);
-            font-weight: 600;
-            color: var(--navy);
-            margin-bottom: var(--sp-1);
-        }
-
-        .bank-balance {
-            font-size: var(--t-md);
-            font-weight: 700;
-            color: var(--blue);
-        }
-
-        .bank-balance.negative {
-            color: var(--red);
-        }
-
-        /* ========== TEAMS ========== */
-        .teams-note {
-            background: var(--slate-100);
-            border-left: 4px solid var(--slate-400);
-            padding: var(--sp-4);
-            border-radius: var(--radius);
-            color: var(--slate-700);
-            font-size: var(--t-sm);
-        }
-
-        /* ========== FUNIL ========== */
-        .funil-item {
-            background: var(--slate-100);
-            padding: var(--sp-4);
-            border-radius: var(--radius);
-            margin-bottom: var(--sp-3);
-            border-left: 4px solid var(--blue);
-        }
-
-        .funil-item.prioridade {
-            background: var(--amber-soft);
-            border-left-color: var(--amber);
-        }
-
-        .funil-client {
-            font-size: var(--t-md);
-            font-weight: 600;
-            color: var(--navy);
-            margin-bottom: var(--sp-2);
-        }
-
-        .funil-badge {
-            display: inline-block;
-            font-size: var(--t-xs);
-            font-weight: 700;
-            text-transform: uppercase;
-            letter-spacing: 0.5px;
-            padding: var(--sp-1) var(--sp-2);
-            border-radius: 3px;
-            background: var(--amber);
-            color: var(--white);
-            margin-bottom: var(--sp-2);
-        }
-
-        .funil-status {
-            font-size: var(--t-sm);
-            color: var(--slate-700);
-            line-height: 1.6;
-        }
-
-        /* ========== AGENDA TIME ========== */
-        .team-agenda-note {
-            background: var(--slate-100);
-            border-left: 4px solid var(--slate-400);
-            padding: var(--sp-4);
-            border-radius: var(--radius);
-            color: var(--slate-700);
-            font-size: var(--t-sm);
-        }
-
-        /* ========== NOTÍCIAS ========== */
-        .news-item {
-            background: var(--slate-100);
-            padding: var(--sp-4);
-            border-radius: var(--radius);
-            margin-bottom: var(--sp-4);
-            border-left: 4px solid var(--blue-mid);
-        }
-
-        .news-badge {
-            display: inline-block;
-            font-size: var(--t-xs);
-            font-weight: 700;
-            text-transform: uppercase;
-            letter-spacing: 0.5px;
-            padding: var(--sp-1) var(--sp-2);
-            border-radius: 3px;
-            background: var(--blue);
-            color: var(--white);
-            margin-bottom: var(--sp-2);
-        }
-
-        .news-title {
-            font-size: var(--t-md);
-            font-weight: 600;
-            color: var(--navy);
-            margin-bottom: var(--sp-2);
-        }
-
-        .news-impact {
-            background: var(--blue-xsoft);
-            padding: var(--sp-3);
-            border-radius: var(--radius);
-            margin-top: var(--sp-2);
-            font-size: var(--t-sm);
-            color: var(--slate-700);
-            line-height: 1.6;
-        }
-
-        .news-link {
-            color: var(--blue);
-            text-decoration: none;
-            font-weight: 600;
-            word-break: break-word;
-        }
-
-        .news-link:hover {
-            text-decoration: underline;
-        }
-
-        /* ========== UTILITIES ========== */
-        .divider {
-            height: 1px;
-            background: var(--slate-200);
-            margin: var(--sp-5) 0;
-        }
-
-        @media (max-width: 1024px) {
-            #sidebar {
-                width: 160px;
-            }
-
-            #main-content {
-                margin-left: 160px;
-                padding: var(--sp-4);
-            }
-
-            .kpi-grid {
-                grid-template-columns: repeat(2, 1fr);
-            }
-        }
-
-        @media (max-width: 768px) {
-            #sidebar {
-                width: 100%;
-                height: auto;
-                position: static;
-                border-right: none;
-                border-bottom: 1px solid var(--slate-200);
-                flex-direction: row;
-                align-items: center;
-                padding: var(--sp-3);
-                overflow-x: auto;
-            }
-
-            #main-content {
-                margin-left: 0;
-                margin-top: var(--ticker-h);
-            }
-
-            .sidebar-nav-group {
-                margin-bottom: 0;
-            }
-
-            .kpi-grid {
-                grid-template-columns: 1fr;
-            }
-
-            .progress-container {
-                margin-top: 0;
-                padding-top: 0;
-                border-top: none;
-            }
-        }
-    </style>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Daily Briefing SunR - 30/03/2026</title>
+<style>
+:root{--navy:#0F2444;--blue:#1B56B0;--blue-mid:#2D6FD9;--blue-soft:#EBF2FF;--blue-xsoft:#F4F7FD;--slate-700:#374361;--slate-500:#64748B;--slate-400:#94A3B8;--slate-200:#E2E8F0;--slate-100:#F1F5F9;--white:#FFFFFF;--red:#DC2626;--red-soft:#FEF2F2;--amber:#B45309;--amber-soft:#FFFBEB;--green:#16a34a;--green-soft:#f0fdf4;--t-xs:11px;--t-sm:13px;--t-base:14px;--t-md:15px;--t-lg:20px;--sp-1:4px;--sp-2:8px;--sp-3:12px;--sp-4:16px;--sp-5:20px;--sp-6:24px;--ticker-h:36px;--sidebar-w:208px;--radius:8px}
+*{margin:0;padding:0;box-sizing:border-box}
+body{font-family:-apple-system,BlinkMacSystemFont,'Segoe UI',Roboto,sans-serif;background:#F8FAFC;color:var(--slate-700);font-size:var(--t-base);line-height:1.5}
+/* TICKER */
+.ticker{position:fixed;top:0;left:0;right:0;height:var(--ticker-h);background:#07111F;color:#94DB8C;font-size:var(--t-xs);display:flex;align-items:center;overflow:hidden;z-index:100;letter-spacing:.3px}
+.ticker-track{display:flex;white-space:nowrap;animation:scroll 55s linear infinite}
+@keyframes scroll{0%{transform:translateX(0)}100%{transform:translateX(-50%)}}
+.ticker-item{padding:0 28px;display:inline-flex;align-items:center;gap:6px}
+.ticker-item .label{color:#64748B;font-weight:500}
+.ticker-item .val{font-weight:700;color:#94DB8C}
+.ticker-item .change.up{color:#4ade80}
+.ticker-item .change.down{color:#f87171}
+.ticker-sep{color:#1e3a5f;padding:0 4px}
+/* SIDEBAR */
+.sidebar{position:fixed;top:var(--ticker-h);left:0;width:var(--sidebar-w);height:calc(100vh - var(--ticker-h));background:var(--white);border-right:1px solid var(--slate-200);display:flex;flex-direction:column;z-index:90;padding:var(--sp-4) var(--sp-3)}
+.sb-logo{width:110px;margin:0 auto var(--sp-4)}
+.sb-date{text-align:center;font-size:var(--t-sm);color:var(--slate-500);margin-bottom:var(--sp-5);font-weight:500}
+.sb-group{margin-bottom:var(--sp-4)}
+.sb-group-title{font-size:var(--t-xs);text-transform:uppercase;letter-spacing:.8px;color:var(--slate-400);font-weight:600;margin-bottom:var(--sp-1);padding-left:var(--sp-2)}
+.sb-link{display:flex;align-items:center;gap:var(--sp-2);padding:5px var(--sp-2);border-radius:6px;font-size:var(--t-sm);color:var(--slate-500);text-decoration:none;cursor:pointer;transition:all .15s}
+.sb-link:hover{background:var(--blue-xsoft);color:var(--blue)}
+.sb-link.active{background:var(--blue-soft);color:var(--blue);font-weight:600}
+.sb-link svg{width:14px;height:14px;flex-shrink:0;stroke:currentColor;fill:none;stroke-width:2;stroke-linecap:round;stroke-linejoin:round}
+.sb-progress{margin-top:auto;padding-top:var(--sp-3)}
+.sb-progress-label{font-size:var(--t-xs);color:var(--slate-400);margin-bottom:4px}
+.sb-progress-bar{height:3px;background:var(--slate-100);border-radius:2px;overflow:hidden}
+.sb-progress-bar .fill{height:100%;background:var(--blue-mid);width:0%;transition:width .2s}
+/* MAIN */
+.main{margin-left:var(--sidebar-w);padding:calc(var(--ticker-h) + var(--sp-5)) var(--sp-6) var(--sp-6);max-width:960px}
+.main h1{font-size:24px;color:var(--navy);margin-bottom:var(--sp-1)}
+.main .subtitle{font-size:var(--t-sm);color:var(--slate-400);margin-bottom:var(--sp-5)}
+/* ALERT */
+.alert{border-left:4px solid var(--red);background:var(--red-soft);padding:var(--sp-3) var(--sp-4);border-radius:0 var(--radius) var(--radius) 0;margin-bottom:var(--sp-5)}
+.alert.warn{border-left-color:var(--amber);background:var(--amber-soft)}
+.alert-title{font-weight:700;font-size:var(--t-md);color:var(--red);margin-bottom:var(--sp-1)}
+.alert.warn .alert-title{color:var(--amber)}
+.alert p{font-size:var(--t-sm);color:var(--slate-700)}
+/* SECTIONS */
+.section{margin-bottom:var(--sp-5)}
+.sec-header{display:flex;align-items:center;gap:var(--sp-2);cursor:pointer;padding:var(--sp-3) 0;border-bottom:1px solid var(--slate-200);user-select:none}
+.sec-header h2{font-size:var(--t-lg);color:var(--navy);flex:1}
+.sec-arrow{transition:transform .2s;color:var(--slate-400)}
+.sec-body{padding:var(--sp-4) 0;overflow:hidden;transition:max-height .3s ease}
+.section.closed .sec-body{display:none}
+.section.closed .sec-arrow{transform:rotate(-90deg)}
+/* ACTION ITEMS */
+.action-item{display:flex;align-items:flex-start;gap:var(--sp-3);padding:var(--sp-3);border-left:3px solid var(--blue);background:var(--white);border-radius:0 var(--radius) var(--radius) 0;margin-bottom:var(--sp-2);box-shadow:0 1px 3px rgba(0,0,0,.04)}
+.action-item.crit{border-left-color:var(--red)}
+.action-item.warn{border-left-color:var(--amber)}
+.action-item .num{width:22px;height:22px;border-radius:50%;background:var(--blue-soft);color:var(--blue);font-size:var(--t-xs);font-weight:700;display:flex;align-items:center;justify-content:center;flex-shrink:0}
+.action-item.crit .num{background:var(--red-soft);color:var(--red)}
+.action-item.warn .num{background:var(--amber-soft);color:var(--amber)}
+.action-item .content{flex:1}
+.action-item .title{font-weight:600;font-size:var(--t-sm);color:var(--slate-700)}
+.action-item .meta{font-size:var(--t-xs);color:var(--slate-400);margin-top:2px}
+.owner{display:inline-block;padding:1px 8px;border-radius:10px;font-size:var(--t-xs);font-weight:600;background:var(--blue-soft);color:var(--blue)}
+.owner.mar{background:#f3e8ff;color:#7c3aed}
+.owner.lai{background:#fef3c7;color:#92400e}
+.owner.car{background:#dbeafe;color:#1d4ed8}
+.owner.dou{background:#d1fae5;color:#065f46}
+/* EMAIL CARDS */
+.email-card{background:var(--white);border-radius:var(--radius);padding:var(--sp-3) var(--sp-4);margin-bottom:var(--sp-2);box-shadow:0 1px 3px rgba(0,0,0,.04);border:1px solid var(--slate-100)}
+.email-badge{display:inline-block;padding:1px 8px;border-radius:10px;font-size:var(--t-xs);font-weight:700;margin-bottom:var(--sp-1)}
+.email-badge.urgente{background:var(--red-soft);color:var(--red)}
+.email-badge.acao{background:var(--amber-soft);color:var(--amber)}
+.email-badge.fyi{background:var(--blue-soft);color:var(--blue)}
+.email-from{font-weight:600;font-size:var(--t-sm);color:var(--slate-700)}
+.email-subject{font-size:var(--t-sm);color:var(--slate-500);margin:2px 0}
+.email-snippet{font-size:var(--t-xs);color:var(--slate-400)}
+/* AGENDA */
+.agenda-grid{display:grid;grid-template-columns:1fr 1fr;gap:var(--sp-4)}
+.agenda-col h3{font-size:var(--t-md);color:var(--navy);margin-bottom:var(--sp-3);padding-bottom:var(--sp-1);border-bottom:2px solid var(--blue-soft)}
+.event-row{display:flex;gap:var(--sp-3);padding:var(--sp-2) 0;border-bottom:1px solid var(--slate-100);font-size:var(--t-sm)}
+.event-time{min-width:90px;font-weight:600;color:var(--blue);font-size:var(--t-xs)}
+.event-name{color:var(--slate-700)}
+.event-row.highlight{background:var(--amber-soft);padding:var(--sp-2) var(--sp-2);border-radius:4px;border-bottom:none}
+.event-row.conflict{background:var(--red-soft);padding:var(--sp-2) var(--sp-2);border-radius:4px;border-bottom:none}
+/* KPI CARDS */
+.kpi-grid{display:grid;grid-template-columns:repeat(4,1fr);gap:var(--sp-3);margin-bottom:var(--sp-4)}
+.kpi-card{background:var(--white);border-radius:var(--radius);padding:var(--sp-3) var(--sp-4);box-shadow:0 1px 3px rgba(0,0,0,.04);border-left:3px solid var(--blue)}
+.kpi-card.alert-card{border-left-color:var(--amber)}
+.kpi-card.crit-card{border-left-color:var(--red)}
+.kpi-label{font-size:var(--t-xs);color:var(--slate-400);text-transform:uppercase;letter-spacing:.5px}
+.kpi-value{font-size:20px;font-weight:700;color:var(--navy);margin:var(--sp-1) 0}
+.kpi-sub{font-size:var(--t-xs);color:var(--slate-500)}
+/* TABLE */
+table{width:100%;border-collapse:collapse;font-size:var(--t-sm);margin-bottom:var(--sp-4)}
+th{text-align:left;padding:var(--sp-2) var(--sp-3);background:var(--slate-100);color:var(--slate-500);font-weight:600;font-size:var(--t-xs);text-transform:uppercase;letter-spacing:.5px}
+td{padding:var(--sp-2) var(--sp-3);border-bottom:1px solid var(--slate-100);color:var(--slate-700)}
+.pill{display:inline-block;padding:1px 8px;border-radius:10px;font-size:var(--t-xs);font-weight:600}
+.pill.ep-green{background:var(--green-soft);color:var(--green)}
+.pill.ep-amber{background:var(--amber-soft);color:var(--amber)}
+.pill.ep-blue{background:var(--blue-soft);color:var(--blue)}
+.pill.ep-red{background:var(--red-soft);color:var(--red)}
+/* TEAMS */
+.teams-msg{display:flex;gap:var(--sp-3);padding:var(--sp-3);background:var(--white);border-radius:var(--radius);margin-bottom:var(--sp-2);box-shadow:0 1px 3px rgba(0,0,0,.04)}
+.teams-avatar{width:32px;height:32px;border-radius:50%;display:flex;align-items:center;justify-content:center;font-weight:700;font-size:var(--t-sm);color:var(--white);flex-shrink:0}
+.teams-content{flex:1}
+.teams-meta{font-size:var(--t-xs);color:var(--slate-400);margin-bottom:2px}
+.teams-meta strong{color:var(--slate-700)}
+.teams-text{font-size:var(--t-sm);color:var(--slate-700)}
+/* FUNIL */
+.funil-card{background:var(--white);border-radius:var(--radius);padding:var(--sp-3) var(--sp-4);margin-bottom:var(--sp-2);box-shadow:0 1px 3px rgba(0,0,0,.04);border-left:3px solid var(--blue)}
+.funil-card .funil-title{font-weight:700;font-size:var(--t-md);color:var(--navy)}
+.funil-card .funil-stage{font-size:var(--t-xs);color:var(--slate-400)}
+/* NEWS */
+.news-item{padding:var(--sp-3) 0;border-bottom:1px solid var(--slate-100)}
+.news-item:last-child{border-bottom:none}
+.news-cat{font-size:var(--t-xs);text-transform:uppercase;letter-spacing:.5px;color:var(--blue);font-weight:600}
+.news-title a{font-weight:600;color:var(--navy);text-decoration:none;font-size:var(--t-sm)}
+.news-title a:hover{color:var(--blue)}
+.news-impact{font-size:var(--t-xs);color:var(--slate-500);margin-top:2px}
+/* INSIGHT */
+.insight-box{background:linear-gradient(135deg,var(--blue-xsoft),var(--blue-soft));border-radius:var(--radius);padding:var(--sp-4) var(--sp-5);border-left:4px solid var(--blue)}
+.insight-box h3{color:var(--navy);font-size:var(--t-md);margin-bottom:var(--sp-2)}
+.insight-box p{color:var(--slate-700);font-size:var(--t-sm);line-height:1.6}
+/* DECISION CARD */
+.decision-grid{display:grid;grid-template-columns:1fr 1fr;gap:var(--sp-3)}
+.decision-card{background:var(--white);border-radius:var(--radius);padding:var(--sp-3) var(--sp-4);box-shadow:0 1px 3px rgba(0,0,0,.04);border-top:3px solid var(--amber)}
+.decision-card h4{font-size:var(--t-sm);color:var(--navy);margin-bottom:var(--sp-1)}
+.decision-card p{font-size:var(--t-xs);color:var(--slate-500)}
+/* RESPONSIVE */
+@media(max-width:768px){.sidebar{display:none}.main{margin-left:0}.kpi-grid{grid-template-columns:1fr 1fr}.agenda-grid{grid-template-columns:1fr}.decision-grid{grid-template-columns:1fr}}
+</style>
 </head>
 <body>
 
-<!-- ========== TICKER BAR ========== -->
-<div id="ticker">
-    <div class="ticker-label">Mercados</div>
-    <div class="ticker-content">
-        <div class="ticker-item"><span class="ticker-symbol">Al/LME</span><span class="ticker-value">USD 2.630/t</span></div>
-        <div class="ticker-item"><span class="ticker-symbol">Cu/LME</span><span class="ticker-value">USD 9.850/t</span></div>
-        <div class="ticker-item"><span class="ticker-symbol">AG/USD</span><span class="ticker-value">USD 33.80/oz</span></div>
-        <div class="ticker-item"><span class="ticker-symbol">Brent</span><span class="ticker-value">USD 73.20/bbl</span></div>
-        <div class="ticker-item"><span class="ticker-symbol">IBOV</span><span class="ticker-value">132.450 pts</span></div>
-        <div class="ticker-item"><span class="ticker-symbol">USD/BRL</span><span class="ticker-value">R$ 5.74</span></div>
-        <div class="ticker-item"><span class="ticker-symbol">Selic</span><span class="ticker-value">14.25% a.a.</span></div>
-        <div class="ticker-item"><span class="ticker-symbol">PETR4</span><span class="ticker-value">R$ 36.82</span></div>
-
-        <!-- Duplicated for continuous loop -->
-        <div class="ticker-item"><span class="ticker-symbol">Al/LME</span><span class="ticker-value">USD 2.630/t</span></div>
-        <div class="ticker-item"><span class="ticker-symbol">Cu/LME</span><span class="ticker-value">USD 9.850/t</span></div>
-        <div class="ticker-item"><span class="ticker-symbol">AG/USD</span><span class="ticker-value">USD 33.80/oz</span></div>
-        <div class="ticker-item"><span class="ticker-symbol">Brent</span><span class="ticker-value">USD 73.20/bbl</span></div>
-        <div class="ticker-item"><span class="ticker-symbol">IBOV</span><span class="ticker-value">132.450 pts</span></div>
-        <div class="ticker-item"><span class="ticker-symbol">USD/BRL</span><span class="ticker-value">R$ 5.74</span></div>
-        <div class="ticker-item"><span class="ticker-symbol">Selic</span><span class="ticker-value">14.25% a.a.</span></div>
-        <div class="ticker-item"><span class="ticker-symbol">PETR4</span><span class="ticker-value">R$ 36.82</span></div>
-    </div>
+<!-- TICKER -->
+<div class="ticker">
+<div class="ticker-track">
+<span class="ticker-item"><span class="label">Aluminio LME</span><span class="val">$3,284/t</span></span><span class="ticker-sep">|</span>
+<span class="ticker-item"><span class="label">Cobre LME</span><span class="val">$12,088/t</span></span><span class="ticker-sep">|</span>
+<span class="ticker-item"><span class="label">Prata</span><span class="val">$70.52/oz</span></span><span class="ticker-sep">|</span>
+<span class="ticker-item"><span class="label">Brent</span><span class="val">$107.81/bbl</span></span><span class="ticker-sep">|</span>
+<span class="ticker-item"><span class="label">IBOV</span><span class="val">181.557</span> <span class="change down">-0,64%</span></span><span class="ticker-sep">|</span>
+<span class="ticker-item"><span class="label">USD/BRL</span><span class="val">R$ 5,24</span></span><span class="ticker-sep">|</span>
+<span class="ticker-item"><span class="label">Selic</span><span class="val">14,75%</span></span><span class="ticker-sep">|</span>
+<span class="ticker-item"><span class="label">PETR4</span><span class="val">R$ 49,27</span> <span class="change up">+56% YTD</span></span><span class="ticker-sep">|</span>
+<!-- duplicate for loop -->
+<span class="ticker-item"><span class="label">Aluminio LME</span><span class="val">$3,284/t</span></span><span class="ticker-sep">|</span>
+<span class="ticker-item"><span class="label">Cobre LME</span><span class="val">$12,088/t</span></span><span class="ticker-sep">|</span>
+<span class="ticker-item"><span class="label">Prata</span><span class="val">$70.52/oz</span></span><span class="ticker-sep">|</span>
+<span class="ticker-item"><span class="label">Brent</span><span class="val">$107.81/bbl</span></span><span class="ticker-sep">|</span>
+<span class="ticker-item"><span class="label">IBOV</span><span class="val">181.557</span> <span class="change down">-0,64%</span></span><span class="ticker-sep">|</span>
+<span class="ticker-item"><span class="label">USD/BRL</span><span class="val">R$ 5,24</span></span><span class="ticker-sep">|</span>
+<span class="ticker-item"><span class="label">Selic</span><span class="val">14,75%</span></span><span class="ticker-sep">|</span>
+<span class="ticker-item"><span class="label">PETR4</span><span class="val">R$ 49,27</span> <span class="change up">+56% YTD</span></span><span class="ticker-sep">|</span>
+</div>
 </div>
 
-<!-- ========== SIDEBAR ========== -->
-<div id="sidebar">
-    <div class="sidebar-logo">
-        <img src="https://i0.wp.com/sunr.com.br/wp-content/uploads/2024/08/SunR_Logotipo-.png?fit=400%2C154&ssl=1" alt="SunR">
-    </div>
+<!-- SIDEBAR -->
+<nav class="sidebar">
+<img class="sb-logo" src="https://i0.wp.com/sunr.com.br/wp-content/uploads/2024/08/SunR_Logotipo-.png?fit=400%2C154&ssl=1" alt="SunR">
+<div class="sb-date">Segunda, 30 mar 2026</div>
+<div class="sb-group">
+<div class="sb-group-title">Executivo</div>
+<a class="sb-link active" data-t="situacao"><svg viewBox="0 0 24 24"><circle cx="12" cy="12" r="10"/><line x1="12" y1="8" x2="12" y2="12"/><line x1="12" y1="16" x2="12.01" y2="16"/></svg>Situacao</a>
+<a class="sb-link" data-t="acoes"><svg viewBox="0 0 24 24"><polyline points="9 11 12 14 22 4"/><path d="M21 12v7a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h11"/></svg>Acoes</a>
+<a class="sb-link" data-t="insight"><svg viewBox="0 0 24 24"><path d="M12 2L2 7l10 5 10-5-10-5z"/><path d="M2 17l10 5 10-5"/><path d="M2 12l10 5 10-5"/></svg>Insight</a>
+</div>
+<div class="sb-group">
+<div class="sb-group-title">Comunicacoes</div>
+<a class="sb-link" data-t="emails"><svg viewBox="0 0 24 24"><path d="M4 4h16c1.1 0 2 .9 2 2v12c0 1.1-.9 2-2 2H4c-1.1 0-2-.9-2-2V6c0-1.1.9-2 2-2z"/><polyline points="22,6 12,13 2,6"/></svg>E-mails</a>
+<a class="sb-link" data-t="teams"><svg viewBox="0 0 24 24"><path d="M17 21v-2a4 4 0 0 0-4-4H5a4 4 0 0 0-4 4v2"/><circle cx="9" cy="7" r="4"/><path d="M23 21v-2a4 4 0 0 0-3-3.87"/><path d="M16 3.13a4 4 0 0 1 0 7.75"/></svg>Teams</a>
+</div>
+<div class="sb-group">
+<div class="sb-group-title">Operacoes</div>
+<a class="sb-link" data-t="agenda"><svg viewBox="0 0 24 24"><rect x="3" y="4" width="18" height="18" rx="2" ry="2"/><line x1="16" y1="2" x2="16" y2="6"/><line x1="8" y1="2" x2="8" y2="6"/><line x1="3" y1="10" x2="21" y2="10"/></svg>Agenda</a>
+<a class="sb-link" data-t="decisoes"><svg viewBox="0 0 24 24"><path d="M22 11.08V12a10 10 0 1 1-5.93-9.14"/><polyline points="22 4 12 14.01 9 11.01"/></svg>Decisoes</a>
+<a class="sb-link" data-t="operacao"><svg viewBox="0 0 24 24"><circle cx="12" cy="12" r="3"/><path d="M19.4 15a1.65 1.65 0 0 0 .33 1.82l.06.06a2 2 0 0 1 0 2.83 2 2 0 0 1-2.83 0l-.06-.06a1.65 1.65 0 0 0-1.82-.33 1.65 1.65 0 0 0-1 1.51V21a2 2 0 0 1-2 2 2 2 0 0 1-2-2v-.09A1.65 1.65 0 0 0 9 19.4a1.65 1.65 0 0 0-1.82.33l-.06.06a2 2 0 0 1-2.83 0 2 2 0 0 1 0-2.83l.06-.06A1.65 1.65 0 0 0 4.68 15a1.65 1.65 0 0 0-1.51-1H3a2 2 0 0 1-2-2 2 2 0 0 1 2-2h.09A1.65 1.65 0 0 0 4.6 9a1.65 1.65 0 0 0-.33-1.82l-.06-.06a2 2 0 0 1 0-2.83 2 2 0 0 1 2.83 0l.06.06A1.65 1.65 0 0 0 9 4.68a1.65 1.65 0 0 0 1-1.51V3a2 2 0 0 1 2-2 2 2 0 0 1 2 2v.09a1.65 1.65 0 0 0 1 1.51 1.65 1.65 0 0 0 1.82-.33l.06-.06a2 2 0 0 1 2.83 0 2 2 0 0 1 0 2.83l-.06.06A1.65 1.65 0 0 0 19.4 9a1.65 1.65 0 0 0 1.51 1H21a2 2 0 0 1 2 2 2 2 0 0 1-2 2h-.09a1.65 1.65 0 0 0-1.51 1z"/></svg>Operacao</a>
+<a class="sb-link" data-t="funil"><svg viewBox="0 0 24 24"><polygon points="22 3 2 3 10 12.46 10 19 14 21 14 12.46 22 3"/></svg>Funil</a>
+</div>
+<div class="sb-group">
+<div class="sb-group-title">Dados</div>
+<a class="sb-link" data-t="omie"><svg viewBox="0 0 24 24"><line x1="12" y1="20" x2="12" y2="10"/><line x1="18" y1="20" x2="18" y2="4"/><line x1="6" y1="20" x2="6" y2="16"/></svg>Omie</a>
+<a class="sb-link" data-t="time"><svg viewBox="0 0 24 24"><path d="M17 21v-2a4 4 0 0 0-4-4H5a4 4 0 0 0-4 4v2"/><circle cx="9" cy="7" r="4"/><path d="M23 21v-2a4 4 0 0 0-3-3.87"/><path d="M16 3.13a4 4 0 0 1 0 7.75"/></svg>Time</a>
+<a class="sb-link" data-t="noticias"><svg viewBox="0 0 24 24"><path d="M2 3h6a4 4 0 0 1 4 4v14a3 3 0 0 0-3-3H2z"/><path d="M22 3h-6a4 4 0 0 0-4 4v14a3 3 0 0 1 3-3h7z"/></svg>Noticias</a>
+</div>
+<div class="sb-progress">
+<div class="sb-progress-label">Leitura</div>
+<div class="sb-progress-bar"><div class="fill" id="readFill"></div></div>
+</div>
+</nav>
 
-    <div class="sidebar-date">28 de março<br>2026</div>
+<!-- MAIN -->
+<div class="main">
+<h1>Daily Briefing SunR</h1>
+<div class="subtitle">Cobertura: sex 27/03 + sab 28/03 + dom 29/03 &bull; Gerado em 30/03/2026</div>
 
-    <div class="sidebar-nav-group">
-        <div class="sidebar-nav-label">Status</div>
-        <a class="sidebar-nav-item active" href="#situacao">
-            <svg class="sidebar-nav-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor">
-                <path d="M9 5H7a2 2 0 00-2 2v12a2 2 0 002 2h10a2 2 0 002-2V7a2 2 0 00-2-2h-2M9 5a2 2 0 002 2h2a2 2 0 002-2M9 5a2 2 0 012-2h2a2 2 0 012 2"/>
-                <path d="M9 12h6M9 16h6"/>
-            </svg>
-            Situação
-        </a>
-        <a class="sidebar-nav-item active" href="#acoes">
-            <svg class="sidebar-nav-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor">
-                <path d="M9 11l3 3L22 4M21 12a9 9 0 11-18 0 9 9 0 0118 0z"/>
-            </svg>
-            Ações
-        </a>
-    </div>
-
-    <div class="sidebar-nav-group">
-        <div class="sidebar-nav-label">Insights</div>
-        <a class="sidebar-nav-item" href="#insight">
-            <svg class="sidebar-nav-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor">
-                <path d="M13 16h-1v-4h-1m1-4h.01M21 12a9 9 0 11-18 0 9 9 0 0118 0z"/>
-            </svg>
-            Insight
-        </a>
-        <a class="sidebar-nav-item" href="#emails">
-            <svg class="sidebar-nav-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor">
-                <path d="M3 8l7.89 5.26a2 2 0 002.22 0L21 8M5 19h14a2 2 0 002-2V7a2 2 0 00-2-2H5a2 2 0 00-2 2v10a2 2 0 002 2z"/>
-            </svg>
-            E-mails
-        </a>
-        <a class="sidebar-nav-item" href="#agenda">
-            <svg class="sidebar-nav-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor">
-                <path d="M19 21H5a2 2 0 01-2-2V7a2 2 0 012-2h14a2 2 0 012 2v12a2 2 0 01-2 2zM3 7h18M16 2v4M8 2v4"/>
-            </svg>
-            Agenda
-        </a>
-    </div>
-
-    <div class="sidebar-nav-group">
-        <div class="sidebar-nav-label">Operações</div>
-        <a class="sidebar-nav-item" href="#decisoes">
-            <svg class="sidebar-nav-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor">
-                <path d="M12 8v4l3 2M21 12a9 9 0 11-18 0 9 9 0 0118 0z"/>
-            </svg>
-            Decisões
-        </a>
-        <a class="sidebar-nav-item" href="#operacao">
-            <svg class="sidebar-nav-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor">
-                <path d="M9 19v-6a2 2 0 00-2-2H5a2 2 0 00-2 2v6a2 2 0 002 2h2a2 2 0 002-2zm0 0V9a2 2 0 012-2h2a2 2 0 012 2v10m-6 0a2 2 0 002 2h2a2 2 0 002-2m0 0V5a2 2 0 012-2h2a2 2 0 012 2v14a2 2 0 01-2 2h-2a2 2 0 01-2-2z"/>
-            </svg>
-            Operação
-        </a>
-        <a class="sidebar-nav-item" href="#omie">
-            <svg class="sidebar-nav-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor">
-                <path d="M12 2C6.48 2 2 6.48 2 12s4.48 10 10 10 10-4.48 10-10S17.52 2 12 2zm-2 15l-5-5 1.41-1.41L10 14.17l7.59-7.59L19 8l-9 9z"/>
-            </svg>
-            Painel Omie
-        </a>
-        <a class="sidebar-nav-item" href="#funil">
-            <svg class="sidebar-nav-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor">
-                <path d="M3 3h18v2H3V3zm2 4h14v2H5V7zm3 4h8v2H8v-2zm2 4h4v2h-4v-2z"/>
-            </svg>
-            Funil
-        </a>
-    </div>
-
-    <div class="sidebar-nav-group">
-        <div class="sidebar-nav-label">Comunicação</div>
-        <a class="sidebar-nav-item" href="#teams">
-            <svg class="sidebar-nav-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor">
-                <path d="M17 21v-2a4 4 0 00-4-4H5a4 4 0 00-4 4v2M23 21v-2a4 4 0 00-3-3.87M16 3.13a4 4 0 010 7.75M12 14H3v7h9v-7z"/>
-            </svg>
-            Teams
-        </a>
-        <a class="sidebar-nav-item" href="#noticias">
-            <svg class="sidebar-nav-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor">
-                <path d="M4 4h16a2 2 0 012 2v12a2 2 0 01-2 2H4a2 2 0 01-2-2V6a2 2 0 012-2zM6 8h12M6 12h12M6 16h8"/>
-            </svg>
-            Notícias
-        </a>
-    </div>
-
-    <div class="progress-container">
-        <div class="progress-label">Progresso</div>
-        <div class="progress-bar">
-            <div class="progress-fill"></div>
-        </div>
-    </div>
+<!-- ALERT -->
+<div class="alert">
+<div class="alert-title">Acao Urgente: Processo Trabalhista</div>
+<p>Advogada Anna Carolina (Granito Boneli) precisa dos documentos <strong>ate segunda-feira meio-dia</strong> para audiencia do processo 0010309-98.2026 (Henrique Kenedy vs SunR). Nao ha como postergar sem comprovar impossibilidade.</p>
+</div>
+<div class="alert warn">
+<div class="alert-title">Documento Pendente: D4Sign</div>
+<p>Lorena (Essencis) enviou <strong>Regularizacao Hybris - KII</strong> para assinatura. Lembrete repetido sexta e domingo. Requer assinatura.</p>
+</div>
+<div class="alert warn">
+<div class="alert-title">Alvara MOC vence amanha (31/03)</div>
+<p>O alvara de funcionamento de Montes Claros vence amanha. Verificar status da renovacao com Lais.</p>
 </div>
 
-<!-- ========== MAIN CONTENT ========== -->
-<div id="main-content">
-
-    <!-- ALERT BANNER -->
-    <div class="alert-banner">
-        <svg class="alert-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
-            <circle cx="12" cy="12" r="10"></circle>
-            <line x1="12" y1="8" x2="12" y2="12"></line>
-            <line x1="12" y1="16" x2="12.01" y2="16"></line>
-        </svg>
-        <div class="alert-content">
-            <div class="alert-title">Reclamatória Trabalhista</div>
-            <div class="alert-text">
-                Audiência marcada para <span class="alert-deadline">31 de março</span>.
-                Documentos de defesa devem ser enviados até <span class="alert-deadline">segunda-feira ao meio-dia</span>.
-                Reunião com advogada agendada para <span class="alert-deadline">30 de março às 13h30</span>.
-            </div>
-        </div>
-    </div>
-
-    <!-- SEÇÃO 1: SITUAÇÃO -->
-    <div id="situacao" class="section">
-        <div class="sec-header always-open">
-            <svg class="sec-toggle-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor">
-                <polyline points="6 9 12 15 18 9"></polyline>
-            </svg>
-            <div class="sec-title">Situação do Dia</div>
-        </div>
-        <div class="sec-body">
-            <div class="situation-item">
-                <div class="situation-badge urgente">1</div>
-                <div class="situation-content">
-                    <div class="situation-label urgente">Urgente</div>
-                    <div class="situation-text">
-                        <span class="situation-emphasis">Audiência trabalhista (Henrique x SunR)</span> em 31/03.
-                        Documentos para defesa devem ser enviados até segunda meio-dia.
-                        Reunião com advogada 30/03 às 13h30.
-                    </div>
-                </div>
-            </div>
-
-            <div class="situation-item">
-                <div class="situation-badge acao">2</div>
-                <div class="situation-content">
-                    <div class="situation-label acao">Ação</div>
-                    <div class="situation-text">
-                        <span class="situation-emphasis">Contratos de Vesting prontos</span> — Granito Boneli enviou aditivo Marinna + 3 contratos novos (Bianca, Douglas, Laís).
-                        Revisar e validar antes de assinatura.
-                    </div>
-                </div>
-            </div>
-
-            <div class="situation-item">
-                <div class="situation-badge acao">3</div>
-                <div class="situation-content">
-                    <div class="situation-label acao">Ação</div>
-                    <div class="situation-text">
-                        <span class="situation-emphasis">Documento D4Sign pendente</span> — Regularização Hybris/KII (Essencis/Lorena).
-                        Assinar para validação final.
-                    </div>
-                </div>
-            </div>
-
-            <div class="situation-item">
-                <div class="situation-badge acao">4</div>
-                <div class="situation-content">
-                    <div class="situation-label acao">Ação</div>
-                    <div class="situation-text">
-                        <span class="situation-emphasis">Pedido de compra MOC #175</span> (EPI, R$380) aguardando aprovação no Omie.
-                    </div>
-                </div>
-            </div>
-
-            <div class="situation-item">
-                <div class="situation-badge">5</div>
-                <div class="situation-content">
-                    <div class="situation-label operacao">Operação</div>
-                    <div class="situation-text">
-                        <span class="situation-emphasis">Voltalia coletada no RN</span>, chegada prevista para segunda em Valinhos.
-                        Pagamento de 30% restante na segunda.
-                    </div>
-                </div>
-            </div>
-
-            <div class="situation-item">
-                <div class="situation-badge">6</div>
-                <div class="situation-content">
-                    <div class="situation-label pipeline">Pipeline</div>
-                    <div class="situation-text">
-                        <span class="situation-emphasis">Olívia/Bioenergia é prioridade</span> — demanda grande de alumínio, proposta de compra sendo enviada.
-                        Sim Soluções em fase final (R$28k).
-                    </div>
-                </div>
-            </div>
-
-            <div class="situation-item">
-                <div class="situation-badge">7</div>
-                <div class="situation-content">
-                    <div class="situation-label financeiro">Financeiro</div>
-                    <div class="situation-text">
-                        <span class="situation-emphasis">Nota da Unisol será protestada na segunda</span> — cliente sem retorno.
-                    </div>
-                </div>
-            </div>
-        </div>
-    </div>
-
-    <!-- SEÇÃO 2: AÇÕES -->
-    <div id="acoes" class="section">
-        <div class="sec-header always-open">
-            <svg class="sec-toggle-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor">
-                <polyline points="6 9 12 15 18 9"></polyline>
-            </svg>
-            <div class="sec-title">Ações do Dia</div>
-        </div>
-        <div class="sec-body">
-            <div class="action-list">
-                <div class="action-item crit">
-                    <div class="action-number">1</div>
-                    <div class="action-content">
-                        <div class="action-priority">Crítico</div>
-                        <div class="action-text">Enviar documentos trabalhistas até segunda meio-dia</div>
-                        <div class="action-owner">Responsáveis: Marinna / Lucas</div>
-                    </div>
-                </div>
-
-                <div class="action-item crit">
-                    <div class="action-number">2</div>
-                    <div class="action-content">
-                        <div class="action-priority">Crítico</div>
-                        <div class="action-text">Revisar contratos de Vesting da Granito Boneli (4 documentos)</div>
-                        <div class="action-owner">Responsável: Leo</div>
-                    </div>
-                </div>
-
-                <div class="action-item warn">
-                    <div class="action-number">3</div>
-                    <div class="action-content">
-                        <div class="action-priority">Aviso</div>
-                        <div class="action-text">Assinar documento D4Sign — Regularização Hybris/KII</div>
-                        <div class="action-owner">Responsável: Leo</div>
-                    </div>
-                </div>
-
-                <div class="action-item warn">
-                    <div class="action-number">4</div>
-                    <div class="action-content">
-                        <div class="action-priority">Aviso</div>
-                        <div class="action-text">Aprovar pedido de compra MOC #175 (R$380) no Omie</div>
-                        <div class="action-owner">Responsável: Leo</div>
-                    </div>
-                </div>
-
-                <div class="action-item warn">
-                    <div class="action-number">5</div>
-                    <div class="action-content">
-                        <div class="action-priority">Aviso</div>
-                        <div class="action-text">Protestar nota Unisol na segunda</div>
-                        <div class="action-owner">Responsáveis: Bianca / Marinna</div>
-                    </div>
-                </div>
-
-                <div class="action-item info">
-                    <div class="action-number">6</div>
-                    <div class="action-content">
-                        <div class="action-priority">Info</div>
-                        <div class="action-text">Pagamento 30% Voltalia na segunda ao descarregar</div>
-                        <div class="action-owner">Responsável: Bianca</div>
-                    </div>
-                </div>
-
-                <div class="action-item info">
-                    <div class="action-number">7</div>
-                    <div class="action-content">
-                        <div class="action-priority">Info</div>
-                        <div class="action-text">Enviar proposta de compra alumínio Olívia/Bioenergia</div>
-                        <div class="action-owner">Responsável: Carol</div>
-                    </div>
-                </div>
-            </div>
-        </div>
-    </div>
-
-    <!-- SEÇÃO 3: INSIGHT -->
-    <div id="insight" class="section closed">
-        <div class="sec-header">
-            <svg class="sec-toggle-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor">
-                <polyline points="6 9 12 15 18 9"></polyline>
-            </svg>
-            <div class="sec-title">Insight do Dia</div>
-        </div>
-        <div class="sec-body">
-            <div class="insight-box">
-                <div class="insight-text">
-                    O primeiro trimestre foi desafiador em volume para a área comercial, mas o pipeline está se reconstruindo com força:
-                    <strong>Olívia/Bioenergia</strong> traz uma demanda relevante de alumínio,
-                    <strong>Sim Soluções</strong> está em fase final de R$28k, e as entregas programadas para início de abril
-                    (Ambipar, Light Engine, Equasysh) vão turbinar o faturamento. A estratégia de diversificar para vidro
-                    (ensaios laboratoriais, novos clientes SP) e avançar o PIPE/FAPESP mostra que a operação está amadurecendo
-                    além do serviço de reciclagem puro. <strong>Atenção ao jurídico:</strong> a reclamatória trabalhista exige mobilização imediata.
-                </div>
-            </div>
-        </div>
-    </div>
-
-    <!-- SEÇÃO 4: E-MAILS -->
-    <div id="emails" class="section closed">
-        <div class="sec-header">
-            <svg class="sec-toggle-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor">
-                <polyline points="6 9 12 15 18 9"></polyline>
-            </svg>
-            <div class="sec-title">E-mails</div>
-            <div class="sec-subtitle">5 mensagens</div>
-        </div>
-        <div class="sec-body">
-            <div class="email-card urgente">
-                <div class="email-header">
-                    <span class="email-badge">Urgente</span>
-                    <span class="email-from">Anna Neves</span>
-                    <span class="email-from" style="color: var(--slate-500);">Granito Boneli</span>
-                </div>
-                <div class="email-subject"><strong>Reclamatória Trabalhista</strong></div>
-                <div class="email-detail">
-                    Audiência marcada para 31/03. Documentação para defesa deve ser enviada até segunda-feira ao meio-dia.
-                    Reunião com preposto agendada para 30/03 às 13h30.
-                </div>
-            </div>
-
-            <div class="email-card acao">
-                <div class="email-header">
-                    <span class="email-badge">Ação</span>
-                    <span class="email-from">Giovanna Rossagnesi</span>
-                    <span class="email-from" style="color: var(--slate-500);">Granito Boneli</span>
-                </div>
-                <div class="email-subject"><strong>Contratos de Vesting</strong></div>
-                <div class="email-detail">
-                    4 anexos: aditivo Marinna + contratos novos (Bianca, Douglas, Laís). Marinna como Anuente nos 3 contratos novos.
-                </div>
-            </div>
-
-            <div class="email-card acao">
-                <div class="email-header">
-                    <span class="email-badge">Ação</span>
-                    <span class="email-from">Lorena</span>
-                    <span class="email-from" style="color: var(--slate-500);">D4Sign / Essencis</span>
-                </div>
-                <div class="email-subject"><strong>Regularização Hybris/KII</strong></div>
-                <div class="email-detail">
-                    Documento pendente de assinatura. Necessário para validação final da regularização.
-                </div>
-            </div>
-
-            <div class="email-card acao">
-                <div class="email-header">
-                    <span class="email-badge">Ação</span>
-                    <span class="email-from">Omie</span>
-                    <span class="email-from" style="color: var(--slate-500);">Sistema</span>
-                </div>
-                <div class="email-subject"><strong>Pedido compra MOC #175</strong></div>
-                <div class="email-detail">
-                    EPI R$380 — Fornecedor Pioneira Equipamentos. Aguardando aprovação para processamento.
-                </div>
-            </div>
-
-            <div class="email-card fyi">
-                <div class="email-header">
-                    <span class="email-badge">FYI</span>
-                    <span class="email-from">Google Workspace</span>
-                    <span class="email-from" style="color: var(--slate-500);">Segurança</span>
-                </div>
-                <div class="email-subject"><strong>Alerta de segurança</strong></div>
-                <div class="email-detail">
-                    Brechas identificadas na organização. Verificar configurações de permissões de acesso.
-                </div>
-            </div>
-        </div>
-    </div>
-
-    <!-- SEÇÃO 5: AGENDA -->
-    <div id="agenda" class="section closed">
-        <div class="sec-header">
-            <svg class="sec-toggle-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor">
-                <polyline points="6 9 12 15 18 9"></polyline>
-            </svg>
-            <div class="sec-title">Minha Agenda</div>
-        </div>
-        <div class="sec-body">
-            <div class="agenda-empty">
-                <svg style="width: 24px; height: 24px; margin: 0 auto 8px; display: block; opacity: 0.5;" viewBox="0 0 24 24" fill="none" stroke="currentColor">
-                    <path d="M19 21H5a2 2 0 01-2-2V7a2 2 0 012-2h14a2 2 0 012 2v12a2 2 0 01-2 2zM3 7h18M16 2v4M8 2v4"/>
-                </svg>
-                Sem compromissos agendados (fim de semana)
-            </div>
-            <div style="padding-top: var(--sp-4); border-top: 1px solid var(--slate-200); margin-top: var(--sp-4);">
-                <div style="font-size: var(--t-sm); color: var(--slate-500); margin-bottom: var(--sp-2); font-weight: 600;">Próximos compromissos:</div>
-                <div class="agenda-item">
-                    <div class="agenda-time">segunda<br>13h30</div>
-                    <div class="agenda-event">
-                        <div class="agenda-title">Reunião com advogada</div>
-                        <div class="agenda-desc">Preposto para reclamatória trabalhista (31/03)</div>
-                    </div>
-                </div>
-            </div>
-        </div>
-    </div>
-
-    <!-- SEÇÃO 6: DECISÕES -->
-    <div id="decisoes" class="section closed">
-        <div class="sec-header">
-            <svg class="sec-toggle-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor">
-                <polyline points="6 9 12 15 18 9"></polyline>
-            </svg>
-            <div class="sec-title">Decisões & Follow-ups</div>
-        </div>
-        <div class="sec-body">
-            <div class="decision-card">
-                <div class="decision-title">Contratos de Vesting</div>
-                <div class="decision-detail">
-                    Validar 4 documentos da Granito Boneli (aditivo Marinna + Bianca, Douglas, Laís) antes de assinatura definitiva.
-                </div>
-            </div>
-
-            <div class="decision-card">
-                <div class="decision-title">Reclamatória Trabalhista</div>
-                <div class="decision-detail">
-                    Definir preposto e reunir documentação de defesa até segunda meio-dia. Reunião com advogada 30/03 13h30.
-                </div>
-            </div>
-
-            <div class="decision-card">
-                <div class="decision-title">Nota Unisol</div>
-                <div class="decision-detail">
-                    Decidir se protesta na segunda ou tenta mais um contato com cliente antes da ação de cobrança.
-                </div>
-            </div>
-        </div>
-    </div>
-
-    <!-- SEÇÃO 7: OPERAÇÃO -->
-    <div id="operacao" class="section closed">
-        <div class="sec-header">
-            <svg class="sec-toggle-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor">
-                <polyline points="6 9 12 15 18 9"></polyline>
-            </svg>
-            <div class="sec-title">Operação</div>
-        </div>
-        <div class="sec-body">
-            <div class="operation-group">
-                <div class="operation-group-title">RT Biz Dev (27/03)</div>
-                <div class="operation-item">
-                    <div class="operation-bullet">•</div>
-                    <div class="operation-content">Total material recebido na semana: 1.664 kg</div>
-                </div>
-                <div class="operation-item">
-                    <div class="operation-bullet">•</div>
-                    <div class="operation-content">Coleta Azul realizada</div>
-                </div>
-                <div class="operation-item">
-                    <div class="operation-bullet">•</div>
-                    <div class="operation-content"><strong>Voltalia:</strong> coletada ontem no RN, chegada segunda em Valinhos</div>
-                </div>
-                <div class="operation-item">
-                    <div class="operation-bullet">•</div>
-                    <div class="operation-content"><strong>Entregas programadas:</strong> Ambipar 30/03, Equasysh 30/03 (27 módulos), Light Engine 06/04</div>
-                </div>
-                <div class="operation-item">
-                    <div class="operation-bullet">•</div>
-                    <div class="operation-content"><strong>Intelbras:</strong> aguardando liberação financeira para coleta</div>
-                </div>
-                <div class="operation-item">
-                    <div class="operation-bullet">•</div>
-                    <div class="operation-content"><strong>NPS:</strong> 68 pesquisas enviadas, sem novas respostas</div>
-                </div>
-            </div>
-
-            <div class="operation-group">
-                <div class="operation-group-title">TP Novos Negócios (27/03)</div>
-                <div class="operation-item">
-                    <div class="operation-bullet">•</div>
-                    <div class="operation-content"><strong>PIPE/FAPESP:</strong> documentos em finalização, meta submissão</div>
-                </div>
-                <div class="operation-item">
-                    <div class="operation-bullet">•</div>
-                    <div class="operation-content"><strong>Ensaios laboratoriais de vidro:</strong> pedido de compra a criar (prazo abril)</div>
-                </div>
-                <div class="operation-item">
-                    <div class="operation-bullet">•</div>
-                    <div class="operation-content"><strong>Valinhos:</strong> retomou processamento de vidro</div>
-                </div>
-                <div class="operation-item">
-                    <div class="operation-bullet">•</div>
-                    <div class="operation-content"><strong>Solo Eco:</strong> interesse em parceria com fração fina de vidro</div>
-                </div>
-                <div class="operation-item">
-                    <div class="operation-bullet">•</div>
-                    <div class="operation-content"><strong>Licenciamento ambiental:</strong> reunião com Invest SP na próxima semana</div>
-                </div>
-            </div>
-        </div>
-    </div>
-
-    <!-- SEÇÃO 8: PAINEL OMIE -->
-    <div id="omie" class="section closed">
-        <div class="sec-header">
-            <svg class="sec-toggle-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor">
-                <polyline points="6 9 12 15 18 9"></polyline>
-            </svg>
-            <div class="sec-title">Painel Omie</div>
-        </div>
-        <div class="sec-body">
-            <div class="kpi-grid">
-                <div class="kpi-card">
-                    <div class="kpi-label">Pedidos Semana VAL</div>
-                    <div class="kpi-value">5</div>
-                </div>
-                <div class="kpi-card">
-                    <div class="kpi-label">Pedidos Semana MOC</div>
-                    <div class="kpi-value">3</div>
-                </div>
-                <div class="kpi-card">
-                    <div class="kpi-label">Faturado MOC</div>
-                    <div class="kpi-value">R$ 11.000</div>
-                </div>
-                <div class="kpi-card alert-kpi">
-                    <div class="kpi-label">Pedidos Pendentes MOC</div>
-                    <div class="kpi-value">R$ 49.760</div>
-                </div>
-            </div>
-
-            <div style="margin-bottom: var(--sp-5);">
-                <div style="font-size: var(--t-md); font-weight: 700; color: var(--navy); margin-bottom: var(--sp-3);">Pedidos MOC Recentes</div>
-                <table class="omie-table">
-                    <thead>
-                        <tr>
-                            <th>Pedido</th>
-                            <th>Item</th>
-                            <th>Qtd</th>
-                            <th>Etapa</th>
-                            <th>Valor</th>
-                        </tr>
-                    </thead>
-                    <tbody>
-                        <tr>
-                            <td>#41</td>
-                            <td>Resíduo contendo metais</td>
-                            <td>30.000 kg</td>
-                            <td><span class="etapa-pill etapa-50">50 — Separar</span></td>
-                            <td>R$ 24.000</td>
-                        </tr>
-                        <tr>
-                            <td>#43</td>
-                            <td>Perfil de Alumínio</td>
-                            <td>2.300 kg</td>
-                            <td><span class="etapa-pill etapa-50">50 — Separar</span></td>
-                            <td>R$ 25.760</td>
-                        </tr>
-                        <tr>
-                            <td>#44</td>
-                            <td>Granalha de vidro (2 itens)</td>
-                            <td>10 T</td>
-                            <td><span class="etapa-pill etapa-60">60 — Faturado</span></td>
-                            <td>R$ 11.000</td>
-                        </tr>
-                    </tbody>
-                </table>
-            </div>
-
-            <div>
-                <div style="font-size: var(--t-md); font-weight: 700; color: var(--navy); margin-bottom: var(--sp-3);">Saldos Bancários Valinhos</div>
-                <div class="bank-account">
-                    <div class="bank-card">
-                        <div class="bank-name">Itaú</div>
-                        <div class="bank-balance negative">-R$ 69.312</div>
-                    </div>
-                    <div class="bank-card">
-                        <div class="bank-name">BB Valinhos</div>
-                        <div class="bank-balance">R$ 2.347</div>
-                    </div>
-                    <div class="bank-card">
-                        <div class="bank-name">Sicoob</div>
-                        <div class="bank-balance">R$ 3.167</div>
-                    </div>
-                    <div class="bank-card">
-                        <div class="bank-name">BB</div>
-                        <div class="bank-balance">R$ 4.928</div>
-                    </div>
-                    <div class="bank-card">
-                        <div class="bank-name">Inter</div>
-                        <div class="bank-balance">R$ 869</div>
-                    </div>
-                </div>
-            </div>
-
-            <div style="padding-top: var(--sp-4); margin-top: var(--sp-4); border-top: 1px solid var(--slate-200); font-size: var(--t-sm); color: var(--slate-500);">
-                <strong>Nota:</strong> Contas a receber com erro na API. Contas a pagar: sem registros no período.
-            </div>
-        </div>
-    </div>
-
-    <!-- SEÇÃO 9: TEAMS -->
-    <div id="teams" class="section closed">
-        <div class="sec-header">
-            <svg class="sec-toggle-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor">
-                <polyline points="6 9 12 15 18 9"></polyline>
-            </svg>
-            <div class="sec-title">Teams</div>
-        </div>
-        <div class="sec-body">
-            <div class="teams-note">
-                Integração Teams via Zapier não retornou mensagens recentes.
-                <strong>Para ativar:</strong> instalar Zapier app no Teams > Time SunR
-            </div>
-        </div>
-    </div>
-
-    <!-- SEÇÃO 10: FUNIL -->
-    <div id="funil" class="section closed">
-        <div class="sec-header">
-            <svg class="sec-toggle-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor">
-                <polyline points="6 9 12 15 18 9"></polyline>
-            </svg>
-            <div class="sec-title">Funil de Vendas</div>
-        </div>
-        <div class="sec-body">
-            <div class="funil-item prioridade">
-                <div class="funil-badge">Prioridade</div>
-                <div class="funil-client">Olívia / Bioenergia</div>
-                <div class="funil-status">
-                    Proposta de compra de alumínio sendo enviada. Demanda grande com logística viável e margem positiva.
-                </div>
-            </div>
-
-            <div class="funil-item">
-                <div class="funil-client">Sim Soluções</div>
-                <div class="funil-status">
-                    Fase final, R$28k. Aprovação financeira pendente.
-                </div>
-            </div>
-
-            <div class="funil-item">
-                <div class="funil-client">BR Engenharia / Atlas</div>
-                <div class="funil-status">
-                    Operação bem evoluída. Atlas travando o processo. Update segunda.
-                </div>
-            </div>
-
-            <div class="funil-item">
-                <div class="funil-client">Engie</div>
-                <div class="funil-status">
-                    2 propostas paradas por questões internas e orçamentárias.
-                </div>
-            </div>
-
-            <div class="funil-item">
-                <div class="funil-client">DMS / 2A Engenharia</div>
-                <div class="funil-status">
-                    Volume grande. Negociação em evolução.
-                </div>
-            </div>
-
-            <div class="funil-item">
-                <div class="funil-client">Visus</div>
-                <div class="funil-status">
-                    Negociação bem evoluída. Documentações CNER enviadas.
-                </div>
-            </div>
-
-            <div class="funil-item">
-                <div class="funil-client">Escatec</div>
-                <div class="funil-status">
-                    1.200 módulos. Reunião a marcar.
-                </div>
-            </div>
-        </div>
-    </div>
-
-    <!-- SEÇÃO 11: AGENDA TIME -->
-    <div id="time" class="section closed">
-        <div class="sec-header">
-            <svg class="sec-toggle-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor">
-                <polyline points="6 9 12 15 18 9"></polyline>
-            </svg>
-            <div class="sec-title">Agenda do Time</div>
-        </div>
-        <div class="sec-body">
-            <div class="team-agenda-note">
-                Fim de semana — sem agenda programada para o time.
-            </div>
-        </div>
-    </div>
-
-    <!-- SEÇÃO 12: RADAR DE NOTÍCIAS -->
-    <div id="noticias" class="section closed">
-        <div class="sec-header">
-            <svg class="sec-toggle-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor">
-                <polyline points="6 9 12 15 18 9"></polyline>
-            </svg>
-            <div class="sec-title">Radar de Notícias</div>
-            <div class="sec-subtitle">4 notícias</div>
-        </div>
-        <div class="sec-body">
-            <div class="news-item">
-                <span class="news-badge">Regulação</span>
-                <div class="news-title">Energia solar é a 2ª maior fonte da matriz brasileira</div>
-                <div class="news-impact">
-                    <strong>Dado:</strong> Solar adiciona 24,5% da matriz. ABSOLAR reporta 10,6 GW adicionados em 2025.<br>
-                    <strong>Impacto SunR:</strong> Volume crescente de painéis instalados = mais demanda futura de reciclagem.<br>
-                    <strong>Link:</strong> <a href="https://www.absolar.org.br/home/energia-solar-avanca-no-brasil-e-adiciona-106-gw-em-2025-com-mais-de-r-329-bi-em-investimentos/" class="news-link">absolar.org.br</a>
-                </div>
-            </div>
-
-            <div class="news-item">
-                <span class="news-badge">Legislação</span>
-                <div class="news-title">PL 391/2025: logística reversa obrigatória para painéis solares</div>
-                <div class="news-impact">
-                    <strong>Proposta:</strong> Fabricantes, importadores e comerciantes adotarão logística reversa.<br>
-                    <strong>Impacto SunR:</strong> Regulação favorece diretamente o modelo de negócio.<br>
-                    <strong>Link:</strong> <a href="https://www.camara.leg.br/noticias/1138206-projeto-preve-logistica-reversa-na-industria-e-no-comercio-de-paineis-solares" class="news-link">camara.leg.br</a>
-                </div>
-            </div>
-
-            <div class="news-item">
-                <span class="news-badge">Regulação</span>
-                <div class="news-title">ANEEL mantém consulta pública sobre valoração de GD até março 2026</div>
-                <div class="news-impact">
-                    <strong>Status:</strong> Sem cronograma para conclusão.<br>
-                    <strong>Impacto SunR:</strong> Incerteza regulatória pode afetar investimentos em solar e volume de painéis.<br>
-                    <strong>Link:</strong> <a href="https://canalsolar.com.br/consumidores-60-do-fio-b-2026/" class="news-link">canalsolar.com.br</a>
-                </div>
-            </div>
-
-            <div class="news-item">
-                <span class="news-badge">Mercado</span>
-                <div class="news-title">Setor solar mostra resiliência para 2026 apesar de obstáculos</div>
-                <div class="news-impact">
-                    <strong>Cenário:</strong> ABSOLAR projeta desafios mas com mesma capacidade adicionada.<br>
-                    <strong>Impacto SunR:</strong> Mercado de reciclagem acompanha crescimento da instalação de painéis.<br>
-                    <strong>Link:</strong> <a href="https://www.absolar.org.br/home/setor-solar-mostra-resiliencia-para-superar-obstaculos-em-2026/" class="news-link">absolar.org.br</a>
-                </div>
-            </div>
-        </div>
-    </div>
-
+<!-- SITUACAO -->
+<div class="section" id="situacao">
+<div class="sec-header" onclick="toggle(this)">
+<h2>Situacao do Dia</h2>
+<svg class="sec-arrow" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polyline points="6 9 12 15 18 9"/></svg>
+</div>
+<div class="sec-body">
+<ul style="list-style:none;padding:0">
+<li style="padding:6px 0;border-bottom:1px solid var(--slate-100)"><strong>Processo trabalhista urgente:</strong> Granito Boneli precisa de documentos ate 2a meio-dia para audiencia. Giovanna tambem enviou 4 anexos dos contratos de vesting para revisao.</li>
+<li style="padding:6px 0;border-bottom:1px solid var(--slate-100)"><strong>Pipeline aquecendo:</strong> Voltalia chega hoje (coletada no RN), Equasysh entrega 27 modulos hoje, Ambipar entrega hoje. Light Engine confirmada para 06/04.</li>
+<li style="padding:6px 0;border-bottom:1px solid var(--slate-100)"><strong>Oportunidade Olivia/Bioenergia:</strong> Demanda grande de aluminio, Carolina precisa enviar proposta de compra hoje. Equipe avalia que logistica e viavel com lucro.</li>
+<li style="padding:6px 0;border-bottom:1px solid var(--slate-100)"><strong>Unisol inadimplente:</strong> Nota sera protestada provavelmente hoje. Sem retorno por email ou telefone.</li>
+<li style="padding:6px 0;border-bottom:1px solid var(--slate-100)"><strong>Sim Solucoes em fase final:</strong> Proposta de R$ 28 mil em aprovacao financeira do cliente. Fechamento iminente.</li>
+<li style="padding:6px 0;border-bottom:1px solid var(--slate-100)"><strong>Reuniao com Petrobras amanha:</strong> Apresentacao da SunR sobre reciclagem fotovoltaica organizada por Fontenele. 9 participantes.</li>
+<li style="padding:6px 0"><strong>Omie NFSe com erro:</strong> Monitoramento de NFSe Valinhos falhando (usuario/senha incorretos). Notificacoes repetidas.</li>
+</ul>
+</div>
 </div>
 
-<!-- JAVASCRIPT -->
+<!-- ACOES -->
+<div class="section" id="acoes">
+<div class="sec-header" onclick="toggle(this)">
+<h2>Acoes do Dia</h2>
+<svg class="sec-arrow" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polyline points="6 9 12 15 18 9"/></svg>
+</div>
+<div class="sec-body">
+<div class="action-item crit">
+<div class="num">1</div>
+<div class="content">
+<div class="title">Enviar documentos do processo trabalhista para Granito Boneli</div>
+<div class="meta"><span class="owner mar">Leo / Marinna</span> Prazo: hoje ate 12h</div>
+</div>
+</div>
+<div class="action-item crit">
+<div class="num">2</div>
+<div class="content">
+<div class="title">Assinar documento D4Sign - Regularizacao Hybris/KII (Essencis)</div>
+<div class="meta"><span class="owner">Leo</span> 2 lembretes recebidos</div>
+</div>
+</div>
+<div class="action-item warn">
+<div class="num">3</div>
+<div class="content">
+<div class="title">Aprovar pedido de compra MOC no Omie</div>
+<div class="meta"><span class="owner">Leo</span> 1 pedido pendente</div>
+</div>
+</div>
+<div class="action-item warn">
+<div class="num">4</div>
+<div class="content">
+<div class="title">Revisar contratos de vesting enviados por Giovanna (Granito Boneli)</div>
+<div class="meta"><span class="owner">Leo</span> 4 anexos com comentarios</div>
+</div>
+</div>
+<div class="action-item warn">
+<div class="num">5</div>
+<div class="content">
+<div class="title">Protestar nota da Unisol</div>
+<div class="meta"><span class="owner car">Carolina</span> Sem resposta do cliente</div>
+</div>
+</div>
+<div class="action-item">
+<div class="num">6</div>
+<div class="content">
+<div class="title">Carolina enviar proposta de compra de aluminio para Olivia/Bioenergia</div>
+<div class="meta"><span class="owner car">Carolina</span> Prioridade alta - demanda grande</div>
+</div>
+</div>
+<div class="action-item">
+<div class="num">7</div>
+<div class="content">
+<div class="title">Pagar 30% restante Voltalia quando descarregar (chegada hoje)</div>
+<div class="meta"><span class="owner mar">Marinna / Financeiro</span></div>
+</div>
+</div>
+<div class="action-item">
+<div class="num">8</div>
+<div class="content">
+<div class="title">Corrigir credenciais do monitoramento NFSe Valinhos no Omie</div>
+<div class="meta"><span class="owner mar">Marinna / TI</span> Alertas repetidos</div>
+</div>
+</div>
+<div class="action-item">
+<div class="num">9</div>
+<div class="content">
+<div class="title">Corrigir alerta de seguranca Google Workspace</div>
+<div class="meta"><span class="owner">Leo</span> Brechas de seguranca identificadas</div>
+</div>
+</div>
+</div>
+</div>
+
+<!-- INSIGHT -->
+<div class="section" id="insight">
+<div class="sec-header" onclick="toggle(this)">
+<h2>Insight do Dia</h2>
+<svg class="sec-arrow" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polyline points="6 9 12 15 18 9"/></svg>
+</div>
+<div class="sec-body">
+<div class="insight-box">
+<h3>Aluminio LME em alta + demanda Bioenergia = oportunidade de margem</h3>
+<p>O aluminio LME esta em $3.284/t e a SunR recebeu uma demanda grande de aluminio da Olivia/Bioenergia. Com a logistica ja validada como viavel e lucrativa pelo time, fechar essa venda rapidamente pode representar uma receita relevante no Q2. Paralelamente, Brent acima de $107 e prata a $70/oz confirmam a tendencia de valorizacao de commodities — o que fortalece o posicionamento da SunR como fornecedora de materiais reciclados competitivos. A reuniao com Petrobras amanha pode abrir uma porta institucional de alto valor para reciclagem de paineis em grande escala.</p>
+</div>
+</div>
+</div>
+
+<!-- EMAILS -->
+<div class="section closed" id="emails">
+<div class="sec-header" onclick="toggle(this)">
+<h2>E-mails</h2>
+<svg class="sec-arrow" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polyline points="6 9 12 15 18 9"/></svg>
+</div>
+<div class="sec-body">
+<div class="email-card">
+<span class="email-badge urgente">Urgente</span>
+<div class="email-from">Anna Carolina Neves (Granito Boneli)</div>
+<div class="email-subject">Reclamatoria Trabalhista - Processo 0010309-98.2026</div>
+<div class="email-snippet">Nao ha como postergar a audiencia. Aguardo documentos ate segunda-feira meio dia.</div>
+</div>
+<div class="email-card">
+<span class="email-badge acao">Acao</span>
+<div class="email-from">Giovanna Rossagnesi (Granito Boneli)</div>
+<div class="email-subject">RE: Contratos de Vesting</div>
+<div class="email-snippet">Encaminho os 4 anexos solicitados com comentarios e informacoes destacadas nos documentos.</div>
+</div>
+<div class="email-card">
+<span class="email-badge acao">Acao</span>
+<div class="email-from">Lorena via D4Sign</div>
+<div class="email-subject">Lembrete: Regularizacao Hybris - KII - SunR</div>
+<div class="email-snippet">Documento para assinar como parte. Lembrete repetido (sex + dom).</div>
+</div>
+<div class="email-card">
+<span class="email-badge acao">Acao</span>
+<div class="email-from">Omie (SunR Filial MOC)</div>
+<div class="email-subject">1 pedido de compra precisa da sua aprovacao</div>
+<div class="email-snippet">Pedido de compra aguardando aprovacao no modulo de Compras, Estoque e Producao.</div>
+</div>
+<div class="email-card">
+<span class="email-badge acao">Acao</span>
+<div class="email-from">Google Workspace</div>
+<div class="email-subject">Corrija possiveis problemas de seguranca</div>
+<div class="email-snippet">Brechas de seguranca encontradas na organizacao. Entre em acao para reforcar seguranca.</div>
+</div>
+<div class="email-card">
+<span class="email-badge fyi">FYI</span>
+<div class="email-from">Omie (SunR Matriz Valinhos)</div>
+<div class="email-subject">Monitoramento de NFSe - usuario/senha incorretos</div>
+<div class="email-snippet">Nao foi possivel realizar monitoramento da NFS-e de Valinhos. Confirme dados. (2 alertas)</div>
+</div>
+</div>
+</div>
+
+<!-- AGENDA -->
+<div class="section closed" id="agenda">
+<div class="sec-header" onclick="toggle(this)">
+<h2>Minha Agenda</h2>
+<svg class="sec-arrow" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polyline points="6 9 12 15 18 9"/></svg>
+</div>
+<div class="sec-body">
+<div class="agenda-grid">
+<div class="agenda-col">
+<h3>Hoje - Segunda 30/03</h3>
+<div class="event-row"><div class="event-time">Dia todo</div><div class="event-name">DP Flash</div></div>
+<div class="event-row"><div class="event-time">10:30 - 12:00</div><div class="event-name">DP - Leonardo / Marinna</div></div>
+<div class="event-row highlight"><div class="event-time">13:00 - 14:30</div><div class="event-name"><strong>WBR - Lideres</strong></div></div>
+<div class="event-row"><div class="event-time">16:00 - 17:00</div><div class="event-name">1:1 Leo &lt;&gt; Douglas</div></div>
+<div class="event-row"><div class="event-time">20:30 - 21:30</div><div class="event-name">Treino de Caminhada MaLeo</div></div>
+</div>
+<div class="agenda-col">
+<h3>Amanha - Terca 31/03</h3>
+<div class="event-row"><div class="event-time">Dia todo</div><div class="event-name" style="color:var(--red);font-weight:600">Alvara MOC - Vencimento</div></div>
+<div class="event-row conflict"><div class="event-time">09:00 - 11:30</div><div class="event-name">Treinamento Tecnicas de Feedback</div></div>
+<div class="event-row conflict"><div class="event-time">09:00 - 10:00</div><div class="event-name"><strong style="color:var(--red)">Reciclagem Fotovoltaica (Petrobras)</strong></div></div>
+<div class="event-row"><div class="event-time">11:00 - 12:00</div><div class="event-name">Planejamento Comercial</div></div>
+<div class="event-row"><div class="event-time">14:00 - 14:50</div><div class="event-name">Psicoterapia Leo</div></div>
+<div class="event-row"><div class="event-time">19:00 - 20:00</div><div class="event-name">NERV Digital</div></div>
+<div class="event-row"><div class="event-time">20:00 - 21:00</div><div class="event-name">Reuniao SW com Leo</div></div>
+</div>
+</div>
+<div class="alert warn" style="margin-top:var(--sp-3)">
+<div class="alert-title">Conflito de Agenda - Terca 09h</div>
+<p><strong>Treinamento Feedback</strong> (09:00-11:30) conflita com <strong>Reuniao Petrobras</strong> (09:00-10:00). Decidir prioridade.</p>
+</div>
+</div>
+</div>
+
+<!-- DECISOES -->
+<div class="section closed" id="decisoes">
+<div class="sec-header" onclick="toggle(this)">
+<h2>Decisoes & Follow-ups</h2>
+<svg class="sec-arrow" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polyline points="6 9 12 15 18 9"/></svg>
+</div>
+<div class="sec-body">
+<div class="decision-grid">
+<div class="decision-card">
+<h4>Protesto Unisol</h4>
+<p>Boleto emitido sem retorno. Protestar nota na segunda. Idinaura tentando ajudar internamente.</p>
+</div>
+<div class="decision-card">
+<h4>Proposta Olivia/Bioenergia</h4>
+<p>Logistica viavel com lucro. Carolina deve enviar proposta de compra de aluminio. Nao perder essa oportunidade.</p>
+</div>
+<div class="decision-card">
+<h4>Reciclagem Fotovoltaica Petrobras</h4>
+<p>Reuniao dia 31/03 via Teams para apresentacao da SunR. Oportunidade institucional grande.</p>
+</div>
+<div class="decision-card">
+<h4>PIPE FAPESP - Submissao</h4>
+<p>Documento integrado e BMC pendentes. Lais prioriza finalizacao para submissao. Claudio revisando.</p>
+</div>
+</div>
+</div>
+</div>
+
+<!-- OPERACAO -->
+<div class="section closed" id="operacao">
+<div class="sec-header" onclick="toggle(this)">
+<h2>Operacao</h2>
+<svg class="sec-arrow" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polyline points="6 9 12 15 18 9"/></svg>
+</div>
+<div class="sec-body">
+<h3 style="font-size:var(--t-md);color:var(--navy);margin-bottom:var(--sp-3)">Tarefas Ativas (Notion)</h3>
+<table>
+<tr><th>Tarefa</th><th>Responsavel</th><th>Status</th><th>Prazo</th><th>Prioridade</th></tr>
+<tr><td>ABRAMAR</td><td>Leo, Marinna</td><td><span class="pill ep-blue">Continuo</span></td><td>-</td><td><span class="pill ep-red">High</span></td></tr>
+<tr><td>Criar processo homologacao clientes</td><td>Lais</td><td><span class="pill ep-amber">Sendo feito</span></td><td>31/03</td><td>-</td></tr>
+<tr><td>Elaboracao cronograma renovacao LO</td><td>Lais</td><td><span class="pill ep-blue">Backlog</span></td><td>31/03</td><td><span class="pill ep-red">High</span></td></tr>
+<tr><td>MRC-2 Triturador</td><td>Douglas</td><td><span class="pill ep-blue">Continuo</span></td><td>-</td><td>-</td></tr>
+</table>
+<h3 style="font-size:var(--t-md);color:var(--navy);margin-bottom:var(--sp-3)">Reunioes da Semana (Notion)</h3>
+<table>
+<tr><th>Reuniao</th><th>Data</th><th>Tipo</th><th>Destaques</th></tr>
+<tr><td>RT Biz Dev</td><td>27/03</td><td><span class="pill ep-green">Biz Dev</span></td><td>Voltalia coletada, Sim Solucoes fase final, Olivia/Bioenergia prioridade, Unisol protesto</td></tr>
+<tr><td>TP Novos Negocios</td><td>27/03</td><td><span class="pill ep-amber">Novos Negocios</span></td><td>PIPE finalizacao, ensaios laboratoriais vidro, venda 10t vidro, licenciamento ambiental InvestSP</td></tr>
+</table>
+</div>
+</div>
+
+<!-- OMIE -->
+<div class="section closed" id="omie">
+<div class="sec-header" onclick="toggle(this)">
+<h2>Painel Omie</h2>
+<svg class="sec-arrow" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polyline points="6 9 12 15 18 9"/></svg>
+</div>
+<div class="sec-body">
+<div class="kpi-grid">
+<div class="kpi-card alert-card">
+<div class="kpi-label">Pedido Compra MOC</div>
+<div class="kpi-value">1</div>
+<div class="kpi-sub">Aguardando aprovacao</div>
+</div>
+<div class="kpi-card crit-card">
+<div class="kpi-label">NFSe Valinhos</div>
+<div class="kpi-value">Erro</div>
+<div class="kpi-sub">Usuario/senha incorretos</div>
+</div>
+<div class="kpi-card">
+<div class="kpi-label">Materiais Recebidos</div>
+<div class="kpi-value">1.664 kg</div>
+<div class="kpi-sub">Semana 27/03</div>
+</div>
+<div class="kpi-card">
+<div class="kpi-label">Entregas Previstas</div>
+<div class="kpi-value">3</div>
+<div class="kpi-sub">Voltalia + Equasysh + Ambipar</div>
+</div>
+</div>
+<p style="font-size:var(--t-sm);color:var(--slate-500);padding:var(--sp-2);background:var(--slate-100);border-radius:var(--radius)"><strong>Nota:</strong> Dados detalhados de saldo bancario, contas a pagar/receber e resumo financeiro nao disponiveis nesta sessao (MCP Omie nao conectado). Valores serao atualizados quando a integracao estiver ativa.</p>
+<h3 style="font-size:var(--t-md);color:var(--navy);margin:var(--sp-4) 0 var(--sp-3)">Byproducts - Precos de Mercado</h3>
+<table>
+<tr><th>Material</th><th>Preco Referencia</th><th>Fonte</th></tr>
+<tr><td>Aluminio</td><td>$3.284/t (LME)</td><td>LME Cash 27/03</td></tr>
+<tr><td>Cobre</td><td>$12.088/t (LME)</td><td>LME Spot 26/03</td></tr>
+<tr><td>Prata</td><td>$70,52/oz</td><td>Spot 27/03</td></tr>
+<tr><td>Vidro FV</td><td>Variavel</td><td>Negociacao direta</td></tr>
+</table>
+<div class="insight-box" style="margin-top:var(--sp-3)">
+<h3>Analise Estrategica</h3>
+<p>Aluminio LME estavel acima de $3.200/t e cobre acima de $12.000/t indicam margens saudaveis para subprodutos. Prata em alta historica ($70/oz) torna o processamento de celulas fotovoltaicas ainda mais atrativo. Com 3 entregas previstas para hoje e pipeline de propostas aceitas robusto, a proxima semana deve marcar uma inflexao positiva no Q1 desafiador.</p>
+</div>
+</div>
+</div>
+
+<!-- TEAMS -->
+<div class="section closed" id="teams">
+<div class="sec-header" onclick="toggle(this)">
+<h2>Teams</h2>
+<svg class="sec-arrow" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polyline points="6 9 12 15 18 9"/></svg>
+</div>
+<div class="sec-body">
+<div style="padding:var(--sp-4);background:var(--amber-soft);border-radius:var(--radius);border-left:3px solid var(--amber)">
+<p style="font-size:var(--t-sm);color:var(--amber)"><strong>Sem mensagens recentes capturadas.</strong> A integracao Zapier/Teams nao retornou mensagens do periodo de referencia. Para ativar: instalar <a href="https://appsource.microsoft.com/en-us/product/office/WA200002044" target="_blank" style="color:var(--amber)">Zapier app</a> no Teams > Time SunR.</p>
+</div>
+</div>
+</div>
+
+<!-- FUNIL -->
+<div class="section closed" id="funil">
+<div class="sec-header" onclick="toggle(this)">
+<h2>Funil de Vendas</h2>
+<svg class="sec-arrow" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polyline points="6 9 12 15 18 9"/></svg>
+</div>
+<div class="sec-body">
+<div class="funil-card" style="border-left-color:var(--red)">
+<div class="funil-title">Olivia / Bioenergia</div>
+<div class="funil-stage"><span class="pill ep-amber">Negociacao</span> &bull; Proxima acao: Carolina enviar proposta de compra de aluminio</div>
+<p style="font-size:var(--t-xs);color:var(--slate-500);margin-top:4px">Demanda grande. Logistica viavel com lucro confirmado. Prioridade maxima do time.</p>
+</div>
+<div class="funil-card" style="border-left-color:var(--green)">
+<div class="funil-title">Sim Solucoes</div>
+<div class="funil-stage"><span class="pill ep-green">Proposta Aceita</span> &bull; R$ 28.000 &bull; Aprovacao financeira do cliente</div>
+<p style="font-size:var(--t-xs);color:var(--slate-500);margin-top:4px">Adriana tirou duvidas, passou para aprovacao. Entrada ou a vista/parcelado.</p>
+</div>
+<div class="funil-card">
+<div class="funil-title">Intelbras</div>
+<div class="funil-stage"><span class="pill ep-green">Proposta Aceita - Programada</span> &bull; Aguardando liberacao financeira para agendar coleta</div>
+</div>
+<div class="funil-card">
+<div class="funil-title">Light Engine</div>
+<div class="funil-stage"><span class="pill ep-green">Proposta Aceita - Programada</span> &bull; Entrega: 06/04</div>
+</div>
+<div class="funil-card">
+<div class="funil-title">Equasysh</div>
+<div class="funil-stage"><span class="pill ep-green">Proposta Aceita - Programada</span> &bull; 27 modulos &bull; Entrega: hoje 30/03</div>
+</div>
+<div class="funil-card">
+<div class="funil-title">BR Engenharia / Atlas</div>
+<div class="funil-stage"><span class="pill ep-amber">Negociacao</span> &bull; Amanda atualiza segunda</div>
+</div>
+<div class="funil-card">
+<div class="funil-title">Visus</div>
+<div class="funil-stage"><span class="pill ep-amber">Negociacao</span> &bull; Documentacoes CNER enviadas, tramites internos</div>
+</div>
+<div class="funil-card">
+<div class="funil-title">Escatec</div>
+<div class="funil-stage"><span class="pill ep-blue">Prospeccao</span> &bull; 1.200 modulos &bull; Reuniao a marcar com coord. ambiental Helbert</div>
+</div>
+<div class="funil-card">
+<div class="funil-title">Engie</div>
+<div class="funil-stage"><span class="pill ep-blue">Em Pausa</span> &bull; 2 propostas paradas por questoes internas/orcamentarias</div>
+</div>
+<div class="funil-card">
+<div class="funil-title">DMS / 2A Engenharia</div>
+<div class="funil-stage"><span class="pill ep-amber">Negociacao</span> &bull; Volume grande de modulos, proposta recente</div>
+</div>
+</div>
+</div>
+
+<!-- TIME -->
+<div class="section closed" id="time">
+<div class="sec-header" onclick="toggle(this)">
+<h2>Agenda do Time</h2>
+<svg class="sec-arrow" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polyline points="6 9 12 15 18 9"/></svg>
+</div>
+<div class="sec-body">
+<table>
+<tr><th>Colaborador</th><th>Foco da Semana</th></tr>
+<tr><td><strong>Marinna</strong></td><td>DP Leo/Marinna (hoje 10:30), WBR Lideres (hoje 13:00), Planejamento Comercial (terca 11:00)</td></tr>
+<tr><td><strong>Lais</strong></td><td>PIPE finalizacao, ensaios laboratoriais vidro, homologacao clientes, cronograma renovacao LO (prazo 31/03), reuniao InvestSP licenciamento</td></tr>
+<tr><td><strong>Douglas</strong></td><td>1:1 Leo (hoje 16:00), MRC-2 Triturador continuo</td></tr>
+<tr><td><strong>Carolina</strong></td><td>Proposta aluminio Bioenergia, protesto Unisol, correcao e-mail NPS DB Engenharia, planilhas contatos</td></tr>
+<tr><td><strong>Bianca</strong></td><td>Liberacao financeira Intelbras (com Leo)</td></tr>
+<tr><td><strong>Mateus</strong></td><td>Operacao Valinhos, recepcao entregas (Voltalia, Equasysh, Ambipar)</td></tr>
+</table>
+</div>
+</div>
+
+<!-- NOTICIAS -->
+<div class="section closed" id="noticias">
+<div class="sec-header" onclick="toggle(this)">
+<h2>Radar de Noticias</h2>
+<svg class="sec-arrow" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polyline points="6 9 12 15 18 9"/></svg>
+</div>
+<div class="sec-body">
+<div class="news-item">
+<div class="news-cat">Reciclagem Fotovoltaica</div>
+<div class="news-title"><a href="https://www.longi.com/en/news/first-certificate-pvcycle-brazil/" target="_blank">LONGi recebe primeira certificacao PV CYCLE no Brasil via SunR</a></div>
+<div class="news-impact">Impacto SunR: Validacao internacional da operacao. SunR e mencionada como parceira certificada para reciclagem na America Latina.</div>
+</div>
+<div class="news-item">
+<div class="news-cat">Mercado Solar</div>
+<div class="news-title"><a href="https://ember-energy.org/latest-insights/wind-and-solar-generate-over-a-third-of-brazils-electricity-for-the-first-month-on-record/" target="_blank">Eolica e solar geram mais de 1/3 da eletricidade do Brasil pela primeira vez</a></div>
+<div class="news-impact">Impacto SunR: Expansao acelerada do parque solar aumenta demanda futura por reciclagem. Brasil adicionou 509 MW solar so em jan/2026.</div>
+</div>
+<div class="news-item">
+<div class="news-cat">Regulacao</div>
+<div class="news-title"><a href="https://iclg.com/practice-areas/renewable-energy-laws-and-regulations/brazil" target="_blank">Renewable Energy Laws and Regulations Brazil 2026</a></div>
+<div class="news-impact">Impacto SunR: Regulacao de logistica reversa (Decreto 10.240/2020) segue vigente. Monitorar evolucao de obrigatoriedade.</div>
+</div>
+<div class="news-item">
+<div class="news-cat">Commodities</div>
+<div class="news-title"><a href="https://tradingeconomics.com/commodity/aluminum" target="_blank">Aluminio LME sustenta $3.284/t com demanda industrial forte</a></div>
+<div class="news-impact">Impacto SunR: Preco elevado do aluminio melhora margem de venda de subprodutos da reciclagem.</div>
+</div>
+</div>
+</div>
+
+</div><!-- /main -->
+
 <script>
-    // Toggle section
-    function toggle(id) {
-        const section = document.getElementById(id);
-        if (section) {
-            section.classList.toggle('closed');
-        }
-    }
-
-    // Sidebar nav click handlers
-    document.querySelectorAll('.sidebar-nav-item').forEach(item => {
-        item.addEventListener('click', (e) => {
-            e.preventDefault();
-            const href = item.getAttribute('href');
-            if (href) {
-                const target = document.querySelector(href);
-                if (target) {
-                    // Close if needed
-                    if (target.classList.contains('closed')) {
-                        target.classList.remove('closed');
-                    }
-                    // Scroll
-                    target.scrollIntoView({ behavior: 'smooth', block: 'start' });
-                }
-            }
-        });
-    });
-
-    // Update nav highlight on scroll
-    window.addEventListener('scroll', () => {
-        const sections = document.querySelectorAll('[id^="situacao"], [id^="acoes"], [id^="insight"], [id^="emails"], [id^="agenda"], [id^="decisoes"], [id^="operacao"], [id^="omie"], [id^="teams"], [id^="funil"], [id^="time"], [id^="noticias"]');
-
-        let current = '';
-        sections.forEach(section => {
-            const rect = section.getBoundingClientRect();
-            if (rect.top <= 100) {
-                current = section.id;
-            }
-        });
-
-        document.querySelectorAll('.sidebar-nav-item').forEach(item => {
-            item.classList.remove('active');
-            if (item.getAttribute('href') === '#' + current) {
-                item.classList.add('active');
-            }
-        });
-
-        // Update progress bar
-        const winScroll = document.documentElement.scrollTop;
-        const height = document.documentElement.scrollHeight - window.innerHeight;
-        const scrollPercent = (winScroll / height) * 100;
-        document.querySelector('.progress-fill').style.width = scrollPercent + '%';
-    });
-
-    // Section toggle on header click
-    document.querySelectorAll('.sec-header:not(.always-open)').forEach(header => {
-        header.addEventListener('click', () => {
-            const section = header.parentElement;
-            section.classList.toggle('closed');
-        });
-    });
+function toggle(headerEl){headerEl.closest('.section').classList.toggle('closed');var arrow=headerEl.querySelector('.sec-arrow');if(arrow){var isClosed=headerEl.closest('.section').classList.contains('closed');arrow.style.transform=isClosed?'rotate(-90deg)':'rotate(0deg)'}}
+window.addEventListener('scroll',function(){var pct=window.scrollY/(document.documentElement.scrollHeight-window.innerHeight);document.getElementById('readFill').style.width=Math.round(pct*100)+'%'},{passive:true});
+var sectionIds=['situacao','acoes','insight','emails','agenda','decisoes','operacao','omie','teams','funil','time','noticias'];
+window.addEventListener('scroll',function(){var active=sectionIds[0];for(var i=0;i<sectionIds.length;i++){var el=document.getElementById(sectionIds[i]);if(el&&el.getBoundingClientRect().top<84)active=sectionIds[i]}document.querySelectorAll('.sb-link').forEach(function(l){l.classList.toggle('active',l.getAttribute('data-t')===active)})},{passive:true});
+document.querySelectorAll('.sb-link').forEach(function(link){link.addEventListener('click',function(e){e.preventDefault();var t=document.getElementById(link.getAttribute('data-t'));if(t)window.scrollTo({top:t.getBoundingClientRect().top+window.scrollY-44,behavior:'smooth'})})});
 </script>
-
 </body>
 </html>
