@@ -1,0 +1,380 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Briefing Postos Gasparini — 02/04/2026</title>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+<style>
+*{margin:0;padding:0;box-sizing:border-box}
+body{background:#DDE1EE;font-family:'Inter',sans-serif;color:#1a1a2e;line-height:1.6;padding:16px}
+.wrapper{max-width:660px;margin:0 auto;border-radius:14px;overflow:hidden;background:#fff;box-shadow:0 4px 24px rgba(10,16,32,.12)}
+.header{background:linear-gradient(150deg,#0A1020,#1C2B6E,#2A3E8C);padding:28px 24px 22px;text-align:center;position:relative}
+.header-date{color:rgba(255,255,255,.6);font-size:12px;font-weight:500;letter-spacing:1.5px;text-transform:uppercase;margin-bottom:12px}
+.logo-oval{display:inline-block;border:2px solid rgba(255,255,255,.25);border-radius:50%;padding:6px}
+.logo-oval-inner{display:flex;flex-direction:column;align-items:center;justify-content:center;width:100px;height:100px;border:1px solid rgba(255,255,255,.15);border-radius:50%}
+.logo-postos{color:rgba(255,255,255,.7);font-size:9px;font-weight:600;letter-spacing:3px;text-transform:uppercase}
+.logo-gasparini{color:#fff;font-size:14px;font-weight:800;letter-spacing:1.5px;text-transform:uppercase;margin:2px 0}
+.logo-desde{color:rgba(255,255,255,.45);font-size:7px;font-weight:500;letter-spacing:2px;text-transform:uppercase}
+.header-title{color:#fff;font-size:18px;font-weight:700;margin-top:14px}
+.header-sub{color:rgba(255,255,255,.55);font-size:12px;margin-top:4px}
+.metallic-rule{height:3px;background:linear-gradient(90deg,#1C2B6E,#C8CCD8,#1C2B6E)}
+
+/* Alert Bar */
+.alert-bar{background:#0A1020;border-left:4px solid #E53E3E;padding:16px 20px;display:flex;align-items:flex-start;gap:10px}
+.alert-icon{font-size:18px;flex-shrink:0;margin-top:1px}
+.alert-text{color:#fff;font-size:13px;line-height:1.5}
+.alert-text strong{color:#FC8181}
+
+/* Sections */
+.section{padding:24px 20px}
+.section-header{display:flex;align-items:center;gap:8px;margin-bottom:16px}
+.section-icon{width:28px;height:28px;border-radius:8px;display:flex;align-items:center;justify-content:center;font-size:14px;flex-shrink:0}
+.section-title{font-size:15px;font-weight:700;color:#0A1020}
+.section-subtitle{font-size:11px;color:#666;font-weight:500;margin-left:auto}
+
+/* Monitor Items */
+.monitor-item{display:flex;gap:12px;padding:14px 0;border-bottom:1px solid #f0f0f5}
+.monitor-item:last-child{border-bottom:none}
+.monitor-num{width:26px;height:26px;border-radius:50%;display:flex;align-items:center;justify-content:center;font-size:12px;font-weight:700;color:#fff;flex-shrink:0;margin-top:2px}
+.monitor-num.red{background:#E53E3E}
+.monitor-num.amber{background:#D69E2E}
+.monitor-num.blue{background:#3182CE}
+.monitor-label{font-size:13px;font-weight:600;color:#1a1a2e}
+.monitor-desc{font-size:12px;color:#555;margin-top:2px}
+
+/* Barometer */
+.barometer-card{background:linear-gradient(135deg,#0A1020,#1C2B6E);border-radius:12px;padding:20px;margin-bottom:16px;color:#fff}
+.baro-top{display:flex;align-items:center;justify-content:space-between;margin-bottom:12px}
+.baro-label{font-size:11px;font-weight:600;letter-spacing:1.5px;text-transform:uppercase;color:rgba(255,255,255,.6)}
+.baro-score{font-size:36px;font-weight:800;line-height:1}
+.baro-class{font-size:12px;font-weight:700;letter-spacing:1px;text-transform:uppercase;padding:4px 10px;border-radius:20px;margin-left:8px}
+.baro-class.low{background:rgba(229,62,62,.25);color:#FC8181}
+.baro-class.mid{background:rgba(214,158,46,.25);color:#F6E05E}
+.baro-class.high{background:rgba(72,187,120,.25);color:#9AE6B4}
+.baro-bar-bg{height:8px;background:rgba(255,255,255,.1);border-radius:4px;overflow:hidden;margin:12px 0}
+.baro-bar-fill{height:100%;border-radius:4px;transition:width .5s}
+.baro-reason{font-size:12px;color:rgba(255,255,255,.7);line-height:1.5}
+
+/* Market Cards */
+.market-row{display:grid;grid-template-columns:1fr 1fr;gap:12px;margin-bottom:12px}
+.market-card{background:#f7f8fc;border-radius:10px;padding:14px;text-align:center}
+.market-card .mc-label{font-size:10px;font-weight:600;letter-spacing:1px;text-transform:uppercase;color:#666;margin-bottom:4px}
+.market-card .mc-value{font-size:22px;font-weight:800;color:#0A1020}
+.market-card .mc-delta{font-size:11px;font-weight:600;margin-top:2px}
+.mc-delta.up{color:#E53E3E}
+.mc-delta.down{color:#38A169}
+.mc-delta.neutral{color:#666}
+
+/* Fuel Strip */
+.fuel-strip{display:grid;grid-template-columns:repeat(4,1fr);gap:8px;margin-bottom:16px}
+.fuel-chip{background:#f7f8fc;border-radius:8px;padding:10px 6px;text-align:center}
+.fuel-chip .fc-name{font-size:9px;font-weight:600;letter-spacing:.5px;text-transform:uppercase;color:#666;margin-bottom:4px}
+.fuel-chip .fc-price{font-size:16px;font-weight:800;color:#0A1020}
+.fuel-chip .fc-unit{font-size:9px;color:#888}
+
+/* Parity Card */
+.parity-card{background:#f7f8fc;border-radius:10px;padding:16px;text-align:center}
+.parity-title{font-size:11px;font-weight:600;letter-spacing:1px;text-transform:uppercase;color:#666;margin-bottom:8px}
+.parity-value{font-size:28px;font-weight:800;color:#0A1020}
+.parity-bar-bg{height:8px;background:#e2e8f0;border-radius:4px;overflow:hidden;margin:10px 0;position:relative}
+.parity-bar-fill{height:100%;border-radius:4px}
+.parity-verdict{font-size:12px;font-weight:600;padding:4px 12px;border-radius:20px;display:inline-block}
+
+/* Strike Section */
+.strike-section{background:#FFF8F8;border:1px solid #FED7D7;border-radius:10px;padding:16px;margin-bottom:12px}
+.strike-card{padding:12px 0;border-bottom:1px solid #FED7D7}
+.strike-card:last-child{border-bottom:none}
+.strike-name{font-size:13px;font-weight:700;color:#1a1a2e}
+.strike-badge{display:inline-block;font-size:9px;font-weight:700;letter-spacing:.5px;text-transform:uppercase;padding:3px 8px;border-radius:12px;margin-left:6px}
+.badge-monitorar{background:#FEFCBF;color:#975A16}
+.badge-provavel{background:#FED7D7;color:#9B2C2C}
+.badge-confirmada{background:#E53E3E;color:#fff}
+.badge-suspensa{background:#C6F6D5;color:#276749}
+.strike-desc{font-size:12px;color:#555;margin-top:4px;line-height:1.5}
+.strike-source{font-size:10px;color:#888;margin-top:4px}
+.strike-source a{color:#3182CE;text-decoration:none}
+
+/* News Items */
+.news-category{font-size:10px;font-weight:700;letter-spacing:1px;text-transform:uppercase;padding:3px 8px;border-radius:12px;display:inline-block;margin-bottom:6px}
+.cat-shell{background:#FFF5F5;color:#C53030}
+.cat-concorrencia{background:#EBF8FF;color:#2B6CB0}
+.cat-combustiveis{background:#F0FFF4;color:#276749}
+.cat-refino{background:#FAF5FF;color:#6B46C1}
+.cat-anp{background:#FFFAF0;color:#C05621}
+.news-item{padding:12px 0;border-bottom:1px solid #f0f0f5}
+.news-item:last-child{border-bottom:none}
+.news-text{font-size:12px;color:#333;line-height:1.5;margin-top:4px}
+.news-text a{color:#3182CE;text-decoration:none}
+
+/* Education */
+.edu-section{background:#F5F7FF;border-radius:10px;padding:20px;position:relative}
+.edu-title{font-size:14px;font-weight:700;color:#1C2B6E;margin-bottom:8px}
+.edu-text{font-size:12px;color:#444;line-height:1.6}
+.edu-kpi{position:absolute;top:16px;right:16px;background:#1C2B6E;color:#fff;font-size:10px;font-weight:700;padding:6px 10px;border-radius:8px;text-align:center}
+.edu-kpi .kpi-val{font-size:18px;font-weight:800;display:block;margin-bottom:1px}
+
+/* Weather */
+.weather-row{display:flex;align-items:center;gap:12px;background:#f7f8fc;border-radius:10px;padding:14px}
+.weather-icon{font-size:32px}
+.weather-info{flex:1}
+.weather-temp{font-size:18px;font-weight:800;color:#0A1020}
+.weather-desc{font-size:12px;color:#555}
+
+/* Footer */
+.footer{background:#0A1020;padding:16px 20px;text-align:center}
+.footer-text{color:rgba(255,255,255,.4);font-size:10px;letter-spacing:.5px}
+
+/* Dark section header */
+.section-dark{background:linear-gradient(135deg,#0A1020,#1C2B6E);padding:14px 20px;display:flex;align-items:center;gap:8px}
+.section-dark .section-title{color:#fff}
+.section-dark .section-icon{background:rgba(255,255,255,.1)}
+</style>
+</head>
+<body>
+<div class="wrapper">
+
+<!-- HEADER -->
+<div class="header">
+<div class="header-date">Quinta-feira, 02 de Abril de 2026</div>
+<div class="logo-oval">
+<div class="logo-oval-inner">
+<span class="logo-postos">POSTOS</span>
+<span class="logo-gasparini">GASPARINI</span>
+<span class="logo-desde">DESDE 1989</span>
+</div>
+</div>
+<div class="header-title">Briefing Di&aacute;rio</div>
+<div class="header-sub">APIV &middot; CCAR &middot; VENETO &mdash; Vinhedo/SP</div>
+</div>
+<div class="metallic-rule"></div>
+
+<!-- ALERT BAR -->
+<div class="alert-bar">
+<div class="alert-icon">&#9888;</div>
+<div class="alert-text">
+<strong>Petr&oacute;leo dispara para USD 104,86/barril.</strong> Alta de ~3% em rela&ccedil;&atilde;o a ontem. Tens&otilde;es EUA-Ir&atilde;-Israel continuam pressionando. Ra&iacute;zen em recupera&ccedil;&atilde;o extrajudicial de R$ 65 bi. Monitorar entregas e custos de reposi&ccedil;&atilde;o.
+</div>
+</div>
+
+<!-- SECAO 1: O QUE MONITORAR HOJE -->
+<div class="section">
+<div class="section-header">
+<div class="section-icon" style="background:#EBF4FF;color:#2B6CB0">&#9872;</div>
+<div class="section-title">O Que Monitorar Hoje</div>
+</div>
+
+<div class="monitor-item">
+<div class="monitor-num red">1</div>
+<div>
+<div class="monitor-label">Petr&oacute;leo em forte alta &mdash; USD 104,86/barril</div>
+<div class="monitor-desc">Brent subiu ~3% em rela&ccedil;&atilde;o a ontem (era USD 101,75). Tens&otilde;es geopol&iacute;ticas entre EUA, Ir&atilde; e Israel continuam empurrando o pre&ccedil;o para cima. Se a Petrobras reajustar, o custo da gasolina e diesel nas bombas vai subir. Fique atenta a comunica&ccedil;&otilde;es da distribuidora sobre pre&ccedil;os de reposi&ccedil;&atilde;o.</div>
+</div>
+</div>
+
+<div class="monitor-item">
+<div class="monitor-num amber">2</div>
+<div>
+<div class="monitor-label">Greve dos caminhoneiros suspensa, mas em estado de alerta</div>
+<div class="monitor-desc">Governo zerou PIS/Cofins do diesel (redu&ccedil;&atilde;o de ~R$ 0,64/L na refinaria). Categoria recuou temporariamente, mas mant&eacute;m cobran&ccedil;a sobre cumprimento da tabela de frete. Principais entidades s&atilde;o contra paralisação total, o que reduz risco de bloqueios, mas a situa&ccedil;&atilde;o n&atilde;o est&aacute; resolvida.</div>
+</div>
+</div>
+
+<div class="monitor-item">
+<div class="monitor-num blue">3</div>
+<div>
+<div class="monitor-label">Safra 2026/27 come&ccedil;a em abril &mdash; etanol pode baratear</div>
+<div class="monitor-desc">In&iacute;cio da moagem da cana previsto para este m&ecirc;s, com mix de 53% para etanol. Chuvas recentes atrasaram algumas usinas em SP, mas expectativa &eacute; de aumento de oferta a partir de meados de abril. Se o etanol cair, a paridade pode mudar e favorecer mais o etanol frente &agrave; gasolina.</div>
+</div>
+</div>
+</div>
+
+<div class="metallic-rule"></div>
+
+<!-- SECAO 2: BAROMETRO + MERCADO -->
+<div class="section">
+<div class="section-header">
+<div class="section-icon" style="background:#FFF5F5;color:#C53030">&#9733;</div>
+<div class="section-title">Bar&ocirc;metro &amp; Mercado</div>
+</div>
+
+<div class="barometer-card">
+<div class="baro-top">
+<div class="baro-label">Bar&ocirc;metro do Dia</div>
+<div style="display:flex;align-items:center">
+<span class="baro-score">48</span>
+<span class="baro-class mid">M&Eacute;DIO</span>
+</div>
+</div>
+<div class="baro-bar-bg">
+<div class="baro-bar-fill" style="width:48%;background:linear-gradient(90deg,#D69E2E,#F6E05E)"></div>
+</div>
+<div class="baro-reason">Petr&oacute;leo em forte alta (USD 104,86) pressiona custos. D&oacute;lar favor&aacute;vel abaixo de R$ 5,20 compensa parcialmente. Greve suspensa mas em alerta. Medidas do governo ajudam no diesel, por&eacute;m defasagem internacional persiste. Dia de aten&ccedil;&atilde;o.</div>
+</div>
+
+<div class="market-row">
+<div class="market-card">
+<div class="mc-label">Brent (USD/barril)</div>
+<div class="mc-value">104,86</div>
+<div class="mc-delta up">&#9650; +3,1% vs ontem</div>
+</div>
+<div class="market-card">
+<div class="mc-label">D&oacute;lar (USD/BRL)</div>
+<div class="mc-value">R$ 5,18</div>
+<div class="mc-delta down">&#9660; -0,6% (favor&aacute;vel)</div>
+</div>
+</div>
+
+<div class="fuel-strip">
+<div class="fuel-chip">
+<div class="fc-name">Gasolina Comum</div>
+<div class="fc-price">R$ 6,78</div>
+<div class="fc-unit">/litro</div>
+</div>
+<div class="fuel-chip">
+<div class="fc-name">Gas. Aditivada</div>
+<div class="fc-price">R$ 7,10</div>
+<div class="fc-unit">/litro</div>
+</div>
+<div class="fuel-chip">
+<div class="fc-name">Etanol</div>
+<div class="fc-price">R$ 4,54</div>
+<div class="fc-unit">/litro</div>
+</div>
+<div class="fuel-chip">
+<div class="fc-name">Diesel S10</div>
+<div class="fc-price">R$ 6,45</div>
+<div class="fc-unit">/litro</div>
+</div>
+</div>
+
+<div class="parity-card">
+<div class="parity-title">Paridade Gasolina / Etanol</div>
+<div class="parity-value">67,0%</div>
+<div class="parity-bar-bg">
+<div class="parity-bar-fill" style="width:67%;background:linear-gradient(90deg,#38A169,#68D391)"></div>
+</div>
+<div style="display:flex;justify-content:space-between;font-size:10px;color:#888;margin-bottom:8px">
+<span>0%</span>
+<span style="color:#E53E3E;font-weight:600">70% limite</span>
+<span>100%</span>
+</div>
+<div class="parity-verdict" style="background:#C6F6D5;color:#276749">Etanol mais vantajoso para o consumidor</div>
+<div style="font-size:11px;color:#666;margin-top:8px;line-height:1.4">Abaixo de 70%: etanol compensa mais. Isso tende a reduzir o volume de gasolina nos postos. Com a safra come&ccedil;ando, o etanol pode ficar ainda mais competitivo nas pr&oacute;ximas semanas.</div>
+</div>
+</div>
+
+<div class="metallic-rule"></div>
+
+<!-- SECAO 3: GREVES & ALERTAS -->
+<div class="section">
+<div class="section-header">
+<div class="section-icon" style="background:#FFF5F5;color:#E53E3E">&#9888;</div>
+<div class="section-title">Greves &amp; Alertas Log&iacute;sticos</div>
+</div>
+
+<div class="strike-section">
+<div class="strike-card">
+<div>
+<span class="strike-name">Greve dos Caminhoneiros</span>
+<span class="strike-badge badge-suspensa">Suspensa</span>
+</div>
+<div class="strike-desc">Paralisação suspensa ap&oacute;s negocia&ccedil;&atilde;o com governo federal. Decreto 12.875/2026 zerou PIS/Cofins do diesel; MP 1.340/2026 autorizou subven&ccedil;&atilde;o (redu&ccedil;&atilde;o de ~R$ 0,64/L na refinaria). Principais entidades da categoria se posicionaram contra paralisa&ccedil;&atilde;o nacional plena. Risco reduzido mas n&atilde;o eliminado &mdash; categoria exige cumprimento da tabela de frete.</div>
+<div class="strike-source">Fonte: <a href="https://agenciabrasil.ebc.com.br/geral/noticia/2026-03/negociamos-com-os-caminhoneiros-diz-boulos-sobre-greve-da-categoria" target="_blank">Ag&ecirc;ncia Brasil</a> &middot; <a href="https://ndmais.com.br/transportes/o-que-esta-acontecendo-greve-dos-caminhoneiros-2026/" target="_blank">ND Mais</a></div>
+</div>
+
+<div class="strike-card">
+<div>
+<span class="strike-name">ANP &mdash; Fiscaliza&ccedil;&atilde;o Nacional de Pre&ccedil;os</span>
+<span class="strike-badge badge-monitorar">Monitorar</span>
+</div>
+<div class="strike-desc">ANP deflagrou opera&ccedil;&atilde;o em 22 cidades de 9 estados usando poderes da MP 1.340/2026. Multas de R$ 50 mil a R$ 500 milh&otilde;es para pre&ccedil;os abusivos. Revise se os pre&ccedil;os dos postos est&atilde;o dentro da faixa regional para evitar problemas.</div>
+<div class="strike-source">Fonte: <a href="https://cenarioenergia.com.br/2026/03/18/anp-fiscalizacao-precos-combustiveis-mp-1340-multas/" target="_blank">Cen&aacute;rio Energia</a></div>
+</div>
+</div>
+</div>
+
+<div class="metallic-rule"></div>
+
+<!-- SECAO 4: SETOR & DISTRIBUICAO -->
+<div class="section-dark">
+<div class="section-icon" style="background:rgba(255,255,255,.15);color:#fff;width:28px;height:28px;border-radius:8px;display:flex;align-items:center;justify-content:center;font-size:14px">&#9881;</div>
+<div class="section-title" style="color:#fff">Setor &amp; Distribui&ccedil;&atilde;o</div>
+</div>
+<div class="section">
+
+<div class="news-item">
+<span class="news-category cat-shell">Shell / Ra&iacute;zen</span>
+<div class="news-text"><strong>Ra&iacute;zen segue em recupera&ccedil;&atilde;o extrajudicial de R$ 65,1 bilh&otilde;es.</strong> Shell confirmou aporte de R$ 3,5 bi; Cosan comprometeu R$ 500 mi. Prazo de 90 dias para definir o plano de reestrutura&ccedil;&atilde;o est&aacute; correndo. Opera&ccedil;&atilde;o dos postos Shell continua normal, mas fique atenta a qualquer comunica&ccedil;&atilde;o sobre mudan&ccedil;as em condi&ccedil;&otilde;es comerciais ou prazos de entrega. <a href="https://www.cnnbrasil.com.br/economia/negocios/shell-pode-assumir-controle-da-raizen-apos-negociacoes-dizem-fontes/" target="_blank">CNN Brasil</a></div>
+</div>
+
+<div class="news-item">
+<span class="news-category cat-combustiveis">Combust&iacute;veis SP</span>
+<div class="news-text"><strong>Gasolina em SP varia de R$ 5,49 a R$ 9,29/L.</strong> M&eacute;dia nacional em R$ 6,78/L segundo &uacute;ltima edi&ccedil;&atilde;o da ANP. Alta puxada pelo petr&oacute;leo que agora ultrapassou USD 104/barril. Se a Petrobras reajustar pre&ccedil;os de refinaria, espere nova onda de alta nas bombas. <a href="https://www.gov.br/anp/pt-br/assuntos/precos-e-defesa-da-concorrencia/precos/sintese-semanal-do-comportamento-dos-precos-dos-combustiveis" target="_blank">ANP</a></div>
+</div>
+
+<div class="news-item">
+<span class="news-category cat-concorrencia">Concorr&ecirc;ncia / Diesel</span>
+<div class="news-text"><strong>Diesel come&ccedil;a a refletir corte de PIS/Cofins.</strong> Governo zerou as al&iacute;quotas (Decreto 12.875/2026), gerando redu&ccedil;&atilde;o de ~R$ 0,64/L na sa&iacute;da da refinaria. Pre&ccedil;o nas bombas est&aacute; caindo gradualmente &mdash; m&eacute;dia estadual j&aacute; baixou para R$ 6,45/L. Acompanhe a concorr&ecirc;ncia e ajuste seus pre&ccedil;os de diesel para n&atilde;o ficar fora da faixa. <a href="https://www.seudinheiro.com/2026/economia/caminhoneiros-confirmam-greve-por-alta-do-diesel-e-pressao-sobre-fretes-paralisacao-pode-comecar-ainda-nesta-semana-ccgg/" target="_blank">Seu Dinheiro</a></div>
+</div>
+
+<div class="news-item">
+<span class="news-category cat-refino">Etanol / Safra</span>
+<div class="news-text"><strong>Safra 2026/27 come&ccedil;a em abril com foco no etanol.</strong> Mix previsto: 53% etanol, 47% a&ccedil;&uacute;car (invers&atilde;o em rela&ccedil;&atilde;o &agrave; safra anterior). Moagem estimada em 615 milh&otilde;es de toneladas. Chuvas recentes atrasaram o in&iacute;cio em SP, MS e GO, mas a oferta deve ganhar f&ocirc;lego a partir da segunda quinzena de abril. Etanol pode baratear &mdash; fique atenta ao impacto na paridade. <a href="https://br.investing.com/news/economy-news/brasil-tera-recomposicao-de-estoques-de-etanol-na-nova-safra-apos-queda-de-20-em-202526-1832131" target="_blank">Investing.com</a></div>
+</div>
+</div>
+
+<div class="metallic-rule"></div>
+
+<!-- SECAO 5: EDUCACAO DO DIA -->
+<div class="section">
+<div class="section-header">
+<div class="section-icon" style="background:#F5F7FF;color:#1C2B6E">&#9733;</div>
+<div class="section-title">Conceito do Dia</div>
+</div>
+
+<div class="edu-section">
+<div class="edu-kpi">
+<span class="kpi-val">53%</span>
+mix etanol
+</div>
+<div class="edu-title">O que &eacute; o "mix da safra" e como ele afeta o pre&ccedil;o do etanol</div>
+<div class="edu-text">
+As usinas de cana-de-a&ccedil;&uacute;car podem escolher quanto da sua produ&ccedil;&atilde;o vai para a&ccedil;&uacute;car e quanto vai para etanol. Essa divis&atilde;o se chama "mix da safra".<br><br>
+Quando o mix favorece o etanol (como nesta safra, com 53%), significa que mais cana vai virar combust&iacute;vel. Mais etanol no mercado = mais oferta = tend&ecirc;ncia de queda no pre&ccedil;o.<br><br>
+<strong>Para os postos:</strong> se o etanol baratear, a paridade com a gasolina cai. Isso faz o consumidor preferir etanol, o que pode reduzir o volume de gasolina vendido. Como a gasolina &eacute; o produto mais importante para o lucro dos postos, vale a pena acompanhar essa tend&ecirc;ncia de perto e preparar a estrat&eacute;gia de pre&ccedil;os.<br><br>
+<strong>Dica pr&aacute;tica:</strong> nas pr&oacute;ximas semanas, monitore o pre&ccedil;o do etanol na distribuidora. Se cair, considere reajustar o pre&ccedil;o da gasolina para manter a paridade pr&oacute;xima de 70% e proteger seu volume.
+</div>
+</div>
+</div>
+
+<div class="metallic-rule"></div>
+
+<!-- SECAO 6: VINHEDO, AGENDA & TEMPO -->
+<div class="section">
+<div class="section-header">
+<div class="section-icon" style="background:#EBF8FF;color:#2B6CB0">&#9729;</div>
+<div class="section-title">Vinhedo &mdash; Tempo &amp; Local</div>
+</div>
+
+<div class="weather-row">
+<div class="weather-icon">&#9728;</div>
+<div class="weather-info">
+<div class="weather-temp">18&deg;C &mdash; 30&deg;C</div>
+<div class="weather-desc">Dia quente e ensolarado, sem previs&atilde;o de chuva. Condi&ccedil;&otilde;es favor&aacute;veis para bom movimento nos postos ao longo do dia.</div>
+</div>
+</div>
+<div style="margin-top:12px;padding:12px;background:#f7f8fc;border-radius:10px">
+<div style="font-size:11px;font-weight:600;color:#666;letter-spacing:.5px;text-transform:uppercase;margin-bottom:4px">Informa&ccedil;&atilde;o Local</div>
+<div style="font-size:12px;color:#444">Quinta-feira normal em Vinhedo. Sem feriados municipais ou eventos especiais previstos. Dia &uacute;til com movimento padr&atilde;o &mdash; tempo bom deve favorecer fluxo nos postos.</div>
+</div>
+</div>
+
+<!-- FOOTER -->
+<div class="footer">
+<div class="footer-text">Briefing gerado automaticamente &middot; Postos Gasparini &middot; 02/04/2026</div>
+</div>
+
+</div>
+</body>
+</html>
