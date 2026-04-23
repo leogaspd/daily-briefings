@@ -1,0 +1,376 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Briefing Postos Gasparini — 23 de abril de 2026</title>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+<style>
+*{margin:0;padding:0;box-sizing:border-box}
+body{font-family:'Inter',sans-serif;background:#DDE1EE;color:#1a1a2e;line-height:1.6;padding:16px}
+.wrapper{max-width:660px;margin:0 auto;border-radius:14px;overflow:hidden;background:#fff;box-shadow:0 4px 24px rgba(10,16,32,.12)}
+
+/* HEADER */
+.header{background:linear-gradient(150deg,#0A1020,#1C2B6E,#2A3E8C);padding:28px 24px 24px;text-align:center;color:#fff}
+.logo-oval{display:inline-block;border:2px solid rgba(255,255,255,.35);border-radius:50%;padding:6px}
+.logo-oval-inner{display:flex;flex-direction:column;align-items:center;justify-content:center;width:100px;height:100px;border:1.5px solid rgba(255,255,255,.25);border-radius:50%}
+.logo-postos{font-size:10px;letter-spacing:3px;font-weight:600;opacity:.85}
+.logo-gasparini{font-size:14px;font-weight:800;letter-spacing:1.5px;margin:-2px 0}
+.logo-desde{font-size:8px;letter-spacing:2px;opacity:.6;margin-top:1px}
+.header h1{font-size:18px;font-weight:700;margin-top:14px;letter-spacing:.5px}
+.header .date{font-size:13px;opacity:.7;margin-top:4px}
+
+/* METALLIC RULE */
+.rule{height:3px;background:linear-gradient(90deg,#1C2B6E,#C8CCD8,#1C2B6E)}
+
+/* ALERT BAR */
+.alert-bar{background:#0A1020;border-left:4px solid #E53E3E;padding:16px 20px;color:#fff;font-size:13px;line-height:1.5}
+.alert-bar strong{color:#FC8181;font-size:14px}
+
+/* SECTIONS */
+.section{padding:24px 20px}
+.section-title{font-size:15px;font-weight:700;text-transform:uppercase;letter-spacing:1px;color:#1C2B6E;margin-bottom:16px;display:flex;align-items:center;gap:8px}
+.section-title .icon{font-size:18px}
+
+/* MONITOR ITEMS */
+.monitor-item{display:flex;gap:14px;margin-bottom:16px;align-items:flex-start}
+.monitor-num{width:30px;height:30px;border-radius:50%;display:flex;align-items:center;justify-content:center;font-weight:700;font-size:13px;color:#fff;flex-shrink:0}
+.num-red{background:#E53E3E}
+.num-amber{background:#D69E2E}
+.num-blue{background:#3182CE}
+.monitor-text h4{font-size:14px;font-weight:600;color:#1a1a2e;margin-bottom:2px}
+.monitor-text p{font-size:13px;color:#4a5568}
+
+/* BAROMETER CARD */
+.baro-card{background:linear-gradient(135deg,#0A1020,#1C2B6E);border-radius:12px;padding:20px;color:#fff;margin-bottom:20px;text-align:center}
+.baro-label{font-size:11px;text-transform:uppercase;letter-spacing:2px;opacity:.7}
+.baro-score{font-size:48px;font-weight:800;margin:4px 0}
+.baro-class{font-size:14px;font-weight:600;padding:4px 14px;border-radius:20px;display:inline-block;margin:4px 0 8px}
+.baro-yellow{background:rgba(214,158,46,.25);color:#ECC94B}
+.baro-bar-outer{height:8px;background:rgba(255,255,255,.15);border-radius:4px;margin:10px 0}
+.baro-bar-inner{height:8px;border-radius:4px;transition:width .3s}
+.baro-reason{font-size:12px;opacity:.8;margin-top:6px;line-height:1.5}
+
+/* MARKET CARDS */
+.market-grid{display:grid;grid-template-columns:1fr 1fr;gap:12px;margin-bottom:16px}
+.market-card{background:#F7FAFC;border-radius:10px;padding:14px;text-align:center;border:1px solid #E2E8F0}
+.market-card .label{font-size:11px;color:#718096;text-transform:uppercase;letter-spacing:1px}
+.market-card .value{font-size:22px;font-weight:700;color:#1a1a2e;margin:4px 0}
+.market-card .delta{font-size:12px;font-weight:600;padding:2px 8px;border-radius:10px;display:inline-block}
+.delta-up{background:#FED7D7;color:#C53030}
+.delta-down{background:#C6F6D5;color:#276749}
+
+/* FUEL STRIP */
+.fuel-strip{display:grid;grid-template-columns:repeat(4,1fr);gap:8px;margin-bottom:16px}
+.fuel-item{background:#F7FAFC;border-radius:8px;padding:10px 8px;text-align:center;border:1px solid #E2E8F0}
+.fuel-item .f-name{font-size:10px;color:#718096;text-transform:uppercase;letter-spacing:.5px;font-weight:600}
+.fuel-item .f-price{font-size:16px;font-weight:700;color:#1a1a2e;margin-top:4px}
+
+/* PARITY CARD */
+.parity-card{background:#F0FFF4;border:1px solid #C6F6D5;border-radius:10px;padding:16px;text-align:center}
+.parity-card .p-label{font-size:12px;color:#276749;font-weight:600;text-transform:uppercase;letter-spacing:1px}
+.parity-card .p-value{font-size:28px;font-weight:800;color:#276749;margin:6px 0}
+.parity-bar-outer{height:8px;background:#E2E8F0;border-radius:4px;margin:8px auto;max-width:80%;position:relative}
+.parity-bar-inner{height:8px;border-radius:4px;background:linear-gradient(90deg,#48BB78,#38A169)}
+.parity-bar-marker{position:absolute;top:-4px;width:2px;height:16px;background:#E53E3E}
+.parity-verdict{font-size:13px;color:#2D3748;font-weight:500}
+
+/* STRIKE SECTION */
+.strike-section{background:#FFF8F8;border:1px solid #FED7D7;border-radius:10px;padding:16px;margin-bottom:12px}
+.strike-badge{display:inline-block;font-size:10px;font-weight:700;text-transform:uppercase;letter-spacing:1px;padding:3px 10px;border-radius:12px}
+.badge-monitor{background:#FEFCBF;color:#975A16}
+.badge-probable{background:#FED7D7;color:#C53030}
+.strike-title{font-size:14px;font-weight:600;margin:8px 0 4px}
+.strike-desc{font-size:13px;color:#4a5568;line-height:1.5}
+.strike-source{font-size:11px;color:#A0AEC0;margin-top:6px}
+.strike-source a{color:#3182CE;text-decoration:none}
+
+/* SECTOR */
+.sector-header{background:linear-gradient(135deg,#0A1020,#1C2B6E);border-radius:10px 10px 0 0;padding:14px 16px;color:#fff;font-size:14px;font-weight:600;display:flex;align-items:center;gap:8px}
+.sector-body{border:1px solid #E2E8F0;border-top:0;border-radius:0 0 10px 10px;padding:16px}
+.sector-cat{font-size:11px;font-weight:700;text-transform:uppercase;letter-spacing:1px;color:#1C2B6E;margin:12px 0 6px}
+.sector-cat:first-child{margin-top:0}
+.sector-item{display:flex;gap:10px;margin-bottom:10px;align-items:flex-start}
+.sector-dot{width:8px;height:8px;border-radius:50%;margin-top:6px;flex-shrink:0}
+.dot-shell{background:#DD6B20}
+.dot-anp{background:#3182CE}
+.dot-market{background:#38A169}
+.dot-refine{background:#805AD5}
+.sector-tag{font-size:9px;font-weight:700;text-transform:uppercase;letter-spacing:.5px;padding:2px 6px;border-radius:4px;margin-right:4px}
+.tag-shell{background:#FEEBC8;color:#C05621}
+.tag-anp{background:#BEE3F8;color:#2B6CB0}
+.tag-market{background:#C6F6D5;color:#276749}
+.tag-refine{background:#E9D8FD;color:#6B46C1}
+.sector-text{font-size:13px;color:#2D3748;line-height:1.5}
+.sector-text a{color:#3182CE;text-decoration:none}
+
+/* EDUCATION */
+.edu-section{background:#F5F7FF;border-radius:10px;padding:20px;position:relative}
+.edu-kpi{position:absolute;top:16px;right:16px;background:#1C2B6E;color:#fff;font-size:11px;font-weight:700;padding:6px 12px;border-radius:20px}
+.edu-title{font-size:14px;font-weight:700;color:#1C2B6E;margin-bottom:8px}
+.edu-text{font-size:13px;color:#4a5568;line-height:1.6}
+
+/* WEATHER */
+.weather-card{background:linear-gradient(135deg,#EBF8FF,#F0FFF4);border-radius:10px;padding:16px;display:flex;align-items:center;gap:16px;border:1px solid #E2E8F0;margin-bottom:12px}
+.weather-icon{font-size:40px}
+.weather-info .w-city{font-size:13px;font-weight:600;color:#2D3748}
+.weather-info .w-temp{font-size:20px;font-weight:700;color:#1a1a2e}
+.weather-info .w-cond{font-size:12px;color:#718096}
+
+/* FOOTER */
+.footer{background:linear-gradient(150deg,#0A1020,#1C2B6E);padding:16px 20px;text-align:center;color:rgba(255,255,255,.5);font-size:11px}
+
+@media(max-width:480px){
+  body{padding:8px}
+  .fuel-strip{grid-template-columns:repeat(2,1fr)}
+  .market-grid{grid-template-columns:1fr 1fr}
+  .section{padding:20px 16px}
+  .edu-kpi{position:static;margin-bottom:8px;display:inline-block}
+}
+</style>
+</head>
+<body>
+
+<div class="wrapper">
+  <!-- HEADER -->
+  <div class="header">
+    <div class="logo-oval">
+      <div class="logo-oval-inner">
+        <span class="logo-postos">POSTOS</span>
+        <span class="logo-gasparini">GASPARINI</span>
+        <span class="logo-desde">DESDE 1989</span>
+      </div>
+    </div>
+    <h1>Briefing Diario</h1>
+    <div class="date">Quarta-feira, 23 de abril de 2026</div>
+  </div>
+
+  <div class="rule"></div>
+
+  <!-- ALERT BAR -->
+  <div class="alert-bar">
+    <strong>Alerta: Mobilizacao de Caminhoneiros em SP</strong><br>
+    Liderancas articulam paralisacao apos alta de quase 19% no diesel. Reuniao no Porto de Santos nesta semana e o termometro para definicao da data oficial. Monitore abastecimento nos proximos dias.
+  </div>
+
+  <!-- SECTION 1: O QUE MONITORAR HOJE -->
+  <div class="section">
+    <div class="section-title"><span class="icon">&#128269;</span> O Que Monitorar Hoje</div>
+
+    <div class="monitor-item">
+      <div class="monitor-num num-red">1</div>
+      <div class="monitor-text">
+        <h4>Risco de greve dos caminhoneiros</h4>
+        <p>Diesel acumulou alta de 18,86% desde fevereiro. Reuniao no Porto de Santos esta semana decide data. Garanta estoques minimos e acompanhe noticias diariamente.</p>
+      </div>
+    </div>
+
+    <div class="monitor-item">
+      <div class="monitor-num num-amber">2</div>
+      <div class="monitor-text">
+        <h4>Petroleo Brent acima de USD 100</h4>
+        <p>Brent fechou a USD 103,83 ontem (+3,89%). Tensoes no Estreito de Ormuz e negociacoes EUA-Ira mantem pressao. Precos de combustivel nas refinarias podem subir novamente.</p>
+      </div>
+    </div>
+
+    <div class="monitor-item">
+      <div class="monitor-num num-blue">3</div>
+      <div class="monitor-text">
+        <h4>Raizen em recuperacao extrajudicial</h4>
+        <p>R$ 65,1 bilhoes em dividas com prazo de 90 dias para plano. Shell comprometeu R$ 3,5 bi em aporte. Nao afeta operacao diaria por enquanto, mas acompanhe comunicados da distribuidora.</p>
+      </div>
+    </div>
+  </div>
+
+  <div class="rule"></div>
+
+  <!-- SECTION 2: BAROMETRO + MERCADO -->
+  <div class="section">
+    <div class="section-title"><span class="icon">&#128200;</span> Barometro & Mercado</div>
+
+    <div class="baro-card">
+      <div class="baro-label">Barometro do Dia</div>
+      <div class="baro-score">55</div>
+      <div class="baro-class baro-yellow">MEDIO</div>
+      <div class="baro-bar-outer">
+        <div class="baro-bar-inner" style="width:55%;background:linear-gradient(90deg,#ECC94B,#D69E2E)"></div>
+      </div>
+      <div class="baro-reason">Dolar baixo favorece (+10), mas Brent alto (-10) e risco de greve (-15) pesam. Sem alertas logisticos confirmados (+10). ANP reforçando fiscalizacao (+10).</div>
+    </div>
+
+    <div class="market-grid">
+      <div class="market-card">
+        <div class="label">Brent (USD/barril)</div>
+        <div class="value">103,83</div>
+        <div class="delta delta-up">&#9650; +3,89%</div>
+      </div>
+      <div class="market-card">
+        <div class="label">Dolar (USD/BRL)</div>
+        <div class="value">R$ 4,97</div>
+        <div class="delta delta-down">&#9660; -0,56%</div>
+      </div>
+    </div>
+
+    <div class="fuel-strip">
+      <div class="fuel-item">
+        <div class="f-name">Gasolina C</div>
+        <div class="f-price">R$ 6,49</div>
+      </div>
+      <div class="fuel-item">
+        <div class="f-name">Aditivada</div>
+        <div class="f-price">R$ 6,89</div>
+      </div>
+      <div class="fuel-item">
+        <div class="f-name">Etanol</div>
+        <div class="f-price">R$ 4,52</div>
+      </div>
+      <div class="fuel-item">
+        <div class="f-name">Diesel S10</div>
+        <div class="f-price">R$ 6,35</div>
+      </div>
+    </div>
+
+    <div class="parity-card">
+      <div class="p-label">Paridade Gasolina / Etanol</div>
+      <div class="p-value">67,6%</div>
+      <div class="parity-bar-outer">
+        <div class="parity-bar-inner" style="width:67.6%"></div>
+        <div class="parity-bar-marker" style="left:70%"></div>
+      </div>
+      <div class="parity-verdict">Etanol esta mais vantajoso em SP (abaixo de 70%). Clientes que calculam vao preferir etanol &mdash; fique atenta ao volume de gasolina.</div>
+    </div>
+  </div>
+
+  <div class="rule"></div>
+
+  <!-- SECTION 3: GREVES & ALERTAS -->
+  <div class="section">
+    <div class="section-title"><span class="icon">&#9888;&#65039;</span> Greves & Alertas</div>
+
+    <div class="strike-section">
+      <span class="strike-badge badge-monitor">Monitorar</span>
+      <div class="strike-title">Paralisacao de Caminhoneiros &mdash; SP Epicentro</div>
+      <div class="strike-desc">
+        Liderancas articulam greve apos diesel acumular alta de 18,86% (de R$ 5,72 para R$ 6,80 em media). Reajuste Petrobras de R$ 0,38/L em marco foi o gatilho. Reuniao no Porto de Santos esta semana define data oficial. Sao Paulo e o principal foco da mobilizacao.
+      </div>
+      <div class="strike-source">Fontes: <a href="https://www.gazetadopovo.com.br/economia/por-que-os-caminhoneiros-ameacam-uma-nova-greve-nacional/" target="_blank">Gazeta do Povo</a> &middot; <a href="https://ndmais.com.br/economia/o-que-se-sabe-sobre-a-greve-dos-caminhoneiros-2026/" target="_blank">ND Mais</a></div>
+    </div>
+
+    <div class="strike-section">
+      <span class="strike-badge badge-probable">Atencao</span>
+      <div class="strike-title">Tensoes Geopoliticas &mdash; Estreito de Ormuz</div>
+      <div class="strike-desc">
+        Negociacoes EUA-Ira continuam instáveis. Analistas estimam destruicao de demanda de 4 a 5 milhoes de barris/dia (~5% da oferta global) caso conflito escale. Isso ja pressiona o Brent acima de USD 100.
+      </div>
+      <div class="strike-source">Fonte: <a href="https://tradingeconomics.com/commodity/brent-crude-oil" target="_blank">Trading Economics</a></div>
+    </div>
+  </div>
+
+  <div class="rule"></div>
+
+  <!-- SECTION 4: SETOR & DISTRIBUICAO -->
+  <div class="section" style="padding-bottom:16px">
+    <div class="sector-header"><span>&#9981;</span> Setor & Distribuicao</div>
+    <div class="sector-body">
+
+      <div class="sector-cat">Shell / Raizen</div>
+      <div class="sector-item">
+        <div class="sector-dot dot-shell"></div>
+        <div class="sector-text">
+          <span class="sector-tag tag-shell">Raizen</span>
+          Raizen protocolou o maior pedido de recuperacao extrajudicial do Brasil: R$ 65,1 bilhoes em dividas. Shell comprometeu R$ 3,5 bi e Cosan R$ 500 mi. Prazo de 90 dias para plano de reestruturacao. <a href="https://www.seudinheiro.com/2026/empresas/o-aguardado-aporte-vem-ai-shell-esta-disposto-a-injetar-r-35-bilhoes-na-raizen-diz-jornal-kaes/" target="_blank">Saiba mais</a>
+        </div>
+      </div>
+      <div class="sector-item">
+        <div class="sector-dot dot-shell"></div>
+        <div class="sector-text">
+          <span class="sector-tag tag-shell">Shell</span>
+          Shell pode assumir controle total da Raizen. Lancamento do Shell V-Power Diesel substitui o Evolux Diesel nos postos bandeirados. <a href="https://www.cnnbrasil.com.br/economia/negocios/shell-pode-assumir-controle-da-raizen-apos-negociacoes-dizem-fontes/" target="_blank">CNN Brasil</a>
+        </div>
+      </div>
+
+      <div class="sector-cat">Regulacao / ANP</div>
+      <div class="sector-item">
+        <div class="sector-dot dot-anp"></div>
+        <div class="sector-text">
+          <span class="sector-tag tag-anp">ANP</span>
+          Camara aprovou projeto que amplia poderes de fiscalizacao da ANP &mdash; agencia tera acesso permanente a notas fiscais eletronicas para combater adulteracao. Bom para postos que trabalham correto. <a href="https://agenciabrasil.ebc.com.br/politica/noticia/2026-04/camara-aprova-texto-que-da-anp-acesso-dados-para-combater-fraudes" target="_blank">Agencia Brasil</a>
+        </div>
+      </div>
+      <div class="sector-item">
+        <div class="sector-dot dot-anp"></div>
+        <div class="sector-text">
+          <span class="sector-tag tag-anp">Fiscalizacao</span>
+          ANP fiscalizou 947 agentes (744 postos, 117 distribuidoras) entre 16/mar e 10/abr. Autuou 16 distribuidoras por suspeita de abusividade de precos. <a href="https://www.gov.br/anp/pt-br/" target="_blank">ANP</a>
+        </div>
+      </div>
+
+      <div class="sector-cat">Combustiveis SP</div>
+      <div class="sector-item">
+        <div class="sector-dot dot-market"></div>
+        <div class="sector-text">
+          <span class="sector-tag tag-market">Etanol</span>
+          Preco do etanol caiu em SP com inicio da safra e maior oferta de milho. Paridade em 67,6% favorece etanol. Etanol competitivo em 6 estados. <a href="https://www.band.com.br/agro/noticias/preco-do-etanol-cai-em-sp-com-inicio-de-safra-e-maior-oferta-de-milho-202604221124" target="_blank">Band</a>
+        </div>
+      </div>
+      <div class="sector-item">
+        <div class="sector-dot dot-market"></div>
+        <div class="sector-text">
+          <span class="sector-tag tag-market">Diesel</span>
+          Diesel S10 com precos variando de R$ 6,35 a R$ 7,65 em SP. ANP registrou primeira reducao no diesel desde inicio da crise no Oriente Medio. <a href="https://agenciabrasil.ebc.com.br/economia/noticia/2026-04/anp-tem-1a-reducao-do-diesel-apos-inicio-da-guerra-no-oriente-medio" target="_blank">Agencia Brasil</a>
+        </div>
+      </div>
+
+      <div class="sector-cat">Refino / Distribuicao</div>
+      <div class="sector-item">
+        <div class="sector-dot dot-refine"></div>
+        <div class="sector-text">
+          <span class="sector-tag tag-refine">Fazenda</span>
+          Ministerio da Fazenda determinou que distribuidoras devem informar evolucao das margens brutas de lucro &mdash; medida de transparencia no setor. <a href="https://www.gov.br/fazenda/pt-br/assuntos/noticias/2026/abril/subvencao-dos-combustiveis-distribuidoras-deverao-informar-evolucao-das-margens-brutas-de-lucro" target="_blank">Gov.br</a>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <div class="rule"></div>
+
+  <!-- SECTION 5: EDUCACAO DO DIA -->
+  <div class="section">
+    <div class="section-title"><span class="icon">&#128218;</span> Educacao do Dia</div>
+    <div class="edu-section">
+      <div class="edu-kpi">67,6% hoje</div>
+      <div class="edu-title">Paridade Etanol/Gasolina: O Que Significa Para Seus Postos</div>
+      <div class="edu-text">
+        Quando a paridade (preco do etanol dividido pelo preco da gasolina) fica abaixo de 70%, o etanol e mais vantajoso para o consumidor. Hoje estamos em 67,6% em SP. Na pratica, isso significa que clientes informados vao optar pelo etanol, o que pode reduzir seu volume de gasolina &mdash; que e o produto com maior correlacao com lucro (+0,94). Para compensar: destaque a qualidade Shell V-Power, reforce a conveniencia do posto, e monitore se a concorrencia esta ajustando margens de gasolina para reter clientes.
+      </div>
+    </div>
+  </div>
+
+  <div class="rule"></div>
+
+  <!-- SECTION 6: VINHEDO, AGENDA & TEMPO -->
+  <div class="section">
+    <div class="section-title"><span class="icon">&#127780;</span> Vinhedo, Agenda & Tempo</div>
+
+    <div class="weather-card">
+      <div class="weather-icon">&#9728;&#65039;</div>
+      <div class="weather-info">
+        <div class="w-city">Vinhedo, SP</div>
+        <div class="w-temp">14&deg; &mdash; 27&deg;C</div>
+        <div class="w-cond">Ceu aberto, sem chuva. Dia agradavel &mdash; bom movimento esperado nos postos.</div>
+      </div>
+    </div>
+
+    <div style="background:#F7FAFC;border-radius:10px;padding:14px;border:1px solid #E2E8F0;font-size:13px;color:#4a5568">
+      <strong style="color:#1C2B6E">Calendario de Leo hoje:</strong> 1:1 Bia, 1:1 Ma (Marinna), Kickoff SunR &lt;&gt; EWA, reuniao i9+ &lt;&gt; SunR (parceria Embrapii), 1:1 Lais, BI manutencao, Otavio + Leo. Dia cheio &mdash; assuntos de posto melhor tratar pela manha cedo ou apos as 20h.
+    </div>
+  </div>
+
+  <!-- FOOTER -->
+  <div class="footer">
+    Briefing gerado automaticamente &middot; Postos Gasparini &middot; 23 de abril de 2026
+  </div>
+</div>
+
+</body>
+</html>
