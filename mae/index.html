@@ -4,29 +4,29 @@
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <title>Briefings — Postos Gasparini</title>
-<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800;900&display=swap" rel="stylesheet">
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap" rel="stylesheet">
 <style>
-  *{margin:0;padding:0;box-sizing:border-box}
-  body{font-family:'Inter',sans-serif;background:#DDE1EE;color:#1a1a2e;line-height:1.6;-webkit-font-smoothing:antialiased}
-  .wrapper{max-width:660px;margin:0 auto;background:#fff;border-radius:14px;overflow:hidden;box-shadow:0 4px 24px rgba(10,16,32,.10)}
-  .header{background:linear-gradient(150deg,#0A1020,#1C2B6E,#2A3E8C);padding:32px 24px 28px;text-align:center}
-  .logo-oval{display:inline-block;border:2px solid rgba(255,255,255,.35);border-radius:50%;padding:6px;margin-bottom:12px}
-  .logo-oval-inner{background:rgba(255,255,255,.08);border-radius:50%;width:110px;height:110px;display:flex;flex-direction:column;align-items:center;justify-content:center;border:1.5px solid rgba(255,255,255,.25)}
-  .logo-postos{font-size:10px;font-weight:600;letter-spacing:4px;color:rgba(255,255,255,.7)}
-  .logo-gasparini{font-size:16px;font-weight:800;letter-spacing:2px;color:#fff;margin:2px 0}
-  .logo-desde{font-size:8px;font-weight:500;letter-spacing:3px;color:rgba(255,255,255,.5)}
-  .header-title{color:#fff;font-size:20px;font-weight:700;margin-top:12px}
-  .header-sub{color:rgba(255,255,255,.6);font-size:13px;margin-top:4px}
-  .rule{height:3px;background:linear-gradient(90deg,#1C2B6E,#C8CCD8,#1C2B6E)}
-  .content{padding:24px}
-  .month-group{margin-bottom:20px}
-  .month-label{font-size:12px;font-weight:700;letter-spacing:1.5px;text-transform:uppercase;color:#1C2B6E;margin-bottom:10px;padding-bottom:6px;border-bottom:1px solid #E2E8F0}
-  .briefing-link{display:flex;align-items:center;gap:10px;padding:12px 14px;border-radius:8px;text-decoration:none;color:#1a1a2e;transition:background .15s;margin-bottom:4px}
-  .briefing-link:hover{background:#F7FAFC}
-  .link-date{font-size:14px;font-weight:500;flex:1}
-  .link-arrow{font-size:20px;color:#A0AEC0}
-  .badge-today{background:#1C2B6E;color:#fff;padding:2px 10px;border-radius:12px;font-size:11px;font-weight:700}
-  .footer{text-align:center;padding:20px 24px;font-size:11px;color:#A0AEC0;border-top:1px solid #E2E8F0}
+  * { margin: 0; padding: 0; box-sizing: border-box; }
+  body { background: #DDE1EE; font-family: 'Inter', sans-serif; color: #1a1a2e; padding: 16px; }
+  .wrapper { max-width: 660px; margin: 0 auto; background: #fff; border-radius: 14px; overflow: hidden; box-shadow: 0 4px 24px rgba(10,16,32,0.10); }
+  .header { background: linear-gradient(150deg, #0A1020, #1C2B6E, #2A3E8C); padding: 32px 24px 28px; text-align: center; }
+  .logo-oval { display: inline-block; border: 2px solid rgba(255,255,255,0.35); border-radius: 50%; padding: 18px 32px; }
+  .logo-oval-inner { display: flex; flex-direction: column; align-items: center; gap: 2px; }
+  .logo-postos { font-size: 11px; font-weight: 600; letter-spacing: 4px; color: rgba(255,255,255,0.7); }
+  .logo-gasparini { font-size: 22px; font-weight: 800; letter-spacing: 2px; color: #fff; }
+  .logo-desde { font-size: 9px; font-weight: 500; letter-spacing: 3px; color: rgba(255,255,255,0.5); }
+  .header-title { color: #fff; font-size: 17px; font-weight: 700; margin-top: 16px; }
+  .rule { height: 3px; background: linear-gradient(90deg, #1C2B6E, #C8CCD8, #1C2B6E); }
+  .content { padding: 24px; }
+  .briefing-list { list-style: none; }
+  .briefing-item { margin-bottom: 8px; }
+  .briefing-link { display: flex; align-items: center; gap: 12px; padding: 14px 16px; background: #F7FAFC; border-radius: 10px; text-decoration: none; color: #1a1a2e; transition: background 0.2s; }
+  .briefing-link:hover { background: #EBF8FF; }
+  .briefing-date { font-size: 15px; font-weight: 700; color: #1C2B6E; min-width: 110px; }
+  .briefing-day { font-size: 13px; color: #718096; }
+  .badge-hoje { background: #1C2B6E; color: #fff; font-size: 10px; font-weight: 700; padding: 2px 8px; border-radius: 8px; margin-left: 8px; text-transform: uppercase; letter-spacing: 1px; }
+  .footer { background: linear-gradient(150deg, #0A1020, #1C2B6E); padding: 20px 24px; text-align: center; }
+  .footer p { font-size: 11px; color: rgba(255,255,255,0.5); }
 </style>
 </head>
 <body>
@@ -37,14 +37,55 @@
       <span class="logo-gasparini">GASPARINI</span>
       <span class="logo-desde">DESDE 1989</span>
     </div></div>
-    <div class="header-title">Briefings Diários</div>
-    <div class="header-sub">Arquivo completo de briefings</div>
+    <div class="header-title">Historico de Briefings</div>
   </div>
   <div class="rule"></div>
   <div class="content">
-    <div class="month-group"><div class="month-label">Maio 2026</div><a href="2026-05-15.html" class="briefing-link"><span class="link-date">Sexta, 15</span><span class="badge-today">Hoje</span><span class="link-arrow">&#8250;</span></a><a href="2026-05-14.html" class="briefing-link"><span class="link-date">Quinta, 14</span><span class="link-arrow">&#8250;</span></a><a href="2026-05-13.html" class="briefing-link"><span class="link-date">Quarta, 13</span><span class="link-arrow">&#8250;</span></a><a href="2026-05-09.html" class="briefing-link"><span class="link-date">Sábado, 9</span><span class="link-arrow">&#8250;</span></a><a href="2026-05-08.html" class="briefing-link"><span class="link-date">Sexta, 8</span><span class="link-arrow">&#8250;</span></a><a href="2026-05-07.html" class="briefing-link"><span class="link-date">Quinta, 7</span><span class="link-arrow">&#8250;</span></a><a href="2026-05-05.html" class="briefing-link"><span class="link-date">Terça, 5</span><span class="link-arrow">&#8250;</span></a></div><div class="month-group"><div class="month-label">Abril 2026</div><a href="2026-04-30.html" class="briefing-link"><span class="link-date">Quinta, 30</span><span class="link-arrow">&#8250;</span></a><a href="2026-04-29.html" class="briefing-link"><span class="link-date">Quarta, 29</span><span class="link-arrow">&#8250;</span></a><a href="2026-04-28.html" class="briefing-link"><span class="link-date">Terça, 28</span><span class="link-arrow">&#8250;</span></a><a href="2026-04-26.html" class="briefing-link"><span class="link-date">Domingo, 26</span><span class="link-arrow">&#8250;</span></a><a href="2026-04-25.html" class="briefing-link"><span class="link-date">Sábado, 25</span><span class="link-arrow">&#8250;</span></a><a href="2026-04-24.html" class="briefing-link"><span class="link-date">Sexta, 24</span><span class="link-arrow">&#8250;</span></a><a href="2026-04-23.html" class="briefing-link"><span class="link-date">Quinta, 23</span><span class="link-arrow">&#8250;</span></a><a href="2026-04-22.html" class="briefing-link"><span class="link-date">Quarta, 22</span><span class="link-arrow">&#8250;</span></a><a href="2026-04-21.html" class="briefing-link"><span class="link-date">Terça, 21</span><span class="link-arrow">&#8250;</span></a><a href="2026-04-20.html" class="briefing-link"><span class="link-date">Segunda, 20</span><span class="link-arrow">&#8250;</span></a><a href="2026-04-18.html" class="briefing-link"><span class="link-date">Sábado, 18</span><span class="link-arrow">&#8250;</span></a><a href="2026-04-17.html" class="briefing-link"><span class="link-date">Sexta, 17</span><span class="link-arrow">&#8250;</span></a><a href="2026-04-16.html" class="briefing-link"><span class="link-date">Quinta, 16</span><span class="link-arrow">&#8250;</span></a><a href="2026-04-15.html" class="briefing-link"><span class="link-date">Quarta, 15</span><span class="link-arrow">&#8250;</span></a><a href="2026-04-14.html" class="briefing-link"><span class="link-date">Terça, 14</span><span class="link-arrow">&#8250;</span></a><a href="2026-04-11.html" class="briefing-link"><span class="link-date">Sábado, 11</span><span class="link-arrow">&#8250;</span></a><a href="2026-04-06.html" class="briefing-link"><span class="link-date">Segunda, 6</span><span class="link-arrow">&#8250;</span></a><a href="2026-04-05.html" class="briefing-link"><span class="link-date">Domingo, 5</span><span class="link-arrow">&#8250;</span></a><a href="2026-04-04.html" class="briefing-link"><span class="link-date">Sábado, 4</span><span class="link-arrow">&#8250;</span></a><a href="2026-04-03.html" class="briefing-link"><span class="link-date">Sexta, 3</span><span class="link-arrow">&#8250;</span></a><a href="2026-04-02.html" class="briefing-link"><span class="link-date">Quinta, 2</span><span class="link-arrow">&#8250;</span></a><a href="2026-04-01.html" class="briefing-link"><span class="link-date">Quarta, 1</span><span class="link-arrow">&#8250;</span></a></div><div class="month-group"><div class="month-label">Março 2026</div><a href="2026-03-31.html" class="briefing-link"><span class="link-date">Terça, 31</span><span class="link-arrow">&#8250;</span></a><a href="2026-03-30.html" class="briefing-link"><span class="link-date">Segunda, 30</span><span class="link-arrow">&#8250;</span></a><a href="2026-03-29.html" class="briefing-link"><span class="link-date">Domingo, 29</span><span class="link-arrow">&#8250;</span></a><a href="2026-03-28.html" class="briefing-link"><span class="link-date">Sábado, 28</span><span class="link-arrow">&#8250;</span></a><a href="2026-03-27.html" class="briefing-link"><span class="link-date">Sexta, 27</span><span class="link-arrow">&#8250;</span></a><a href="2026-03-26.html" class="briefing-link"><span class="link-date">Quinta, 26</span><span class="link-arrow">&#8250;</span></a><a href="2026-03-25.html" class="briefing-link"><span class="link-date">Quarta, 25</span><span class="link-arrow">&#8250;</span></a><a href="2026-03-24.html" class="briefing-link"><span class="link-date">Terça, 24</span><span class="link-arrow">&#8250;</span></a><a href="2026-03-23.html" class="briefing-link"><span class="link-date">Segunda, 23</span><span class="link-arrow">&#8250;</span></a><a href="2026-03-22.html" class="briefing-link"><span class="link-date">Domingo, 22</span><span class="link-arrow">&#8250;</span></a><a href="2026-03-21.html" class="briefing-link"><span class="link-date">Sábado, 21</span><span class="link-arrow">&#8250;</span></a><a href="2026-03-20.html" class="briefing-link"><span class="link-date">Sexta, 20</span><span class="link-arrow">&#8250;</span></a><a href="2026-03-19.html" class="briefing-link"><span class="link-date">Quinta, 19</span><span class="link-arrow">&#8250;</span></a></div>
+    <ul class="briefing-list">
+      <li class="briefing-item"><a class="briefing-link" href="2026-05-14.html"><span class="briefing-date">14/05/2026</span><span class="briefing-day">Quarta-feira</span><span class="badge-hoje">Hoje</span></a></li>
+      <li class="briefing-item"><a class="briefing-link" href="2026-05-13.html"><span class="briefing-date">13/05/2026</span><span class="briefing-day">Terca-feira</span></a></li>
+      <li class="briefing-item"><a class="briefing-link" href="2026-05-09.html"><span class="briefing-date">09/05/2026</span><span class="briefing-day">Sexta-feira</span></a></li>
+      <li class="briefing-item"><a class="briefing-link" href="2026-05-08.html"><span class="briefing-date">08/05/2026</span><span class="briefing-day">Quinta-feira</span></a></li>
+      <li class="briefing-item"><a class="briefing-link" href="2026-05-07.html"><span class="briefing-date">07/05/2026</span><span class="briefing-day">Quarta-feira</span></a></li>
+      <li class="briefing-item"><a class="briefing-link" href="2026-05-05.html"><span class="briefing-date">05/05/2026</span><span class="briefing-day">Segunda-feira</span></a></li>
+      <li class="briefing-item"><a class="briefing-link" href="2026-04-30.html"><span class="briefing-date">30/04/2026</span><span class="briefing-day">Quinta-feira</span></a></li>
+      <li class="briefing-item"><a class="briefing-link" href="2026-04-29.html"><span class="briefing-date">29/04/2026</span><span class="briefing-day">Quarta-feira</span></a></li>
+      <li class="briefing-item"><a class="briefing-link" href="2026-04-28.html"><span class="briefing-date">28/04/2026</span><span class="briefing-day">Terca-feira</span></a></li>
+      <li class="briefing-item"><a class="briefing-link" href="2026-04-26.html"><span class="briefing-date">26/04/2026</span><span class="briefing-day">Domingo</span></a></li>
+      <li class="briefing-item"><a class="briefing-link" href="2026-04-25.html"><span class="briefing-date">25/04/2026</span><span class="briefing-day">Sabado</span></a></li>
+      <li class="briefing-item"><a class="briefing-link" href="2026-04-24.html"><span class="briefing-date">24/04/2026</span><span class="briefing-day">Sexta-feira</span></a></li>
+      <li class="briefing-item"><a class="briefing-link" href="2026-04-23.html"><span class="briefing-date">23/04/2026</span><span class="briefing-day">Quinta-feira</span></a></li>
+      <li class="briefing-item"><a class="briefing-link" href="2026-04-22.html"><span class="briefing-date">22/04/2026</span><span class="briefing-day">Quarta-feira</span></a></li>
+      <li class="briefing-item"><a class="briefing-link" href="2026-04-21.html"><span class="briefing-date">21/04/2026</span><span class="briefing-day">Terca-feira</span></a></li>
+      <li class="briefing-item"><a class="briefing-link" href="2026-04-20.html"><span class="briefing-date">20/04/2026</span><span class="briefing-day">Segunda-feira</span></a></li>
+      <li class="briefing-item"><a class="briefing-link" href="2026-04-18.html"><span class="briefing-date">18/04/2026</span><span class="briefing-day">Sabado</span></a></li>
+      <li class="briefing-item"><a class="briefing-link" href="2026-04-17.html"><span class="briefing-date">17/04/2026</span><span class="briefing-day">Sexta-feira</span></a></li>
+      <li class="briefing-item"><a class="briefing-link" href="2026-04-16.html"><span class="briefing-date">16/04/2026</span><span class="briefing-day">Quinta-feira</span></a></li>
+      <li class="briefing-item"><a class="briefing-link" href="2026-04-15.html"><span class="briefing-date">15/04/2026</span><span class="briefing-day">Quarta-feira</span></a></li>
+      <li class="briefing-item"><a class="briefing-link" href="2026-04-14.html"><span class="briefing-date">14/04/2026</span><span class="briefing-day">Terca-feira</span></a></li>
+      <li class="briefing-item"><a class="briefing-link" href="2026-04-11.html"><span class="briefing-date">11/04/2026</span><span class="briefing-day">Sabado</span></a></li>
+      <li class="briefing-item"><a class="briefing-link" href="2026-04-06.html"><span class="briefing-date">06/04/2026</span><span class="briefing-day">Segunda-feira</span></a></li>
+      <li class="briefing-item"><a class="briefing-link" href="2026-04-05.html"><span class="briefing-date">05/04/2026</span><span class="briefing-day">Domingo</span></a></li>
+      <li class="briefing-item"><a class="briefing-link" href="2026-04-04.html"><span class="briefing-date">04/04/2026</span><span class="briefing-day">Sabado</span></a></li>
+      <li class="briefing-item"><a class="briefing-link" href="2026-04-03.html"><span class="briefing-date">03/04/2026</span><span class="briefing-day">Sexta-feira</span></a></li>
+      <li class="briefing-item"><a class="briefing-link" href="2026-04-02.html"><span class="briefing-date">02/04/2026</span><span class="briefing-day">Quinta-feira</span></a></li>
+      <li class="briefing-item"><a class="briefing-link" href="2026-04-01.html"><span class="briefing-date">01/04/2026</span><span class="briefing-day">Quarta-feira</span></a></li>
+      <li class="briefing-item"><a class="briefing-link" href="2026-03-31.html"><span class="briefing-date">31/03/2026</span><span class="briefing-day">Terca-feira</span></a></li>
+      <li class="briefing-item"><a class="briefing-link" href="2026-03-30.html"><span class="briefing-date">30/03/2026</span><span class="briefing-day">Segunda-feira</span></a></li>
+      <li class="briefing-item"><a class="briefing-link" href="2026-03-29.html"><span class="briefing-date">29/03/2026</span><span class="briefing-day">Domingo</span></a></li>
+      <li class="briefing-item"><a class="briefing-link" href="2026-03-28.html"><span class="briefing-date">28/03/2026</span><span class="briefing-day">Sabado</span></a></li>
+      <li class="briefing-item"><a class="briefing-link" href="2026-03-27.html"><span class="briefing-date">27/03/2026</span><span class="briefing-day">Sexta-feira</span></a></li>
+      <li class="briefing-item"><a class="briefing-link" href="2026-03-26.html"><span class="briefing-date">26/03/2026</span><span class="briefing-day">Quinta-feira</span></a></li>
+      <li class="briefing-item"><a class="briefing-link" href="2026-03-25.html"><span class="briefing-date">25/03/2026</span><span class="briefing-day">Quarta-feira</span></a></li>
+      <li class="briefing-item"><a class="briefing-link" href="2026-03-24.html"><span class="briefing-date">24/03/2026</span><span class="briefing-day">Terca-feira</span></a></li>
+      <li class="briefing-item"><a class="briefing-link" href="2026-03-23.html"><span class="briefing-date">23/03/2026</span><span class="briefing-day">Segunda-feira</span></a></li>
+      <li class="briefing-item"><a class="briefing-link" href="2026-03-22.html"><span class="briefing-date">22/03/2026</span><span class="briefing-day">Domingo</span></a></li>
+      <li class="briefing-item"><a class="briefing-link" href="2026-03-21.html"><span class="briefing-date">21/03/2026</span><span class="briefing-day">Sabado</span></a></li>
+      <li class="briefing-item"><a class="briefing-link" href="2026-03-20.html"><span class="briefing-date">20/03/2026</span><span class="briefing-day">Sexta-feira</span></a></li>
+      <li class="briefing-item"><a class="briefing-link" href="2026-03-19.html"><span class="briefing-date">19/03/2026</span><span class="briefing-day">Quinta-feira</span></a></li>
+    </ul>
   </div>
-  <div class="footer">Postos Gasparini · Briefings Diários</div>
+  <div class="footer"><p>Postos Gasparini &middot; Briefings Diarios</p></div>
 </div>
 </body>
 </html>
