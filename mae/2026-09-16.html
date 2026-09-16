@@ -1,0 +1,375 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Briefing Diário — Postos Gasparini — 16/09/2026</title>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+<style>
+* { margin: 0; padding: 0; box-sizing: border-box; }
+body { background: #DDE1EE; font-family: 'Inter', sans-serif; color: #1a1a2e; line-height: 1.6; padding: 16px; }
+.wrapper { max-width: 660px; margin: 0 auto; background: #fff; border-radius: 14px; overflow: hidden; box-shadow: 0 4px 24px rgba(10,16,32,0.10); }
+.header { background: linear-gradient(150deg, #0A1020, #1C2B6E, #2A3E8C); padding: 32px 24px 28px; text-align: center; color: #fff; }
+.logo-oval { display: inline-block; border: 2px solid rgba(255,255,255,0.3); border-radius: 50%; padding: 18px 28px; margin-bottom: 12px; }
+.logo-oval-inner { display: flex; flex-direction: column; align-items: center; gap: 2px; }
+.logo-postos { font-size: 11px; font-weight: 600; letter-spacing: 4px; color: rgba(255,255,255,0.7); }
+.logo-gasparini { font-size: 22px; font-weight: 800; letter-spacing: 2px; }
+.logo-desde { font-size: 9px; font-weight: 500; letter-spacing: 3px; color: rgba(255,255,255,0.5); }
+.header-date { font-size: 14px; color: rgba(255,255,255,0.7); margin-top: 8px; }
+.header-subtitle { font-size: 12px; color: rgba(255,255,255,0.5); margin-top: 4px; }
+.metallic-rule { height: 3px; background: linear-gradient(90deg, #1C2B6E, #C8CCD8, #1C2B6E); }
+
+/* Alert Bar */
+.alert-bar { background: #0A1020; border-left: 4px solid #E53E3E; padding: 16px 20px; color: #fff; }
+.alert-bar strong { color: #FC8181; }
+
+/* Sections */
+.section { padding: 24px 20px; }
+.section-title { font-size: 11px; font-weight: 700; letter-spacing: 2px; color: #2A3E8C; text-transform: uppercase; margin-bottom: 16px; display: flex; align-items: center; gap: 8px; }
+.section-title::before { content: ''; width: 4px; height: 18px; background: #2A3E8C; border-radius: 2px; }
+
+/* Monitor Items */
+.monitor-item { display: flex; gap: 14px; margin-bottom: 16px; align-items: flex-start; }
+.monitor-num { width: 28px; height: 28px; border-radius: 50%; display: flex; align-items: center; justify-content: center; font-size: 13px; font-weight: 700; color: #fff; flex-shrink: 0; margin-top: 2px; }
+.monitor-num.red { background: #E53E3E; }
+.monitor-num.amber { background: #D69E2E; }
+.monitor-num.blue { background: #3182CE; }
+.monitor-content h4 { font-size: 14px; font-weight: 700; margin-bottom: 2px; }
+.monitor-content p { font-size: 13px; color: #4a5568; }
+
+/* Barometer */
+.barometer-card { background: linear-gradient(135deg, #0A1020, #1C2B6E); border-radius: 12px; padding: 24px; color: #fff; margin-bottom: 20px; }
+.barometer-header { display: flex; justify-content: space-between; align-items: center; margin-bottom: 12px; }
+.barometer-label { font-size: 11px; font-weight: 600; letter-spacing: 2px; text-transform: uppercase; color: rgba(255,255,255,0.6); }
+.barometer-score { font-size: 42px; font-weight: 800; }
+.barometer-status { font-size: 14px; font-weight: 600; }
+.barometer-status.alto { color: #48BB78; }
+.barometer-status.medio { color: #ECC94B; }
+.barometer-status.baixo { color: #FC8181; }
+.barometer-bar { height: 8px; background: rgba(255,255,255,0.15); border-radius: 4px; margin: 12px 0; overflow: hidden; }
+.barometer-fill { height: 100%; border-radius: 4px; transition: width 0.5s; }
+.barometer-fill.alto { background: linear-gradient(90deg, #48BB78, #38A169); }
+.barometer-fill.medio { background: linear-gradient(90deg, #ECC94B, #D69E2E); }
+.barometer-fill.baixo { background: linear-gradient(90deg, #FC8181, #E53E3E); }
+.barometer-reason { font-size: 13px; color: rgba(255,255,255,0.7); margin-top: 8px; }
+
+/* Market Cards */
+.market-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 12px; margin-bottom: 16px; }
+.market-card { background: #F7FAFC; border-radius: 10px; padding: 16px; text-align: center; }
+.market-card .label { font-size: 11px; font-weight: 600; color: #718096; text-transform: uppercase; letter-spacing: 1px; }
+.market-card .value { font-size: 24px; font-weight: 800; color: #1a1a2e; margin: 4px 0; }
+.market-card .delta { font-size: 12px; font-weight: 600; }
+.delta.up { color: #E53E3E; }
+.delta.down { color: #38A169; }
+.delta.neutral { color: #718096; }
+
+/* Fuel Strip */
+.fuel-strip { display: grid; grid-template-columns: repeat(4, 1fr); gap: 8px; margin-bottom: 16px; }
+.fuel-item { background: #F7FAFC; border-radius: 8px; padding: 12px 8px; text-align: center; }
+.fuel-item .fuel-name { font-size: 10px; font-weight: 600; color: #718096; text-transform: uppercase; letter-spacing: 0.5px; margin-bottom: 4px; }
+.fuel-item .fuel-price { font-size: 16px; font-weight: 800; color: #1a1a2e; }
+.fuel-item .fuel-unit { font-size: 10px; color: #a0aec0; }
+
+/* Parity Card */
+.parity-card { background: #F7FAFC; border-radius: 10px; padding: 16px; margin-bottom: 8px; }
+.parity-header { display: flex; justify-content: space-between; align-items: center; margin-bottom: 8px; }
+.parity-title { font-size: 12px; font-weight: 700; color: #1a1a2e; }
+.parity-value { font-size: 24px; font-weight: 800; }
+.parity-bar { height: 10px; background: #E2E8F0; border-radius: 5px; position: relative; margin: 12px 0; overflow: visible; }
+.parity-fill { height: 100%; border-radius: 5px; }
+.parity-marker { position: absolute; top: -3px; width: 3px; height: 16px; background: #1a1a2e; border-radius: 2px; }
+.parity-labels { display: flex; justify-content: space-between; font-size: 10px; color: #a0aec0; }
+.parity-verdict { font-size: 13px; font-weight: 600; margin-top: 8px; padding: 8px 12px; border-radius: 6px; }
+.parity-verdict.etanol { background: #FED7D7; color: #C53030; }
+.parity-verdict.gasolina { background: #C6F6D5; color: #276749; }
+
+/* Greves */
+.greve-section { background: #FFF8F8; border: 1px solid #FED7D7; border-radius: 10px; padding: 16px; margin-bottom: 16px; }
+.greve-card { margin-bottom: 12px; }
+.greve-card:last-child { margin-bottom: 0; }
+.greve-card h4 { font-size: 14px; font-weight: 700; margin-bottom: 4px; }
+.greve-badge { display: inline-block; padding: 2px 8px; border-radius: 4px; font-size: 10px; font-weight: 700; text-transform: uppercase; letter-spacing: 0.5px; }
+.greve-badge.monitorar { background: #FEFCBF; color: #975A16; }
+.greve-badge.confirmada { background: #FED7D7; color: #C53030; }
+.greve-badge.suspensa { background: #C6F6D5; color: #276749; }
+.greve-card p { font-size: 13px; color: #4a5568; margin-top: 6px; }
+.greve-source { font-size: 11px; color: #a0aec0; margin-top: 4px; }
+.greve-source a { color: #3182CE; text-decoration: none; }
+
+/* Setor */
+.setor-dark-header { background: linear-gradient(135deg, #0A1020, #1C2B6E); border-radius: 10px 10px 0 0; padding: 14px 16px; color: #fff; font-size: 11px; font-weight: 700; letter-spacing: 2px; text-transform: uppercase; }
+.setor-body { background: #F7FAFC; border-radius: 0 0 10px 10px; padding: 16px; }
+.setor-category { margin-bottom: 16px; }
+.setor-category:last-child { margin-bottom: 0; }
+.setor-category-title { font-size: 12px; font-weight: 700; color: #2A3E8C; margin-bottom: 8px; }
+.setor-item { display: flex; gap: 10px; margin-bottom: 8px; font-size: 13px; color: #4a5568; align-items: flex-start; }
+.setor-bullet { width: 8px; height: 8px; border-radius: 50%; flex-shrink: 0; margin-top: 6px; }
+.setor-bullet.red { background: #E53E3E; }
+.setor-bullet.amber { background: #D69E2E; }
+.setor-bullet.blue { background: #3182CE; }
+.setor-bullet.green { background: #38A169; }
+.setor-tag { display: inline-block; padding: 1px 6px; border-radius: 3px; font-size: 9px; font-weight: 700; text-transform: uppercase; background: #EBF4FF; color: #2A3E8C; margin-right: 4px; }
+.setor-item a { color: #3182CE; text-decoration: none; }
+
+/* Education */
+.edu-section { background: #F5F7FF; border-radius: 10px; padding: 20px; margin: 0 0 16px; position: relative; }
+.edu-title { font-size: 14px; font-weight: 700; color: #2A3E8C; margin-bottom: 8px; }
+.edu-text { font-size: 13px; color: #4a5568; }
+.edu-kpi { position: absolute; top: 16px; right: 16px; background: #2A3E8C; color: #fff; padding: 4px 10px; border-radius: 6px; font-size: 11px; font-weight: 700; }
+
+/* Weather */
+.weather-section { background: #F7FAFC; border-radius: 10px; padding: 16px; display: flex; gap: 16px; align-items: center; margin-bottom: 8px; }
+.weather-icon { font-size: 36px; }
+.weather-info { flex: 1; }
+.weather-temp { font-size: 18px; font-weight: 800; color: #1a1a2e; }
+.weather-desc { font-size: 13px; color: #718096; }
+.weather-impact { font-size: 12px; color: #D69E2E; font-weight: 600; margin-top: 4px; }
+
+/* Footer */
+.footer { background: #0A1020; padding: 20px; text-align: center; color: rgba(255,255,255,0.4); font-size: 11px; }
+
+@media (max-width: 480px) {
+  body { padding: 8px; }
+  .fuel-strip { grid-template-columns: repeat(2, 1fr); }
+  .market-grid { grid-template-columns: 1fr 1fr; }
+  .barometer-score { font-size: 36px; }
+}
+</style>
+</head>
+<body>
+<div class="wrapper">
+  <!-- HEADER -->
+  <div class="header">
+    <div class="logo-oval">
+      <div class="logo-oval-inner">
+        <span class="logo-postos">POSTOS</span>
+        <span class="logo-gasparini">GASPARINI</span>
+        <span class="logo-desde">DESDE 1989</span>
+      </div>
+    </div>
+    <div class="header-date">Quarta-feira, 16 de setembro de 2026</div>
+    <div class="header-subtitle">Briefing Diário — APIV &middot; CCAR &middot; VENETO</div>
+  </div>
+  <div class="metallic-rule"></div>
+
+  <!-- ALERT BAR -->
+  <div class="alert-bar">
+    <strong>Petróleo acima de US$ 107/barril.</strong> Tensões no Oriente Médio (oleoduto saudita fechado, ataques Houthi, campos líbios suspensos) mantêm o Brent em máximas de 4 meses. Risco de novo reajuste de combustíveis no Brasil.
+  </div>
+
+  <!-- SEÇÃO 1 — O QUE MONITORAR HOJE -->
+  <div class="section">
+    <div class="section-title">O que monitorar hoje</div>
+
+    <div class="monitor-item">
+      <div class="monitor-num red">1</div>
+      <div class="monitor-content">
+        <h4>Brent em US$ 107,74 — pressão de alta nos custos</h4>
+        <p>O petróleo subiu 18,5% no último mês por causa de interrupções no Oriente Médio. Se a Petrobras repassar, o preço na bomba pode subir. Fique atenta a comunicados da distribuidora.</p>
+      </div>
+    </div>
+
+    <div class="monitor-item">
+      <div class="monitor-num amber">2</div>
+      <div class="monitor-content">
+        <h4>Paridade etanol/gasolina em 59,4% — etanol muito favorecido</h4>
+        <p>Com etanol a R$ 3,75 e gasolina a R$ 6,31 em SP, o etanol está bem abaixo do limiar de 70%. Motoristas racionais escolherão etanol, o que pode reduzir volume de gasolina nos postos.</p>
+      </div>
+    </div>
+
+    <div class="monitor-item">
+      <div class="monitor-num blue">3</div>
+      <div class="monitor-content">
+        <h4>Raízen em recuperação extrajudicial — acompanhar impactos</h4>
+        <p>A distribuidora Shell/Raízen está em crise financeira desde março e já perdeu mais de 200 postos. Monitorar se há mudanças nas condições comerciais, prazos de pagamento ou fornecimento.</p>
+      </div>
+    </div>
+  </div>
+  <div class="metallic-rule"></div>
+
+  <!-- SEÇÃO 2 — BARÔMETRO + MERCADO -->
+  <div class="section">
+    <div class="section-title">Barômetro do Dia &amp; Mercado</div>
+
+    <div class="barometer-card">
+      <div class="barometer-header">
+        <div>
+          <div class="barometer-label">Barômetro de Risco</div>
+          <div class="barometer-score">40</div>
+          <div class="barometer-status medio">MÉDIO</div>
+        </div>
+        <div style="font-size: 48px; opacity: 0.3;">&#9888;</div>
+      </div>
+      <div class="barometer-bar">
+        <div class="barometer-fill medio" style="width: 40%;"></div>
+      </div>
+      <div class="barometer-reason">Brent elevado e paridade desfavorável para gasolina anulam o benefício do dólar baixo e da ausência de bloqueios logísticos ativos. Dia de atenção.</div>
+    </div>
+
+    <!-- Market Cards -->
+    <div class="market-grid">
+      <div class="market-card">
+        <div class="label">Brent (USD/bbl)</div>
+        <div class="value">107,74</div>
+        <div class="delta up">&#9660; -0,99% no dia &middot; &#9650; +18,5% no mês</div>
+      </div>
+      <div class="market-card">
+        <div class="label">Câmbio USD/BRL</div>
+        <div class="value">5,145</div>
+        <div class="delta down">&#9660; -0,01% &middot; Dólar em queda</div>
+      </div>
+    </div>
+
+    <!-- Fuel Strip -->
+    <div class="fuel-strip">
+      <div class="fuel-item">
+        <div class="fuel-name">Gasolina Comum</div>
+        <div class="fuel-price">R$ 6,31</div>
+        <div class="fuel-unit">/litro SP</div>
+      </div>
+      <div class="fuel-item">
+        <div class="fuel-name">Gas. Aditivada</div>
+        <div class="fuel-price">R$ 6,70</div>
+        <div class="fuel-unit">/litro SP</div>
+      </div>
+      <div class="fuel-item">
+        <div class="fuel-name">Etanol</div>
+        <div class="fuel-price">R$ 3,75</div>
+        <div class="fuel-unit">/litro SP</div>
+      </div>
+      <div class="fuel-item">
+        <div class="fuel-name">Diesel S10</div>
+        <div class="fuel-price">R$ 6,87</div>
+        <div class="fuel-unit">/litro SP</div>
+      </div>
+    </div>
+
+    <!-- Parity Card -->
+    <div class="parity-card">
+      <div class="parity-header">
+        <div>
+          <div class="parity-title">Paridade Gasolina / Etanol</div>
+          <div class="parity-value" style="color: #C53030;">59,4%</div>
+        </div>
+      </div>
+      <div class="parity-bar">
+        <div class="parity-fill" style="width: 59.4%; background: linear-gradient(90deg, #FC8181, #E53E3E);"></div>
+        <div class="parity-marker" style="left: 70%;"></div>
+      </div>
+      <div class="parity-labels">
+        <span>0%</span>
+        <span>Limiar 70% &rarr;</span>
+        <span>100%</span>
+      </div>
+      <div class="parity-verdict etanol">
+        Etanol compensa! A paridade está bem abaixo de 70%. Motoristas tendem a escolher etanol, o que pode reduzir o volume de gasolina comum vendido.
+      </div>
+    </div>
+  </div>
+  <div class="metallic-rule"></div>
+
+  <!-- SEÇÃO 3 — GREVES & ALERTAS -->
+  <div class="section">
+    <div class="section-title">Greves &amp; Alertas Logísticos</div>
+
+    <div class="greve-section">
+      <div class="greve-card">
+        <h4>Greve dos Caminhoneiros 2026 <span class="greve-badge monitorar">Monitorar</span></h4>
+        <p>A greve iniciada em março/julho por causa do diesel alto (média de R$ 6,80/L, até R$ 8,00 no Centro-Oeste) foi parcialmente contida pela MP 1.343/2026. As causas (preço do diesel e tabela de frete) persistem, e com o Brent acima de US$ 107, o risco de novas mobilizações continua.</p>
+        <div class="greve-source">Fontes: <a href="https://ndmais.com.br/transportes/o-que-esta-acontecendo-greve-dos-caminhoneiros-2026/" target="_blank">ND Mais</a> · <a href="https://revistaforum.com.br/politica/greve-dos-caminhoneiros-2026-entenda-reivindicacoes-e-o-impacto-real-na-economia-brasileira/" target="_blank">Revista Fórum</a></div>
+      </div>
+
+      <div class="greve-card">
+        <h4>Oriente Médio — Oleoduto Saudita Fechado <span class="greve-badge confirmada">Ativo</span></h4>
+        <p>Ataques Houthi forçaram o fechamento do oleoduto East-West da Arábia Saudita. A Líbia suspendeu operações em dois campos de petróleo. Isso mantém o Brent em alta e pode pressionar novo reajuste no Brasil.</p>
+        <div class="greve-source">Fonte: <a href="https://tradingeconomics.com/commodity/brent-crude-oil" target="_blank">Trading Economics</a></div>
+      </div>
+    </div>
+  </div>
+  <div class="metallic-rule"></div>
+
+  <!-- SEÇÃO 4 — SETOR & DISTRIBUIÇÃO -->
+  <div class="section" style="padding: 24px 20px 16px;">
+    <div class="setor-dark-header">&#9981; Setor &amp; Distribuição</div>
+    <div class="setor-body">
+
+      <div class="setor-category">
+        <div class="setor-category-title">Shell / Raízen</div>
+        <div class="setor-item">
+          <div class="setor-bullet red"></div>
+          <div><span class="setor-tag">Crise</span> Raízen entrou em recuperação extrajudicial em março de 2026 e já perdeu mais de 200 postos bandeirados Shell no ano. Monitorar condições de fornecimento. <a href="https://www.otempo.com.br/economia/2026/3/15/rede-de-postos-de-combustivel-da-shell-encolhe-em-meio-a-crise-financeira-da-raizen" target="_blank">Fonte</a></div>
+        </div>
+      </div>
+
+      <div class="setor-category">
+        <div class="setor-category-title">Concorrência &amp; Preços em SP</div>
+        <div class="setor-item">
+          <div class="setor-bullet green"></div>
+          <div><span class="setor-tag">Preço</span> Gasolina comum em SP está estável, em tendência de leve queda: de R$ 6,72 (máx. em abril) para R$ 6,31 atual — uma redução de 6% em 5 meses. <a href="https://www.combustiveis-anp.com.br/estado/sp/sao-paulo/gasolina-comum" target="_blank">ANP</a></div>
+        </div>
+        <div class="setor-item">
+          <div class="setor-bullet amber"></div>
+          <div><span class="setor-tag">Etanol</span> Etanol em SP caiu 9,6% em 12 meses (de R$ 4,15 para R$ 3,75), favorecido pela safra. Isso desvia volume da gasolina nos postos. <a href="https://www.combustiveis-anp.com.br/estado/sp/sao-paulo/etanol" target="_blank">ANP</a></div>
+        </div>
+      </div>
+
+      <div class="setor-category">
+        <div class="setor-category-title">Diesel &amp; Frete</div>
+        <div class="setor-item">
+          <div class="setor-bullet red"></div>
+          <div><span class="setor-tag">Diesel</span> Diesel S10 volta a subir em setembro após alta acumulada de 11,6% até agosto (TruckPag). Em SP capital, está em R$ 6,87/L — 9,6% mais caro que há um ano. <a href="https://cenarioenergia.com.br/2026/09/10/diesel-volta-a-subir-em-setembro-apos-alta-de-116-ate-agosto-aponta-truckpag/" target="_blank">Cenário Energia</a></div>
+        </div>
+      </div>
+
+      <div class="setor-category">
+        <div class="setor-category-title">Petrobras &amp; Refino</div>
+        <div class="setor-item">
+          <div class="setor-bullet amber"></div>
+          <div><span class="setor-tag">Alerta</span> Com o Brent a US$ 107 e o câmbio a R$ 5,14, a defasagem de preços pode levar a Petrobras a anunciar reajuste. Acompanhe comunicados da estatal.</div>
+        </div>
+      </div>
+
+    </div>
+  </div>
+  <div class="metallic-rule"></div>
+
+  <!-- SEÇÃO 5 — EDUCAÇÃO DO DIA -->
+  <div class="section">
+    <div class="section-title">Educação do Dia</div>
+    <div class="edu-section">
+      <div class="edu-kpi">59,4%</div>
+      <div class="edu-title">Como a paridade etanol/gasolina afeta o caixa do posto</div>
+      <div class="edu-text">
+        A "regra dos 70%" diz que, quando o preço do etanol é menos de 70% do preço da gasolina, o etanol compensa mais para o motorista. Hoje a paridade está em 59,4% — bem abaixo do limiar. Na prática, motoristas racionais vão preferir etanol, e o posto vende menos gasolina comum (que tem correlação de +0,94 com o lucro bruto). A boa notícia: a margem do etanol costuma ser maior em termos percentuais. A estratégia é garantir bom preço de etanol com a distribuidora e ajustar a comunicação na pista para reforçar o etanol como "o combustível inteligente do momento".
+      </div>
+    </div>
+  </div>
+  <div class="metallic-rule"></div>
+
+  <!-- SEÇÃO 6 — VINHEDO, AGENDA & TEMPO -->
+  <div class="section">
+    <div class="section-title">Vinhedo &middot; Clima &amp; Agenda</div>
+
+    <div class="weather-section">
+      <div class="weather-icon">&#9925;</div>
+      <div class="weather-info">
+        <div class="weather-temp">18°C — 28°C</div>
+        <div class="weather-desc">Parcialmente nublado com possibilidade de chuva no fim do dia. Umidade baixa pela manhã.</div>
+        <div class="weather-impact">Tempo instável pode reduzir movimento nos postos no fim da tarde.</div>
+      </div>
+    </div>
+
+    <div style="background: #F7FAFC; border-radius: 10px; padding: 16px; margin-top: 8px;">
+      <div style="font-size: 12px; font-weight: 700; color: #2A3E8C; margin-bottom: 6px;">Setembro em Vinhedo</div>
+      <div style="font-size: 13px; color: #4a5568;">Período de transição para a primavera. Temperaturas subindo gradualmente. Sem eventos municipais relevantes registrados para hoje.</div>
+    </div>
+  </div>
+
+  <!-- FOOTER -->
+  <div class="footer">
+    Briefing gerado automaticamente &middot; Postos Gasparini &middot; 16/09/2026<br>
+    Dados: ANP, Trading Economics, Combustíveis ANP, fontes jornalísticas
+  </div>
+</div>
+</body>
+</html>
