@@ -1,0 +1,419 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Briefing Postos Gasparini — 21/09/2026</title>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+<style>
+*{margin:0;padding:0;box-sizing:border-box}
+body{background:#DDE1EE;font-family:'Inter',sans-serif;color:#1a1a2e;line-height:1.6;padding:16px}
+.wrapper{max-width:660px;margin:0 auto;border-radius:14px;overflow:hidden;background:#fff;box-shadow:0 4px 24px rgba(10,16,32,.12)}
+.header{background:linear-gradient(150deg,#0A1020,#1C2B6E,#2A3E8C);padding:28px 24px 22px;text-align:center;color:#fff}
+.logo-oval{display:inline-block;border:2px solid rgba(255,255,255,.35);border-radius:50%;padding:6px 18px;margin-bottom:10px}
+.logo-oval-inner{display:flex;flex-direction:column;align-items:center;line-height:1.15}
+.logo-postos{font-size:10px;font-weight:600;letter-spacing:4px;color:rgba(255,255,255,.7)}
+.logo-gasparini{font-size:20px;font-weight:800;letter-spacing:2px}
+.logo-desde{font-size:8px;font-weight:500;letter-spacing:3px;color:rgba(255,255,255,.5);margin-top:2px}
+.header-date{font-size:13px;font-weight:500;color:rgba(255,255,255,.65);margin-top:6px}
+.header-title{font-size:15px;font-weight:600;margin-top:2px}
+.metallic-rule{height:3px;background:linear-gradient(90deg,#1C2B6E,#C8CCD8,#1C2B6E)}
+
+/* Alert bar */
+.alert-bar{background:#0A1020;border-left:4px solid #E53E3E;padding:14px 20px;color:#fff;display:flex;align-items:flex-start;gap:10px}
+.alert-bar .alert-icon{font-size:20px;flex-shrink:0;margin-top:2px}
+.alert-bar .alert-text{font-size:13px;line-height:1.5}
+.alert-bar .alert-text strong{color:#FC8181}
+
+/* Sections */
+.section{padding:22px 20px}
+.section-header{display:flex;align-items:center;gap:8px;margin-bottom:16px}
+.section-header .icon{width:28px;height:28px;border-radius:8px;display:flex;align-items:center;justify-content:center;font-size:14px;flex-shrink:0}
+.section-title{font-size:15px;font-weight:700;color:#1C2B6E}
+.section-subtitle{font-size:11px;color:#6b7280;font-weight:500;margin-top:1px}
+
+/* Monitor items */
+.monitor-item{display:flex;gap:12px;margin-bottom:14px;align-items:flex-start}
+.monitor-num{width:26px;height:26px;border-radius:50%;display:flex;align-items:center;justify-content:center;font-size:12px;font-weight:700;color:#fff;flex-shrink:0;margin-top:2px}
+.monitor-num.red{background:#E53E3E}
+.monitor-num.amber{background:#D69E2E}
+.monitor-num.blue{background:#3182CE}
+.monitor-title{font-size:13px;font-weight:600;color:#1a1a2e}
+.monitor-desc{font-size:12px;color:#4a5568;margin-top:2px}
+
+/* Barometer */
+.barometer-card{background:linear-gradient(135deg,#0A1020,#1C2B6E);border-radius:12px;padding:20px;color:#fff;margin-bottom:16px}
+.baro-label{font-size:11px;font-weight:600;letter-spacing:1.5px;color:rgba(255,255,255,.5);text-transform:uppercase}
+.baro-score{font-size:42px;font-weight:800;margin:4px 0}
+.baro-level{font-size:14px;font-weight:600;margin-left:6px}
+.baro-bar{height:8px;border-radius:4px;background:rgba(255,255,255,.15);margin:12px 0 8px;overflow:hidden}
+.baro-bar-fill{height:100%;border-radius:4px;transition:width .5s}
+.baro-reason{font-size:12px;color:rgba(255,255,255,.7);line-height:1.5}
+
+/* Market cards */
+.market-grid{display:grid;grid-template-columns:1fr 1fr;gap:10px;margin-bottom:14px}
+.market-card{background:#F7FAFC;border-radius:10px;padding:14px;border:1px solid #E2E8F0}
+.market-card .label{font-size:10px;font-weight:600;color:#718096;text-transform:uppercase;letter-spacing:.5px}
+.market-card .value{font-size:22px;font-weight:800;color:#1C2B6E;margin:4px 0 2px}
+.market-card .delta{font-size:11px;font-weight:600;padding:2px 8px;border-radius:10px;display:inline-block}
+.delta.down{background:#FED7D7;color:#C53030}
+.delta.up{background:#C6F6D5;color:#276749}
+.delta.neutral{background:#E2E8F0;color:#4A5568}
+
+/* Fuel strip */
+.fuel-strip{display:grid;grid-template-columns:repeat(4,1fr);gap:6px;margin-bottom:14px}
+.fuel-item{background:#F7FAFC;border-radius:8px;padding:10px 8px;text-align:center;border:1px solid #E2E8F0}
+.fuel-item .fuel-name{font-size:9px;font-weight:600;color:#718096;text-transform:uppercase;letter-spacing:.3px}
+.fuel-item .fuel-price{font-size:16px;font-weight:800;color:#1C2B6E;margin-top:4px}
+.fuel-item .fuel-unit{font-size:9px;color:#A0AEC0}
+
+/* Parity card */
+.parity-card{background:#F0FFF4;border:1px solid #C6F6D5;border-radius:10px;padding:14px;margin-bottom:4px}
+.parity-card.warning{background:#FFFFF0;border-color:#FEFCBF}
+.parity-card.danger{background:#FFF5F5;border-color:#FED7D7}
+.parity-header{display:flex;justify-content:space-between;align-items:center}
+.parity-label{font-size:11px;font-weight:600;color:#718096}
+.parity-value{font-size:24px;font-weight:800;color:#276749}
+.parity-card.warning .parity-value{color:#975A16}
+.parity-card.danger .parity-value{color:#C53030}
+.parity-bar-bg{height:8px;border-radius:4px;background:#E2E8F0;margin:10px 0 6px;position:relative}
+.parity-bar-fill{height:100%;border-radius:4px;background:#48BB78}
+.parity-card.warning .parity-bar-fill{background:#ECC94B}
+.parity-card.danger .parity-bar-fill{background:#FC8181}
+.parity-verdict{font-size:12px;font-weight:600}
+
+/* Alerts section */
+.alerts-section{background:#FFF8F8;border:1px solid #FED7D7;border-radius:10px;padding:16px;margin-bottom:14px}
+.alert-item{background:#fff;border-radius:8px;padding:12px;border:1px solid #FED7D7;margin-bottom:8px}
+.alert-item:last-child{margin-bottom:0}
+.alert-item-header{display:flex;justify-content:space-between;align-items:center;margin-bottom:6px}
+.alert-item-name{font-size:13px;font-weight:600;color:#1a1a2e}
+.status-badge{font-size:10px;font-weight:700;padding:2px 8px;border-radius:10px;text-transform:uppercase;letter-spacing:.3px}
+.status-badge.monitorar{background:#FEFCBF;color:#975A16}
+.status-badge.provavel{background:#FED7D7;color:#C53030}
+.status-badge.confirmada{background:#C53030;color:#fff}
+.status-badge.suspensa{background:#C6F6D5;color:#276749}
+.alert-item-desc{font-size:12px;color:#4a5568;line-height:1.5}
+.alert-item-source{font-size:11px;color:#A0AEC0;margin-top:6px}
+.alert-item-source a{color:#3182CE;text-decoration:none}
+
+/* Setor section */
+.setor-dark-header{background:linear-gradient(135deg,#0A1020,#1C2B6E);border-radius:10px 10px 0 0;padding:12px 16px;display:flex;align-items:center;gap:8px;color:#fff}
+.setor-dark-header .icon-setor{font-size:16px}
+.setor-dark-header .title-setor{font-size:13px;font-weight:700}
+.setor-body{background:#F7FAFC;border-radius:0 0 10px 10px;padding:14px 16px;border:1px solid #E2E8F0;border-top:none}
+.setor-category{font-size:10px;font-weight:700;color:#1C2B6E;text-transform:uppercase;letter-spacing:1px;margin:12px 0 6px;padding-bottom:4px;border-bottom:1px solid #E2E8F0}
+.setor-category:first-child{margin-top:0}
+.setor-item{display:flex;gap:8px;align-items:flex-start;margin-bottom:8px}
+.setor-bullet{width:6px;height:6px;border-radius:50%;flex-shrink:0;margin-top:6px}
+.setor-bullet.shell{background:#FBBC04}
+.setor-bullet.concorrencia{background:#E53E3E}
+.setor-bullet.combustiveis{background:#3182CE}
+.setor-bullet.refino{background:#805AD5}
+.setor-tag{font-size:9px;font-weight:700;padding:1px 6px;border-radius:4px;text-transform:uppercase;letter-spacing:.3px;flex-shrink:0}
+.setor-tag.shell{background:#FFF9DB;color:#975A16}
+.setor-tag.concorrencia{background:#FED7D7;color:#C53030}
+.setor-tag.combustiveis{background:#BEE3F8;color:#2A4365}
+.setor-tag.refino{background:#E9D8FD;color:#553C9A}
+.setor-tag.regulacao{background:#C6F6D5;color:#276749}
+.setor-text{font-size:12px;color:#4a5568;line-height:1.45}
+.setor-text a{color:#3182CE;text-decoration:none}
+
+/* Education */
+.edu-section{background:#F5F7FF;border-radius:10px;padding:18px;margin-bottom:4px;position:relative}
+.edu-title{font-size:13px;font-weight:700;color:#1C2B6E;margin-bottom:6px}
+.edu-body{font-size:12px;color:#4a5568;line-height:1.6}
+.edu-kpi{position:absolute;top:14px;right:16px;background:#1C2B6E;color:#fff;font-size:11px;font-weight:700;padding:4px 10px;border-radius:8px}
+
+/* Weather */
+.weather-card{background:#F7FAFC;border-radius:10px;padding:14px;border:1px solid #E2E8F0;display:flex;align-items:center;gap:14px;margin-bottom:10px}
+.weather-icon{font-size:36px}
+.weather-info .temp{font-size:18px;font-weight:700;color:#1C2B6E}
+.weather-info .condition{font-size:12px;color:#718096}
+.weather-details{margin-left:auto;text-align:right;font-size:11px;color:#718096}
+.weather-details div{margin-bottom:2px}
+
+/* Footer */
+.footer{background:#F7FAFC;padding:16px 20px;text-align:center;font-size:11px;color:#A0AEC0;border-top:1px solid #E2E8F0}
+
+@media(max-width:480px){
+  body{padding:8px}
+  .market-grid{grid-template-columns:1fr 1fr}
+  .fuel-strip{grid-template-columns:repeat(2,1fr)}
+  .market-card .value{font-size:18px}
+}
+</style>
+</head>
+<body>
+
+<div class="wrapper">
+
+  <!-- HEADER -->
+  <div class="header">
+    <div class="logo-oval">
+      <div class="logo-oval-inner">
+        <span class="logo-postos">POSTOS</span>
+        <span class="logo-gasparini">GASPARINI</span>
+        <span class="logo-desde">DESDE 1989</span>
+      </div>
+    </div>
+    <div class="header-title">Briefing Diario</div>
+    <div class="header-date">Segunda-feira, 21 de setembro de 2026</div>
+  </div>
+  <div class="metallic-rule"></div>
+
+  <!-- ALERT BAR -->
+  <div class="alert-bar">
+    <div class="alert-icon">&#9888;</div>
+    <div class="alert-text">
+      <strong>Desabastecimento pontual de diesel em SP.</strong> Postos relatam cotas de abastecimento para caminhoneiros. IBP diz nao haver indicios de crise nacional, mas Santos e regiao estao entre os pontos mais afetados. Monitorar estoque de diesel S-10.
+    </div>
+  </div>
+
+  <!-- SECAO 1 — O QUE MONITORAR HOJE -->
+  <div class="section">
+    <div class="section-header">
+      <div class="icon" style="background:#EBF4FF;color:#3182CE">&#128269;</div>
+      <div>
+        <div class="section-title">O que Monitorar Hoje</div>
+        <div class="section-subtitle">3 itens priorizados para o dia</div>
+      </div>
+    </div>
+
+    <div class="monitor-item">
+      <div class="monitor-num red">1</div>
+      <div>
+        <div class="monitor-title">Estoque de Diesel S-10 — risco de desabastecimento pontual</div>
+        <div class="monitor-desc">Preco do diesel S-10 subiu para R$ 7,13/L (+2,3% na semana). Ha relatos de cotas em postos de SP. Verificar estoque e disponibilidade com a distribuidora Shell/Raizen.</div>
+      </div>
+    </div>
+
+    <div class="monitor-item">
+      <div class="monitor-num amber">2</div>
+      <div>
+        <div class="monitor-title">Paridade Gasolina/Etanol desfavoravel — etanol mais competitivo</div>
+        <div class="monitor-desc">Paridade em 57,7% (bem abaixo de 70%). Chuvas atrasaram moagem de cana, mas etanol segue mais vantajoso para o consumidor. Volume de gasolina pode cair.</div>
+      </div>
+    </div>
+
+    <div class="monitor-item">
+      <div class="monitor-num blue">3</div>
+      <div>
+        <div class="monitor-title">Brent em US$ 101,50 — pressao de alta nos custos</div>
+        <div class="monitor-desc">Petroleo caiu 2,3% hoje com recuperacao de oferta saudita, mas segue acima de US$ 100. Preco alto pressiona margens e pode antecipar reajuste da Petrobras.</div>
+      </div>
+    </div>
+  </div>
+
+  <div class="metallic-rule"></div>
+
+  <!-- SECAO 2 — BAROMETRO + MERCADO -->
+  <div class="section">
+    <div class="section-header">
+      <div class="icon" style="background:#FFF5F5;color:#E53E3E">&#128200;</div>
+      <div>
+        <div class="section-title">Barometro do Dia + Mercado</div>
+      </div>
+    </div>
+
+    <!-- Barometer -->
+    <div class="barometer-card">
+      <div class="baro-label">Barometro de Risco</div>
+      <div>
+        <span class="baro-score">35</span>
+        <span class="baro-level" style="color:#FC8181">BAIXO &#9888;</span>
+      </div>
+      <div class="baro-bar">
+        <div class="baro-bar-fill" style="width:35%;background:linear-gradient(90deg,#E53E3E,#FC8181)"></div>
+      </div>
+      <div class="baro-reason">Brent acima de US$ 100 pressiona custos. Paridade gasolina/etanol muito baixa (57,7%) favorece etanol e reduz volume de gasolina. Alertas de desabastecimento pontual de diesel em SP. Cambio favoravel (R$ 5,14) e amortece parcialmente.</div>
+    </div>
+
+    <!-- Market cards -->
+    <div class="market-grid">
+      <div class="market-card">
+        <div class="label">Brent (Petroleo)</div>
+        <div class="value">US$ 101,50</div>
+        <div class="delta down">&#9660; 2,3%</div>
+      </div>
+      <div class="market-card">
+        <div class="label">Cambio USD/BRL</div>
+        <div class="value">R$ 5,14</div>
+        <div class="delta up">&#9650; 0,04%</div>
+      </div>
+    </div>
+
+    <!-- Fuel strip -->
+    <div class="fuel-strip">
+      <div class="fuel-item">
+        <div class="fuel-name">Gasolina Comum</div>
+        <div class="fuel-price">R$ 6,52</div>
+        <div class="fuel-unit">por litro (media SP)</div>
+      </div>
+      <div class="fuel-item">
+        <div class="fuel-name">Gasolina Aditivada</div>
+        <div class="fuel-price">R$ 6,99</div>
+        <div class="fuel-unit">por litro (ref. SP)</div>
+      </div>
+      <div class="fuel-item">
+        <div class="fuel-name">Etanol Hidratado</div>
+        <div class="fuel-price">R$ 3,76</div>
+        <div class="fuel-unit">por litro (media SP)</div>
+      </div>
+      <div class="fuel-item">
+        <div class="fuel-name">Diesel S-10</div>
+        <div class="fuel-price">R$ 7,13</div>
+        <div class="fuel-unit">por litro (media BR)</div>
+      </div>
+    </div>
+
+    <!-- Parity card -->
+    <div class="parity-card danger">
+      <div class="parity-header">
+        <div>
+          <div class="parity-label">Paridade Gasolina / Etanol</div>
+          <div style="font-size:11px;color:#718096;margin-top:2px">Etanol / Gasolina x 100</div>
+        </div>
+        <div class="parity-value">57,7%</div>
+      </div>
+      <div class="parity-bar-bg">
+        <div class="parity-bar-fill" style="width:57.7%"></div>
+      </div>
+      <div class="parity-verdict" style="color:#C53030">&#9888; Etanol muito mais vantajoso para o consumidor. Abaixo de 70%, motoristas migram para etanol — volume de gasolina tende a cair.</div>
+    </div>
+  </div>
+
+  <div class="metallic-rule"></div>
+
+  <!-- SECAO 3 — GREVES & ALERTAS -->
+  <div class="section">
+    <div class="section-header">
+      <div class="icon" style="background:#FFF5F5;color:#E53E3E">&#9888;</div>
+      <div>
+        <div class="section-title">Alertas Logisticos</div>
+      </div>
+    </div>
+
+    <div class="alerts-section">
+      <div class="alert-item">
+        <div class="alert-item-header">
+          <div class="alert-item-name">Desabastecimento Pontual de Diesel em SP</div>
+          <span class="status-badge monitorar">Monitorar</span>
+        </div>
+        <div class="alert-item-desc">Postos relatam cotas de abastecimento de diesel para caminhoneiros (100L vs. 250-300L habituais). Problema mais agudo em Santos e regiao. Causa: reducao de importacoes de diesel em setembro. IBP nega desabastecimento nacional, mas distribuidores relatam falhas pontuais de "algumas horas".</div>
+        <div class="alert-item-source">Fonte: <a href="https://sbtnews.sbt.com.br/noticia/economia/postos-relatam-falta-de-combustivel-e-estabelecem-cota-de-abastecimento-em-sao-paulo" target="_blank">SBT News</a> · <a href="https://www.dgabc.com.br/Noticia/4347485/ibp-diz-que-nao-ha-indicios-de-desabastecimento-de-diesel-no-mercado-nacional" target="_blank">Diario do Grande ABC</a></div>
+      </div>
+
+      <div class="alert-item">
+        <div class="alert-item-header">
+          <div class="alert-item-name">Risco de Restricao de Diesel (Defasagem Petrobras)</div>
+          <span class="status-badge monitorar">Monitorar</span>
+        </div>
+        <div class="alert-item-desc">30% do mercado de diesel depende de importacoes. Defasagem de precos da Petrobras em relacao ao mercado internacional desestimula importadores, criando risco de escassez pontual. Monitorar nos proximos dias.</div>
+        <div class="alert-item-source">Fonte: <a href="https://www.metropoles.com/brasil/setor-combustivel-risco-de-escassez" target="_blank">Metropoles</a> · <a href="https://blog.livrariart.com.br/noticias/risco-pontual-diesel/" target="_blank">Analise Diesel</a></div>
+      </div>
+    </div>
+  </div>
+
+  <div class="metallic-rule"></div>
+
+  <!-- SECAO 4 — SETOR & DISTRIBUICAO -->
+  <div class="section" style="padding-bottom:16px">
+    <div class="setor-dark-header">
+      <span class="icon-setor">&#9981;</span>
+      <span class="title-setor">Setor & Distribuicao</span>
+    </div>
+    <div class="setor-body">
+
+      <div class="setor-category">Shell / Raizen</div>
+      <div class="setor-item">
+        <div class="setor-bullet shell"></div>
+        <span class="setor-tag shell">Shell</span>
+        <div class="setor-text">Shell esta pronta para injetar R$ 3,5 bilhoes na Raizen para reforcar capital. Boa noticia para postos bandeirados: sinaliza compromisso de longo prazo da marca no Brasil. <a href="https://www.seudinheiro.com/2026/empresas/o-aguardado-aporte-vem-ai-shell-esta-disposto-a-injetar-r-35-bilhoes-na-raizen-diz-jornal-kaes/" target="_blank">Seu Dinheiro</a></div>
+      </div>
+
+      <div class="setor-category">Combustiveis SP</div>
+      <div class="setor-item">
+        <div class="setor-bullet combustiveis"></div>
+        <span class="setor-tag combustiveis">Diesel</span>
+        <div class="setor-text">Diesel S-10 sobe a R$ 7,13/L nos postos, maior preco desde maio. Alta de 2,3% na semana. MP do governo estende subsidio para baratear diesel. <a href="https://www.piranot.com.br/2026/09/18/noticias/economia/diesel-s10-sobe-postos-anp/" target="_blank">Piranot</a></div>
+      </div>
+      <div class="setor-item">
+        <div class="setor-bullet combustiveis"></div>
+        <span class="setor-tag combustiveis">Etanol</span>
+        <div class="setor-text">Chuvas atrasam moagem de cana e sustentam precos do etanol em SP. Primeira alta mensal na safra 2026/27. Preco nas usinas subiu 4,33% na semana. <a href="https://forbes.com.br/forbes-agro/2026/09/chuvas-atrasam-moagem-de-cana-e-sustentam-precos-do-etanol-em-sp-aponta-cepea/" target="_blank">Forbes Agro</a></div>
+      </div>
+
+      <div class="setor-category">Regulacao</div>
+      <div class="setor-item">
+        <div class="setor-bullet refino"></div>
+        <span class="setor-tag regulacao">ANP</span>
+        <div class="setor-text">ANP definiu criterios para caracterizar preco abusivo nos combustiveis (Resolucao 1004/2026). Consulta publica sobre novas exigencias de capital social para o setor. <a href="https://www.dgabc.com.br/Noticia/4345119/anp-abrira-consulta-sobre-novas-exigencias-de-capital-social-para-setor-de-combustiveis" target="_blank">Diario do Grande ABC</a></div>
+      </div>
+      <div class="setor-item">
+        <div class="setor-bullet refino"></div>
+        <span class="setor-tag regulacao">Governo</span>
+        <div class="setor-text">MP estende subsidio para baratear diesel, aprovada pelo Senado em 14/09. Medida visa conter alta de custos logisticos. <a href="https://www12.senado.leg.br/noticias/materias/2026/09/14/medida-provisoria-estende-subsidio-para-baratear-diesel" target="_blank">Senado</a></div>
+      </div>
+    </div>
+  </div>
+
+  <div class="metallic-rule"></div>
+
+  <!-- SECAO 5 — EDUCACAO DO DIA -->
+  <div class="section">
+    <div class="edu-section">
+      <div class="edu-kpi">57,7%</div>
+      <div class="edu-title">&#128218; Como a Paridade Etanol/Gasolina Afeta Seu Volume</div>
+      <div class="edu-body">
+        A "paridade" e a razao entre o preco do etanol e da gasolina. Quando fica abaixo de 70%, o etanol e mais vantajoso para o motorista — e ele troca de bomba.<br><br>
+        Hoje a paridade esta em <strong>57,7%</strong>, muito abaixo do limiar. Isso significa que a cada R$ 1,00 gasto em gasolina, o motorista consegue rodar mais quilometros com etanol. O impacto direto: <strong>queda no volume de gasolina comum</strong>, que e o produto mais correlacionado com o lucro dos postos (+0,94).<br><br>
+        <strong>O que fazer:</strong> Intensificar promocoes de gasolina aditivada (margem melhor) e acompanhar se o etanol continua subindo nas usinas — o que pode reequilibrar a paridade nas proximas semanas.
+      </div>
+    </div>
+  </div>
+
+  <div class="metallic-rule"></div>
+
+  <!-- SECAO 6 — VINHEDO, AGENDA & TEMPO -->
+  <div class="section">
+    <div class="section-header">
+      <div class="icon" style="background:#F0FFF4;color:#38A169">&#127782;</div>
+      <div>
+        <div class="section-title">Vinhedo — Clima & Agenda</div>
+      </div>
+    </div>
+
+    <div class="weather-card">
+      <div class="weather-icon">&#9728;&#65039;</div>
+      <div class="weather-info">
+        <div class="temp">14°C — 24°C</div>
+        <div class="condition">Ceu limpo, dia ensolarado</div>
+      </div>
+      <div class="weather-details">
+        <div>&#127744; Vento: 20 km/h</div>
+        <div>&#127783; Chuva: 7%</div>
+        <div>&#128204; Bom movimento</div>
+      </div>
+    </div>
+
+    <div style="background:#F7FAFC;border-radius:10px;padding:14px;border:1px solid #E2E8F0">
+      <div style="font-size:11px;font-weight:600;color:#718096;text-transform:uppercase;letter-spacing:.5px;margin-bottom:8px">Agenda do Leo (coordenacao)</div>
+      <div style="font-size:12px;color:#4a5568;line-height:1.8">
+        <strong>11h-12h</strong> — Leo e Ma (1:1 semanal)<br>
+        <strong>13h-14h</strong> — Qualidade Materiais (equipe SunR)<br>
+        <strong>14h-15:30</strong> — WBR Lideres<br>
+        <strong>16:30-18h</strong> — Plenaria ABRAMAR
+      </div>
+    </div>
+  </div>
+
+  <!-- FOOTER -->
+  <div class="footer">
+    Briefing gerado automaticamente · Postos Gasparini · 21/09/2026
+  </div>
+
+</div>
+
+</body>
+</html>
